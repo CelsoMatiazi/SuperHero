@@ -6,8 +6,8 @@
     </style>
 
     <style name="ShapeAppearanceOverlay.App.SelectedCornerRadius" parent="">
-        <item name="cornerSizeTopLeft">20dp</item>
-        <item name="cornerSizeBottomLeft">20dp</item>
+        <item name="cornerSizeTopLeft">15dp</item>
+        <item name="cornerSizeBottomLeft">15dp</item>
     </style>
 
     <style name="ImageBorder" parent="">

@@ -49,12 +49,27 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="15dp"
         android:alpha="0"
-        android:text="R$ 189,99"
+        android:text="R$ 0,00"
         android:textColor="@color/amber"
         android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/cart_divider_top"
         app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <TextView
+        android:id="@+id/cart_isEmpty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nenhum item adicionado"
+        android:textColor="@color/grey"
+        app:layout_constraintTop_toTopOf="@id/cart_divider_top"
+        app:layout_constraintBottom_toTopOf="@id/cart_button_finalizar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
+    />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/cart_recycle"
@@ -66,6 +81,8 @@
 
     />
 
+
+
     <Button
         android:id="@+id/cart_button_finalizar"
         android:layout_width="match_parent"
@@ -75,8 +92,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:text="Finalizar"
         android:layout_marginHorizontal="14dp"
-
-        />
+    />
 
 
 </androidx.constraintlayout.motion.widget.MotionLayout>

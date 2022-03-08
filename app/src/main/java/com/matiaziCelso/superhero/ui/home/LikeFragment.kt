@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.matiaziCelso.superhero.R
 import com.matiaziCelso.superhero.adapter.FavoriteAdapter
+import com.matiaziCelso.superhero.data.FavItems
 import com.matiaziCelso.superhero.mock.ComicsMock.thor
 
 class LikeFragment : Fragment(R.layout.fragment_like) {
@@ -16,7 +17,7 @@ class LikeFragment : Fragment(R.layout.fragment_like) {
 
         val recycler = view.findViewById<RecyclerView>(R.id.fav_recycle)
         recycler.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)
-        recycler.adapter = FavoriteAdapter(thor())
+        recycler.adapter = FavoriteAdapter(FavItems.items)
     }
 
 }

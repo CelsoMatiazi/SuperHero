@@ -5,12 +5,12 @@ import kotlinx.android.parcel.Parcelize
 
 
 @Parcelize
-class ComicItem(
+data class ComicItem(
     val title: String,
     val image: String,
     val description: String,
     val value: Double,
-    val isFavorite: Boolean,
+    var isFavorite: Boolean,
     val characters: List<CharacterItem>,
     val more: List<ComicItem>
 ): Parcelable
@@ -18,7 +18,7 @@ class ComicItem(
 
 
 @Parcelize
-class CharacterItem(
+data class CharacterItem(
     val name: String,
     val image: String,
     val description: String,
