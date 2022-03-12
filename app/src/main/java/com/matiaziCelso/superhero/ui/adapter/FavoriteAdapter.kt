@@ -1,4 +1,4 @@
-package com.matiaziCelso.superhero.adapter
+package com.matiaziCelso.superhero.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.matiaziCelso.superhero.R
-import com.matiaziCelso.superhero.models.ComicItem
+import com.matiaziCelso.superhero.data.models.ComicItem
 
 
 class FavoriteAdapter(

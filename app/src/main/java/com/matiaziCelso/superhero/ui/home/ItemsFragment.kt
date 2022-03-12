@@ -6,8 +6,8 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.matiaziCelso.superhero.R
-import com.matiaziCelso.superhero.adapter.ItemsAdapter
-import com.matiaziCelso.superhero.mock.ItemsPayMock
+import com.matiaziCelso.superhero.ui.adapter.ItemsAdapter
+import com.matiaziCelso.superhero.data.mock.ItemsPayMock
 
 class ItemsFragment : Fragment(R.layout.fragment_itens) {
 
@@ -16,7 +16,7 @@ class ItemsFragment : Fragment(R.layout.fragment_itens) {
 
         val recycler = view.findViewById<RecyclerView>(R.id.items_recycle)
         recycler.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)
-        recycler.adapter = ItemsAdapter(ItemsPayMock().itemsPay())
+        recycler.adapter = ItemsAdapter(ItemsPayMock().boughtItems())
     }
 
 }

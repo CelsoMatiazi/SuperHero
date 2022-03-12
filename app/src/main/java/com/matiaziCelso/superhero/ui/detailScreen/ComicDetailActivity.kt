@@ -11,19 +11,21 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.matiaziCelso.superhero.R
-import com.matiaziCelso.superhero.adapter.CharactersAdapter
-import com.matiaziCelso.superhero.adapter.HomeAdapter
+import com.matiaziCelso.superhero.ui.adapter.CharactersAdapter
+import com.matiaziCelso.superhero.ui.adapter.HomeAdapter
 import com.matiaziCelso.superhero.data.CartItems
 import com.matiaziCelso.superhero.data.FavItems
-import com.matiaziCelso.superhero.mock.CharactersMock
-import com.matiaziCelso.superhero.models.CharacterItem
-import com.matiaziCelso.superhero.models.ComicItem
+import com.matiaziCelso.superhero.data.mock.CharactersMock
+import com.matiaziCelso.superhero.data.models.CharacterItem
+import com.matiaziCelso.superhero.data.models.ComicItem
 
 class ComicDetailActivity : AppCompatActivity() {
 
     private lateinit var addCartBtn : TextView
     private lateinit var addCartDoneBtn : FrameLayout
     private lateinit var comicFavIcon : ImageView
+
+    private val charactersRepository: CharactersMock = CharactersMock.instance
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,10 +86,10 @@ class ComicDetailActivity : AppCompatActivity() {
         val recyclerCharacters = findViewById<RecyclerView>(R.id.comic_personagens_recycler)
 
         val characters =  mutableListOf(
-            CharactersMock.ironMan(),
-            CharactersMock.thor(),
-            CharactersMock.huck(),
-            CharactersMock.captainAmerica(),
+            charactersRepository.ironMan(),
+            charactersRepository.thor(),
+            charactersRepository.huck(),
+            charactersRepository.captainAmerica(),
         ).shuffled()
 
         recyclerCharacters.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)

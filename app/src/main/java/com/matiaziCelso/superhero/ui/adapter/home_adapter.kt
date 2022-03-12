@@ -1,6 +1,6 @@
-package com.matiaziCelso.superhero.adapter
+package com.matiaziCelso.superhero.ui.adapter
 
-import com.matiaziCelso.superhero.models.ComicItem
+import com.matiaziCelso.superhero.data.models.ComicItem
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

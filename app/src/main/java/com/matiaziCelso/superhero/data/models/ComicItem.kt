@@ -1,4 +1,4 @@
-package com.matiaziCelso.superhero.models
+package com.matiaziCelso.superhero.data.models
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

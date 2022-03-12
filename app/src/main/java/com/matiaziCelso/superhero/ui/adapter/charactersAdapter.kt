@@ -1,4 +1,4 @@
-package com.matiaziCelso.superhero.adapter
+package com.matiaziCelso.superhero.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.imageview.ShapeableImageView
 import com.matiaziCelso.superhero.R
-import com.matiaziCelso.superhero.models.CharacterItem
+import com.matiaziCelso.superhero.data.models.CharacterItem
 
 class CharactersAdapter(
     private val items: MutableList<CharacterItem>,

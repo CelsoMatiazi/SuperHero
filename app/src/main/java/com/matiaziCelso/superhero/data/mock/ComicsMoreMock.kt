@@ -1,6 +1,6 @@
-package com.matiaziCelso.superhero.mock
+package com.matiaziCelso.superhero.data.mock
 
-import com.matiaziCelso.superhero.models.ComicItem
+import com.matiaziCelso.superhero.data.models.ComicItem
 
 class ComicsMoreMock {
 
@@ -567,5 +567,9 @@ class ComicsMoreMock {
 
             ).shuffled()
 
+    }
+
+    companion object{
+        val instance by lazy { ComicsMoreMock() }
     }
 }

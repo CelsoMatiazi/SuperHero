@@ -11,9 +11,9 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.matiaziCelso.superhero.R
-import com.matiaziCelso.superhero.adapter.CartItemsAdapter
+import com.matiaziCelso.superhero.ui.adapter.CartItemsAdapter
 import com.matiaziCelso.superhero.data.CartItems
-import com.matiaziCelso.superhero.models.ComicItem
+import com.matiaziCelso.superhero.data.models.ComicItem
 
 
 class CartFragment : Fragment(R.layout.fragment_cart) {
@@ -37,10 +37,8 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
         recycler.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)
 
         recycler.adapter = CartItemsAdapter(CartItems.items){
-            //CartItems.items.remove(it)
             showDialog(it)
             setValue()
-
         }
     }
 

@@ -10,9 +10,9 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.matiaziCelso.superhero.R
-import com.matiaziCelso.superhero.adapter.FavoriteAdapter
+import com.matiaziCelso.superhero.ui.adapter.FavoriteAdapter
 import com.matiaziCelso.superhero.data.FavItems
-import com.matiaziCelso.superhero.models.ComicItem
+import com.matiaziCelso.superhero.data.models.ComicItem
 import com.matiaziCelso.superhero.ui.detailScreen.ComicDetailActivity
 
 

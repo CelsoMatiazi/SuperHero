@@ -9,12 +9,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.matiaziCelso.superhero.R
-import com.matiaziCelso.superhero.adapter.HomeAdapter
-import com.matiaziCelso.superhero.mock.ComicsMock
-import com.matiaziCelso.superhero.models.CharacterItem
-import com.matiaziCelso.superhero.models.ComicItem
+import com.matiaziCelso.superhero.ui.adapter.HomeAdapter
+import com.matiaziCelso.superhero.data.mock.ComicsMock
+import com.matiaziCelso.superhero.data.mock.ComicsMoreMock
+import com.matiaziCelso.superhero.data.models.CharacterItem
+import com.matiaziCelso.superhero.data.models.ComicItem
 
 class CharacterDetailActivity : AppCompatActivity() {
+
+    private val repository: ComicsMock = ComicsMock.instance
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_character_detail)
@@ -41,7 +46,7 @@ class CharacterDetailActivity : AppCompatActivity() {
 
         val recycler = findViewById<RecyclerView>(R.id.character_mais_recycler)
         recycler.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        recycler.adapter = HomeAdapter(ComicsMock.comics()){
+        recycler.adapter = HomeAdapter(repository.comics()){
             sendToComicDetail(it)
         }
     }

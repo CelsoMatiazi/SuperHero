@@ -1,17 +1,14 @@
-package com.matiaziCelso.superhero.adapter
+package com.matiaziCelso.superhero.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.matiaziCelso.superhero.R
-import com.matiaziCelso.superhero.data.CartItems
-import com.matiaziCelso.superhero.models.CharacterItem
-import com.matiaziCelso.superhero.models.ComicItem
+import com.matiaziCelso.superhero.data.models.ComicItem
 
 class CartItemsAdapter(
     private val items: List<ComicItem>,
