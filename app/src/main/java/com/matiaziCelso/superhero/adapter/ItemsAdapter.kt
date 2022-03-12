@@ -61,8 +61,8 @@ class ItemViewHolder(view: View): RecyclerView.ViewHolder(view){
             }
              0 -> {
                  status.text = status.context.getString(R.string.pagamento_pendente)
-                 status.setTextColor(Color.YELLOW)
-                 price.setTextColor(Color.YELLOW)
+                 status.setTextColor(Color.parseColor("#ECAC2B"))
+                 price.setTextColor(Color.parseColor("#ECAC2B"))
              }
              1 -> status.text = status.context.getString(R.string.pagamento_aprovado)
         }

@@ -222,9 +222,25 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="180dp"
-                    android:src="@drawable/img_user"
+                    android:src="@drawable/iron_man"
                     android:scaleType="fitXY"
                     android:contentDescription="@string/user" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Iron Man"
+                    android:textColor="@color/amber"
+                    android:textStyle="bold"
+                    android:textSize="28sp"
+                    android:shadowRadius="30"
+                    android:shadowDx="5"
+                    android:shadowDy="5"
+                    android:shadowColor="@color/black"
+                    android:layout_gravity="bottom"
+                    android:layout_marginStart="15dp"
+
+                    />
 
             </androidx.cardview.widget.CardView>
 

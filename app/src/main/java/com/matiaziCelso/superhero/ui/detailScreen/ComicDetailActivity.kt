@@ -46,7 +46,7 @@ class ComicDetailActivity : AppCompatActivity() {
         comicFavIcon = findViewById(R.id.comic_fav_icon)
 
         switchAddToCart(comicItem!!)
-        setFavIcon(comicItem, false)
+        setFavIcon(comicItem)
 
 
         backBtn.setOnClickListener {
@@ -60,13 +60,13 @@ class ComicDetailActivity : AppCompatActivity() {
 
         comicFavIcon.setOnClickListener {
            addFavItem(comicItem)
-           setFavIcon(comicItem, true)
+           setFavIcon(comicItem)
         }
 
         //Glide.with(banner.context).load(comicItem?.image).into(banner)
         Glide.with(cover.context).load(comicItem.image).into(cover)
         title.text = comicItem.title
-        price.text = "R$ " + comicItem.value.toString()
+        price.text = "R$ ${String.format("%.2f", comicItem.value)}"
         description.text = comicItem.description
 
         val recycler = findViewById<RecyclerView>(R.id.comic_mais_recycler)
@@ -75,6 +75,7 @@ class ComicDetailActivity : AppCompatActivity() {
         recycler.adapter = HomeAdapter(comicItem.more){
             sendComicToDetail(it)
         }
+
         if(comicItem.more.isEmpty()){
             tagMais.text = ""
         }
@@ -97,29 +98,33 @@ class ComicDetailActivity : AppCompatActivity() {
     }
 
 
-
     private fun switchAddToCart(comic: ComicItem){
-        println("ENTROUUUUUUU")
-        println(CartItems.items.size)
-        if(CartItems.items.contains(comic)){
-            println("CONTEMMMMMMMM")
+        if(CartItems.items.filter { it.image == comic.image}.getOrNull(0) != null){
             addCartBtn.isVisible = false
             addCartDoneBtn.isVisible = true
         }
     }
 
-    private fun setFavIcon(comic: ComicItem , changeStatus: Boolean){
-        if(comic.isFavorite || FavItems.items.contains(comic) || changeStatus ){
+    private fun setFavIcon(comic: ComicItem){
+        if(FavItems.items.filter { it.image == comic.image }.getOrNull(0) != null){
             comicFavIcon.setImageResource(R.drawable.ic_full_heart)
         }else{
             comicFavIcon.setImageResource(R.drawable.ic_heart_border)
         }
-
-
     }
 
     private fun addFavItem(comic: ComicItem){
-        FavItems.items.add(comic)
+        if(FavItems.items.filter { it.image == comic.image }.getOrNull(0) != null){
+            
+            FavItems.items.map {
+                if(comic.image == it.image){
+                    FavItems.items.remove(it)
+                }
+            }
+
+        }else{
+            FavItems.items.add(comic)
+        }
     }
 
     private fun sendComicToDetail(item: ComicItem){
