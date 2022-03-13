@@ -5,6 +5,7 @@ import com.matiaziCelso.superhero.ui.adapter.HomeAdapter
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,6 +14,7 @@ import com.matiaziCelso.superhero.R
 import com.matiaziCelso.superhero.data.mock.CharactersMock
 import com.matiaziCelso.superhero.data.models.CharacterItem
 import com.matiaziCelso.superhero.data.models.ComicItem
+import com.matiaziCelso.superhero.data.models.MarvelComic
 import com.matiaziCelso.superhero.ui.detailScreen.CharacterDetailActivity
 import com.matiaziCelso.superhero.ui.detailScreen.ComicDetailActivity
 import com.matiaziCelso.superhero.viewModel.HomeViewModel
@@ -81,9 +83,16 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private fun observer(){
 
+
+        viewModel.error.observe(viewLifecycleOwner) {
+            if(it){
+                Toast.makeText(context, "Deu Erro", Toast.LENGTH_SHORT ).show()
+            }
+        }
+
         viewModel.recycler1.observe(viewLifecycleOwner){ items ->
             recycler.adapter = HomeAdapter(items){
-                sendToDetail(it)
+                //sendToDetail(it)
             }
         }
 
@@ -123,6 +132,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         intent.putExtra("comicItem", item)
         startActivity(intent)
     }
+
 
     private fun sendToCharacter(item: CharacterItem){
         val intent = Intent(context, CharacterDetailActivity::class.java)

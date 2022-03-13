@@ -8,6 +8,9 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.matiaziCelso.superhero.R
+import com.matiaziCelso.superhero.data.models.ComicsResponse
+import com.matiaziCelso.superhero.data.models.MarvelComic
+
 
 class HomeAdapter(
     private val items: List<ComicItem>,
@@ -50,3 +53,6 @@ class ComicViewHolder(view: View): RecyclerView.ViewHolder(view){
 
     }
 }
+
+
+
