@@ -92,7 +92,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         viewModel.recycler1.observe(viewLifecycleOwner){ items ->
             recycler.adapter = HomeAdapter(items){
-                //sendToDetail(it)
+                sendToDetail(it)
             }
         }
 

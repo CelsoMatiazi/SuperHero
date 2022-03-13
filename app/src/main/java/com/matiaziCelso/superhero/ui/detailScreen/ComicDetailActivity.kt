@@ -74,9 +74,9 @@ class ComicDetailActivity : AppCompatActivity() {
         val recycler = findViewById<RecyclerView>(R.id.comic_mais_recycler)
         recycler.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
-//        recycler.adapter = HomeAdapter(comicItem.more){
-//            sendComicToDetail(it)
-//        }
+        recycler.adapter = HomeAdapter(comicItem.more){
+            sendComicToDetail(it)
+        }
 
         if(comicItem.more.isEmpty()){
             tagMais.text = ""
