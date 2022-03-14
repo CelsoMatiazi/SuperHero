@@ -8,7 +8,7 @@ import kotlinx.android.parcel.Parcelize
 data class ComicItem(
     val title: String,
     val image: String,
-    val description: String,
+    var description: String,
     val value: Double,
     var isFavorite: Boolean,
     val characters: List<CharacterItem>,

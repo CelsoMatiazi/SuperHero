@@ -1,6 +1,5 @@
 package com.matiaziCelso.superhero.ui.adapter
 
-import com.matiaziCelso.superhero.data.models.ComicItem
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,8 +7,8 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.matiaziCelso.superhero.R
-import com.matiaziCelso.superhero.data.models.ComicsResponse
-import com.matiaziCelso.superhero.data.models.MarvelComic
+import com.matiaziCelso.superhero.data.models.ComicItem
+
 
 
 class HomeAdapter(
@@ -46,6 +45,8 @@ class HomeAdapter(
 class ComicViewHolder(view: View): RecyclerView.ViewHolder(view){
 
     private val image : ImageView = view.findViewById(R.id.comic_front)
+
+    val urlimge = "http://i.annihil.us/u/prod/marvel/i/mg/3/30/622a29d47901c.jpg"
 
     fun bind(item: ComicItem, action: (ComicItem) -> Unit){
         Glide.with(image.context).load(item.image).into(image)

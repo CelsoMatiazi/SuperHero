@@ -10,7 +10,6 @@ object OkHttpClientFactory {
 
     fun build() : OkHttpClient = OkHttpClient.Builder().apply {
 
-
         addInterceptor(QueryInterceptor())
 
         if(BuildConfig.DEBUG){

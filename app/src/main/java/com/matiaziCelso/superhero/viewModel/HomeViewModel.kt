@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.matiaziCelso.superhero.data.Repository.MarvelComicsRepository
 import com.matiaziCelso.superhero.data.mock.ComicsMock
+import com.matiaziCelso.superhero.data.models.CharacterItem
 import com.matiaziCelso.superhero.data.models.ComicItem
 import com.matiaziCelso.superhero.data.models.ComicsResponse
 import kotlinx.coroutines.Dispatchers
@@ -33,12 +34,6 @@ class HomeViewModel(
     val recycler1: MutableLiveData<List<ComicItem>>
         get() = _recycler1
 
-
-//    private val _recycler1 = MutableLiveData<ComicsResponse>()
-//    val recycler1: MutableLiveData<ComicsResponse>
-//        get() = _recycler1
-
-
     private val _recycler2 = MutableLiveData<List<ComicItem>>()
     val recycler2: MutableLiveData<List<ComicItem>>
         get() = _recycler2
@@ -62,7 +57,7 @@ class HomeViewModel(
 
 
     fun loadComics(){
-        _recycler1.value = repository.comics()
+        //_recycler1.value = repository.comics()
         _recycler2.value = repository.avengers()
         _recycler3.value = repository.ironMan()
         _recycler4.value = repository.huck()
@@ -78,8 +73,24 @@ class HomeViewModel(
                 .catch { _error.postValue(true) }
                 .onCompletion { _loading.postValue(false) }
                 .collect {
-                    val result = it
-                    //_recycler1.postValue(result)
+
+                    val comicConvert: List<ComicItem> = it.data.results.map { comic ->
+                        ComicItem(
+                            title = comic.title,
+                            image = "${comic.images.path}.${comic.images.extension}",
+                            description = "${comic.description ?: "Sem descrição"}",
+                            value = comic.prices[0].price,
+                            isFavorite = false,
+                            characters = listOf<CharacterItem>(),
+                            more = listOf<ComicItem>()
+                        )
+
+                    }
+
+
+                    println("IMAGEEEEE")
+                    println(comicConvert[0].image)
+                    _recycler1.postValue(comicConvert)
                 }
         }
     }
