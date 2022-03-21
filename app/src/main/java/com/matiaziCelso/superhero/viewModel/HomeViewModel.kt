@@ -9,6 +9,7 @@ import com.matiaziCelso.superhero.data.mock.ComicsMock
 import com.matiaziCelso.superhero.data.models.CharacterItem
 import com.matiaziCelso.superhero.data.models.ComicItem
 import com.matiaziCelso.superhero.data.models.ComicsResponse
+import com.matiaziCelso.superhero.data.models.MarvelComic
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -21,6 +22,14 @@ class HomeViewModel(
     private val repository: ComicsMock = ComicsMock.instance,
     private val marvelRepository: MarvelComicsRepository = MarvelComicsRepository.instance,
 ): ViewModel() {
+
+    var loading1 = true
+    var loading2 = true
+    var loading3 = true
+    var loading4 = true
+    var loading5 = true
+    var loading6 = true
+
 
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean>
@@ -69,53 +78,80 @@ class HomeViewModel(
 
 
     fun getComics1(){
-        loadMarvelComics("iron man", _recycler1)
+        loadMarvelComics("iron man", _recycler1, 1)
     }
 
     fun getComics2(){
-        loadMarvelComics("avengers", _recycler2)
+        loadMarvelComics("avengers", _recycler2, 2)
     }
 
     fun getComics3(){
-        loadMarvelComics("iron man", _recycler3)
+        loadMarvelComics("iron man", _recycler3, 3)
     }
 
     fun getComics4(){
-        loadMarvelComics("x-men", _recycler4)
+        loadMarvelComics("x-men", _recycler4, 4)
     }
 
     fun getComics5(){
-        loadMarvelComics("thor", _recycler5)
+        loadMarvelComics("thor", _recycler5, 5)
     }
 
     fun getComics6(){
-        loadMarvelComics("america", _recycler6)
+        loadMarvelComics("america", _recycler6, 6)
     }
 
-
-
-    private fun loadMarvelComics(comic: String, recycler: MutableLiveData<List<ComicItem>> ){
+    private fun loadMarvelComics(
+        comic: String,
+        recycler: MutableLiveData<List<ComicItem>>,
+        position: Int
+    ){
         viewModelScope.launch(Dispatchers.IO) {
             marvelRepository.fetchComics(comic)
                 .onStart { _loading.postValue(true) }
                 .catch { _error.postValue(true) }
-                .onCompletion { _loading.postValue(false) }
+                .onCompletion { loadingStatus(position) }
                 .collect {
                     val comicConvert: List<ComicItem> = it.data.results.map { comic ->
-                        val tempImg = "${comic.images.path}.${comic.images.extension}"
-                        ComicItem(
-                            title = comic.title,
-                            image = tempImg.replace("http://", "https://"),
-                            description = "${comic.description ?: "Sem descrição"}",
-                            value = comic.prices[0].price,
-                            isFavorite = false,
-                            characters = listOf<CharacterItem>(),
-                            more = listOf<ComicItem>()
-                        )
+                        convertComicItem(comic)
                     }
                       recycler.postValue(comicConvert.shuffled())
                 }
         }
+    }
+
+    private fun convertComicItem(comic: MarvelComic): ComicItem{
+        val tempImg = "${comic.images.path}.${comic.images.extension}"
+        return ComicItem(
+            title = comic.title,
+            image = tempImg.replace("http://", "https://"),
+            description = "${comic.description ?: "Sem descrição"}",
+            value = comic.prices[0].price,
+            isFavorite = false,
+            characters = listOf<CharacterItem>(),
+            more = listOf<ComicItem>()
+        )
+    }
+
+    private fun loadingStatus(position: Int) {
+
+        when(position){
+            1 -> loading1 = false
+            2 -> loading2 = false
+            3 -> loading3 = false
+            4 -> loading4 = false
+            5 -> loading5 = false
+            6 -> loading6 = false
+        }
+
+        _loading.postValue(( loading1 &&
+                             loading2 &&
+                             loading3 &&
+                             loading4 &&
+                             loading5 &&
+                             loading6 && !loading1)
+        )
+
     }
 
 }

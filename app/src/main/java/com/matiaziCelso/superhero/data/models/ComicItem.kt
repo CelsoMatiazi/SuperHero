@@ -15,8 +15,6 @@ data class ComicItem(
     val more: List<ComicItem>
 ): Parcelable
 
-
-
 @Parcelize
 data class CharacterItem(
     val name: String,

@@ -3,10 +3,14 @@ package com.matiaziCelso.superhero.ui.home
 import android.content.Intent
 import com.matiaziCelso.superhero.ui.adapter.HomeAdapter
 import android.os.Bundle
+import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintSet
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,6 +31,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private lateinit var characterOne: CardView
     private lateinit var characterTwo: CardView
+    private lateinit var loadingState : View
+    private lateinit var homeState : View
 
     private lateinit var recycler: RecyclerView
     private lateinit var recycler2: RecyclerView
@@ -36,11 +42,14 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private lateinit var recycler6: RecyclerView
 
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         characterOne = view.findViewById(R.id.img_persoangem_1)
         characterTwo = view.findViewById(R.id.img_persoangem_2)
+        loadingState = view.findViewById(R.id.home_loading)
+        homeState = view.findViewById(R.id.home_body)
 
         recycler = view.findViewById(R.id.home_recycler_1)
         recycler.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.HORIZONTAL, false)
@@ -89,11 +98,15 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private fun observer(){
 
-
         viewModel.error.observe(viewLifecycleOwner) {
             if(it){
                 Toast.makeText(context, "Deu Erro", Toast.LENGTH_SHORT ).show()
             }
+        }
+
+        viewModel.loading.observe(viewLifecycleOwner) {
+            loadingState.isVisible = it
+            homeState.isVisible = !it
         }
 
         viewModel.recycler1.observe(viewLifecycleOwner){ items ->
