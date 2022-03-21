@@ -45,7 +45,6 @@ class CharacterViewHolder(view: View): RecyclerView.ViewHolder(view){
     fun bind(item: CharacterItem, action: (CharacterItem) -> Unit){
         name.text = item.name
         Glide.with(img.context).load(item.image).into(img)
-
         img.setOnClickListener { action.invoke(item) }
     }
 

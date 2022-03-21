@@ -74,8 +74,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             sendToCharacter(charactersRepository.ironMan())
         }
 
-        viewModel.loadComics()
-        viewModel.loadMarvelComics()
+        //viewModel.loadComics()
+        viewModel.getComics1()
+        viewModel.getComics2()
+        viewModel.getComics3()
+        viewModel.getComics4()
+        viewModel.getComics5()
+        viewModel.getComics6()
         observer()
 
     }

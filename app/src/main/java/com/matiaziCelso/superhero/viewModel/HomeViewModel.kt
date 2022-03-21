@@ -15,12 +15,12 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import kotlin.random.Random
 
 class HomeViewModel(
     private val repository: ComicsMock = ComicsMock.instance,
     private val marvelRepository: MarvelComicsRepository = MarvelComicsRepository.instance,
 ): ViewModel() {
-
 
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean>
@@ -56,41 +56,64 @@ class HomeViewModel(
         get() = _recycler6
 
 
-    fun loadComics(){
-        //_recycler1.value = repository.comics()
-        _recycler2.value = repository.avengers()
-        _recycler3.value = repository.ironMan()
-        _recycler4.value = repository.huck()
-        _recycler5.value = repository.thor()
-        _recycler6.value = repository.captainAmerica()
+//    fun loadComics(){
+//        //_recycler1.value = repository.comics()
+//        //_recycler2.value = repository.avengers()
+//        _recycler3.value = repository.ironMan()
+//        _recycler4.value = repository.huck()
+//        _recycler5.value = repository.thor()
+//        _recycler6.value = repository.captainAmerica()
+//    }
+
+
+
+
+    fun getComics1(){
+        loadMarvelComics("iron man", _recycler1)
+    }
+
+    fun getComics2(){
+        loadMarvelComics("avengers", _recycler2)
+    }
+
+    fun getComics3(){
+        loadMarvelComics("iron man", _recycler3)
+    }
+
+    fun getComics4(){
+        loadMarvelComics("x-men", _recycler4)
+    }
+
+    fun getComics5(){
+        loadMarvelComics("thor", _recycler5)
+    }
+
+    fun getComics6(){
+        loadMarvelComics("america", _recycler6)
     }
 
 
-    fun loadMarvelComics(){
+
+    private fun loadMarvelComics(comic: String, recycler: MutableLiveData<List<ComicItem>> ){
         viewModelScope.launch(Dispatchers.IO) {
-            marvelRepository.fetchComics()
+            marvelRepository.fetchComics(comic)
                 .onStart { _loading.postValue(true) }
                 .catch { _error.postValue(true) }
                 .onCompletion { _loading.postValue(false) }
                 .collect {
-
                     val comicConvert: List<ComicItem> = it.data.results.map { comic ->
+                        val tempImg = "${comic.images.path}.${comic.images.extension}"
                         ComicItem(
                             title = comic.title,
-                            image = "${comic.images.path}.${comic.images.extension}",
+                            image = tempImg.replace("http://", "https://"),
                             description = "${comic.description ?: "Sem descrição"}",
                             value = comic.prices[0].price,
                             isFavorite = false,
                             characters = listOf<CharacterItem>(),
                             more = listOf<ComicItem>()
                         )
-
                     }
-
-
-                    println("IMAGEEEEE")
-                    println(comicConvert[0].image)
-                    _recycler1.postValue(comicConvert)
+                      recycler.postValue(comicConvert.shuffled())
                 }
         }
     }
