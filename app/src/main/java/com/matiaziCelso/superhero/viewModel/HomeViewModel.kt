@@ -6,10 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.matiaziCelso.superhero.data.Repository.MarvelComicsRepository
 import com.matiaziCelso.superhero.data.mock.ComicsMock
-import com.matiaziCelso.superhero.data.models.CharacterItem
-import com.matiaziCelso.superhero.data.models.ComicItem
-import com.matiaziCelso.superhero.data.models.ComicsResponse
-import com.matiaziCelso.superhero.data.models.MarvelComic
+import com.matiaziCelso.superhero.data.models.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -122,13 +119,16 @@ class HomeViewModel(
 
     private fun convertComicItem(comic: MarvelComic): ComicItem{
         val tempImg = "${comic.images.path}.${comic.images.extension}"
+
         return ComicItem(
             title = comic.title,
             image = tempImg.replace("http://", "https://"),
             description = "${comic.description ?: "Sem descrição"}",
             value = comic.prices[0].price,
             isFavorite = false,
-            characters = listOf<CharacterItem>(),
+            characters = comic.characters.items.map {
+                CharacterItem(it.name,"\"https://www.tenhomaisdiscosqueamigos.com/wp-content/uploads/2019/04/Iron-Man-da-Marvel-696x391.jpg\"","N")
+            },
             more = listOf<ComicItem>()
         )
     }

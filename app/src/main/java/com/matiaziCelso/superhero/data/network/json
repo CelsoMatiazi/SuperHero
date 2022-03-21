@@ -1,0 +1,79 @@
+{
+  "code": "int",
+  "status": "string",
+  "copyright": "string",
+  "attributionText": "string",
+  "attributionHTML": "string",
+  "data": {
+    "offset": "int",
+    "limit": "int",
+    "total": "int",
+    "count": "int",
+    "results": [
+      {
+        "id": "int",
+        "digitalId": "int",
+        "title": "string",
+        "issueNumber": "double",
+        "variantDescription": "string",
+        "description": "string",
+        "modified": "Date",
+        "isbn": "string",
+        "upc": "string",
+        "diamondCode": "string",
+        "ean": "string",
+        "issn": "string",
+        "format": "string",
+        "pageCount": "int",
+
+        "resourceURI": "string",
+        "prices": [
+          {
+            "type": "string",
+            "price": "float"
+          }
+        ],
+        "thumbnail": {
+          "path": "string",
+          "extension": "string"
+        },
+        "characters": {
+          "available": "int",
+          "returned": "int",
+          "collectionURI": "string",
+          "items": [
+            {
+              "resourceURI": "string",
+              "name": "string",
+              "role": "string"
+            }
+          ]
+        },
+        "stories": {
+          "available": "int",
+          "returned": "int",
+          "collectionURI": "string",
+          "items": [
+            {
+              "resourceURI": "string",
+              "name": "string",
+              "type": "string"
+            }
+          ]
+        },
+        "events": {
+          "available": "int",
+          "returned": "int",
+          "collectionURI": "string",
+          "items": [
+            {
+              "resourceURI": "string",
+              "name": "string"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "etag": "string"
+}

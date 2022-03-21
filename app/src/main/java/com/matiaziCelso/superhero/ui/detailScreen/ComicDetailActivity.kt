@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -85,15 +86,15 @@ class ComicDetailActivity : AppCompatActivity() {
 
         val recyclerCharacters = findViewById<RecyclerView>(R.id.comic_personagens_recycler)
 
-        val characters =  mutableListOf(
-            charactersRepository.ironMan(),
-            charactersRepository.thor(),
-            charactersRepository.huck(),
-            charactersRepository.captainAmerica(),
-        ).shuffled()
+//        val characters =  mutableListOf(
+//            charactersRepository.ironMan(),
+//            charactersRepository.thor(),
+//            charactersRepository.huck(),
+//            charactersRepository.captainAmerica(),
+//        ).shuffled()
 
         recyclerCharacters.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        recyclerCharacters.adapter = CharactersAdapter(characters as MutableList<CharacterItem>){
+        recyclerCharacters.adapter = CharactersAdapter(comicItem.characters as MutableList<CharacterItem>){
             sendCharacterToDetail(it)
         }
 

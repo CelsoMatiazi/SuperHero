@@ -20,5 +20,5 @@ data class CharacterItem(
     val name: String,
     val image: String,
     val description: String,
-    val comics: List<ComicItem>
+//    val comics: List<ComicItem>
 ): Parcelable
