@@ -49,7 +49,6 @@ class CharacterDetailActivity : AppCompatActivity() {
         recycler.adapter = HomeAdapter(repository.comics()){
             sendToComicDetail(it)
         }
-        TODO("Utilizar o characterItem.comics NESTA RECYCLER acima, e fazer o loading na character_detail:")
     }
 
     private fun sendToComicDetail(item: ComicItem){
