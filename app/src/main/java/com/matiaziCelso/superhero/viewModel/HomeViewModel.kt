@@ -149,7 +149,8 @@ class HomeViewModel(
                              loading3 &&
                              loading4 &&
                              loading5 &&
-                             loading6 && !loading1)
+                             loading6 &&
+                             !loading1)
         )
 
     }
