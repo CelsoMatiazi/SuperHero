@@ -26,9 +26,9 @@ data class CharacterSummary(val resourceURI: String, val name: String)
 
 //region CharactersResponse
 data class CharacterResponse(val data: CharacterResults)
-data class CharacterResults(val results: Character)
-data class Character(val id: Int, val name: String, val description: String, val thumbnail: CharacterImage, val comics: List<CharacterComics>)
+data class CharacterResults(val results: List<MarvelCharacter>)
+data class MarvelCharacter(val id: Int, val name: String, val description: String, val thumbnail: CharacterImage, val comics: CharacterComics)
 data class CharacterImage(val path: String, val extension: String)
-data class CharacterComics(val items: CharacterComicsItems)
+data class CharacterComics(val items: List<CharacterComicsItems>)
 data class CharacterComicsItems(val resourceURI: String, val name: String)
 //endregion

@@ -13,10 +13,6 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
-import kotlin.random.Random
 
 class HomeViewModel(
     private val repository: ComicsMock = ComicsMock.instance,
@@ -64,11 +60,9 @@ class HomeViewModel(
     val recycler6: MutableLiveData<List<ComicItem>>
         get() = _recycler6
 
-    private val _returnedCharacter = MutableLiveData<CharacterItem>()
-    val returnedCharacter : MutableLiveData<CharacterItem>
-        get() = _returnedCharacter
 
 
+    //region getComics
     fun getComics1(){
         loadMarvelComics("iron man", _recycler1, 1)
     }
@@ -92,8 +86,8 @@ class HomeViewModel(
     fun getComics6(){
         loadMarvelComics("america", _recycler6, 6)
     }
+    //endregion
 
-    //region Comic
     private fun loadMarvelComics(
         comic: String,
         recycler: MutableLiveData<List<ComicItem>>,
@@ -121,41 +115,13 @@ class HomeViewModel(
             description = "${comic.description ?: "Sem descrição"}",
             value = comic.prices[0].price,
             isFavorite = false,
-            characters = comic.characters.items.map {
-                CharacterItem(it.name,"\"https://www.tenhomaisdiscosqueamigos.com/wp-content/uploads/2019/04/Iron-Man-da-Marvel-696x391.jpg\"","")
-            },
+            characters = listOf<CharacterItem>(),
             more = listOf<ComicItem>(),
             id = comic.id
         )
     }
-    //endregion
 
-    //region Character
-    fun loadMarvelCharacter(
-        comicId: Int,
-        name: String
-    ){
-        viewModelScope.launch(Dispatchers.IO) {
-            marvelRepository.fetchCharacters(comicId, name)
-                .onStart { _loading.postValue(true) }
-                .catch { _error.postValue(true) }
-                .onCompletion { loadingStatus(6) }
-                .collect {
-                    returnedCharacter.postValue(convertCharacterItem(it.data.results))
-                }
-        }
-    }
 
-    private fun convertCharacterItem(character: Character): CharacterItem{
-        val tempImg = "${character.thumbnail.path}.${character.thumbnail.extension}"
-
-        return CharacterItem(
-            name = character.name,
-            image = tempImg.replace("http://", "https://"),
-            description = character.description
-        )
-    }
-//endregion
 
     private fun loadingStatus(position: Int) {
 

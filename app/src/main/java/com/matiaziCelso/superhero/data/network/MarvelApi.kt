@@ -15,7 +15,7 @@ interface MarvelApi {
     @GET("comics")
     suspend fun  getMarvelComics(@Query("title") comic :String) : ComicsResponse
     @GET("comics/{comicId}/characters")
-    suspend fun getMarvelComicsCharacters(@Path("comicId") comicId: Int, @Query("name") name: String): CharacterResponse
+    suspend fun getMarvelComicsCharacters(@Path("comicId") comicId: Int): CharacterResponse
 
     companion object{
         val instance: MarvelApi by lazy {

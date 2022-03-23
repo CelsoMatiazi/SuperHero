@@ -12,7 +12,7 @@ import com.matiaziCelso.superhero.R
 import com.matiaziCelso.superhero.data.models.CharacterItem
 
 class CharactersAdapter(
-    private val items: MutableList<CharacterItem>,
+    private val items: List<CharacterItem>,
     private val action: (character: CharacterItem) -> Unit
     ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -30,7 +30,7 @@ class CharactersAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder){
-            is CharacterViewHolder -> holder.bind(items[position], action)
+            is CharacterViewHolder -> holder.bind(items[position],action)
         }
     }
 
