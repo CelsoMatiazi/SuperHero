@@ -12,40 +12,28 @@
     "results": [
       {
         "id": "int",
-        "digitalId": "int",
-        "title": "string",
-        "issueNumber": "double",
-        "variantDescription": "string",
+        "name": "string",
         "description": "string",
         "modified": "Date",
-        "isbn": "string",
-        "upc": "string",
-        "diamondCode": "string",
-        "ean": "string",
-        "issn": "string",
-        "format": "string",
-        "pageCount": "int",
-
         "resourceURI": "string",
-        "prices": [
+        "urls": [
           {
             "type": "string",
-            "price": "float"
+            "url": "string"
           }
         ],
         "thumbnail": {
           "path": "string",
           "extension": "string"
         },
-        "characters": {
+        "comics": {
           "available": "int",
           "returned": "int",
           "collectionURI": "string",
           "items": [
             {
               "resourceURI": "string",
-              "name": "string",
-              "role": "string"
+              "name": "string"
             }
           ]
         },
@@ -62,6 +50,17 @@
           ]
         },
         "events": {
+          "available": "int",
+          "returned": "int",
+          "collectionURI": "string",
+          "items": [
+            {
+              "resourceURI": "string",
+              "name": "string"
+            }
+          ]
+        },
+        "series": {
           "available": "int",
           "returned": "int",
           "collectionURI": "string",

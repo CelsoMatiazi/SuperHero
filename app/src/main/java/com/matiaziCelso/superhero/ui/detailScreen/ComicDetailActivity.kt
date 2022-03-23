@@ -7,7 +7,9 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -19,6 +21,8 @@ import com.matiaziCelso.superhero.data.FavItems
 import com.matiaziCelso.superhero.data.mock.CharactersMock
 import com.matiaziCelso.superhero.data.models.CharacterItem
 import com.matiaziCelso.superhero.data.models.ComicItem
+import com.matiaziCelso.superhero.viewModel.HomeViewModel
+
 
 class ComicDetailActivity : AppCompatActivity() {
 
@@ -86,16 +90,10 @@ class ComicDetailActivity : AppCompatActivity() {
 
         val recyclerCharacters = findViewById<RecyclerView>(R.id.comic_personagens_recycler)
 
-//        val characters =  mutableListOf(
-//            charactersRepository.ironMan(),
-//            charactersRepository.thor(),
-//            charactersRepository.huck(),
-//            charactersRepository.captainAmerica(),
-//        ).shuffled()
 
         recyclerCharacters.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         recyclerCharacters.adapter = CharactersAdapter(comicItem.characters as MutableList<CharacterItem>){
-            sendCharacterToDetail(it)
+            sendCharacterToDetail(it, comicItem)
         }
 
     }
@@ -137,9 +135,10 @@ class ComicDetailActivity : AppCompatActivity() {
     }
 
 
-    private fun sendCharacterToDetail(item: CharacterItem){
+    private fun sendCharacterToDetail(item: CharacterItem, item2: ComicItem){
         val intent = Intent(this, CharacterDetailActivity::class.java)
         intent.putExtra("characterItem", item)
+        intent.putExtra("comicItem", item2)
         startActivity(intent)
     }
 }
