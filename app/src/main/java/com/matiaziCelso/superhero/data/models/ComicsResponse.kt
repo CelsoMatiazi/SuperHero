@@ -10,7 +10,7 @@ data class Results(val results: List<MarvelComic>)
 data class MarvelComic(
     val id: Int,
     val title: String,
-    val description: String,
+    val description: String? = null,
     val prices: List<ComicPrice>,
     @SerializedName("thumbnail")
     val images: ComicImage,
@@ -27,7 +27,7 @@ data class CharacterSummary(val resourceURI: String, val name: String)
 //region CharactersResponse
 data class CharacterResponse(val data: CharacterResults)
 data class CharacterResults(val results: List<MarvelCharacter>)
-data class MarvelCharacter(val id: Int, val name: String, val description: String, val thumbnail: CharacterImage, val comics: CharacterComics)
+data class MarvelCharacter(val id: Int, val name: String, val description: String? = null, val thumbnail: CharacterImage, val comics: CharacterComics)
 data class CharacterImage(val path: String, val extension: String)
 data class CharacterComics(val items: List<CharacterComicsItems>)
 data class CharacterComicsItems(val resourceURI: String, val name: String)

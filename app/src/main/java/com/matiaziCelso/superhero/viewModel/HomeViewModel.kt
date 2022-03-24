@@ -25,6 +25,7 @@ class HomeViewModel(
     var loading4 = true
     var loading5 = true
     var loading6 = true
+    private val noDescription = "TOP SECRET\nA descrição desse comic é confidencial e seu conteudo é conhecido apenas pelo Pentágono e pela SHILD."
 
 
     private val _loading = MutableLiveData(false)
@@ -46,7 +47,6 @@ class HomeViewModel(
     private val _recycler3 = MutableLiveData<List<ComicItem>>()
     val recycler3: MutableLiveData<List<ComicItem>>
         get() = _recycler3
-
 
     private val _recycler4 = MutableLiveData<List<ComicItem>>()
     val recycler4: MutableLiveData<List<ComicItem>>
@@ -112,7 +112,7 @@ class HomeViewModel(
         return ComicItem(
             title = comic.title,
             image = tempImg.replace("http://", "https://"),
-            description = "${comic.description ?: "Sem descrição"}",
+            description = comic.description ?: noDescription,
             value = comic.prices[0].price,
             isFavorite = false,
             characters = listOf<CharacterItem>(),

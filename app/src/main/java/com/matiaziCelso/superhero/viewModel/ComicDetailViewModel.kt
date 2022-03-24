@@ -16,6 +16,8 @@ import kotlinx.coroutines.launch
 
 class ComicDetailViewModel(private val marvelRepository: MarvelComicsRepository = MarvelComicsRepository.instance): ViewModel() {
 
+    private val noDescription = "TOP SECRET\nA descrição desse heroi é confidencial e seu conteudo é conhecido apenas pelo Pentágono e pela SHILD."
+
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean>
         get() = _loading
@@ -27,6 +29,7 @@ class ComicDetailViewModel(private val marvelRepository: MarvelComicsRepository 
     private val _returnedCharacters = MutableLiveData<List<CharacterItem>>()
     val returnedCharacters : MutableLiveData<List<CharacterItem>>
         get() = _returnedCharacters
+
 
 
     fun loadComicCharacters(comicId: Int){
@@ -47,11 +50,23 @@ class ComicDetailViewModel(private val marvelRepository: MarvelComicsRepository 
     private fun convertCharacterItem(character: MarvelCharacter): CharacterItem{
         val tempImg = "${character.thumbnail.path}.${character.thumbnail.extension}"
 
+        println("Description")
+        println(character.description)
         return CharacterItem(
             name = character.name,
             image = tempImg.replace("http://", "https://"),
-            description = character.description ?: "Sem descrição"
+            description =  emptyString(character.description)
 //            comics = character.comics.items
         )
     }
+
+
+    private fun emptyString(txt: String?): String{
+        return txt?.ifEmpty {
+            noDescription
+        } ?: noDescription
+        return noDescription
+    }
+
+
 }

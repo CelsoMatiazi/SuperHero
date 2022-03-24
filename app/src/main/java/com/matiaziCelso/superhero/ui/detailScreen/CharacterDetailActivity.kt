@@ -35,6 +35,7 @@ class CharacterDetailActivity : AppCompatActivity() {
         val description = findViewById<TextView>(R.id.character_description)
 
 
+
         backBtn.setOnClickListener {
             onBackPressed()
         }
