@@ -1,6 +1,6 @@
-package com.matiaziCelso.superhero.models
+package com.matiaziCelso.superhero.data.models
 
-class ItemsItem(
+class BoughtItem(
 
     val title: String,
     val day: String,

@@ -1,4 +1,4 @@
-package com.matiaziCelso.superhero.adapter
+package com.matiaziCelso.superhero.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -11,9 +11,14 @@ import com.bumptech.glide.Glide
 import com.matiaziCelso.superhero.R
 import com.matiaziCelso.superhero.models.ComicItem
 import com.matiaziCelso.superhero.utils.like.Like
+import com.matiaziCelso.superhero.data.models.ComicItem
 
 
-class FavoriteAdapter(private val items: List<ComicItem>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class FavoriteAdapter(
+    private val items: List<ComicItem>,
+    private val action: (ComicItem) -> Unit,
+    private val action2: (ComicItem) -> Unit,
+    ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -38,10 +43,12 @@ class FavoriteAdapter(private val items: List<ComicItem>): RecyclerView.Adapter<
 
 class FavoriteViewHolder(view: View): RecyclerView.ViewHolder(view){
 
-    private val image: ImageView = view.findViewById<ImageView>(R.id.fav_img)
-    private val title: TextView = view.findViewById<TextView>(R.id.fav_title)
-    private val number: TextView = view.findViewById<TextView>(R.id.fav_item_number)
-    private val release: TextView = view.findViewById<TextView>(R.id.fav_item_release)
+    private val image: ImageView = view.findViewById(R.id.fav_img)
+    private val title: TextView = view.findViewById(R.id.fav_title)
+    private val number: TextView = view.findViewById(R.id.fav_item_number)
+    private val release: TextView = view.findViewById(R.id.fav_item_release)
+    private val favIcon: ImageView = view.findViewById(R.id.fav_icon)
+    private val itemView: View = view.findViewById(R.id.favorite_view)
 
     init {
         Like.createAction(
@@ -56,10 +63,12 @@ class FavoriteViewHolder(view: View): RecyclerView.ViewHolder(view){
         )
     }
 
-    fun favBind(item: ComicItem){
+    fun favBind(item: ComicItem, action: (ComicItem) -> Unit, action2: (ComicItem) -> Unit){
         Glide.with(image.context).load(item.image).into(image)
         title.text = item.title
         number.text = "numero: #12123"
         release.text = "lançamento: 12/12/12"
+        favIcon.setOnClickListener { action.invoke(item) }
+        itemView.setOnClickListener { action2.invoke(item) }
     }
 }
