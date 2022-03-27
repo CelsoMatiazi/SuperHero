@@ -95,13 +95,13 @@
             android:textSize="26sp"
             />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/comic_fav_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/comic_detail_title"
-            android:src="@drawable/ic_heart_border"
+            android:background="@drawable/ic_heart_border"
             android:layout_marginEnd="15dp"
             />
 

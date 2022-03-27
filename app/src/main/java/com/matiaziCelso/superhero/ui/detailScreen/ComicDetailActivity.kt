@@ -3,6 +3,7 @@ package com.matiaziCelso.superhero.ui.detailScreen
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,9 +13,9 @@ import com.matiaziCelso.superhero.R
 import com.matiaziCelso.superhero.adapter.CharactersAdapter
 import com.matiaziCelso.superhero.adapter.HomeAdapter
 import com.matiaziCelso.superhero.mock.CharactersMock
-import com.matiaziCelso.superhero.mock.ComicsMock
 import com.matiaziCelso.superhero.models.CharacterItem
 import com.matiaziCelso.superhero.models.ComicItem
+import com.matiaziCelso.superhero.utils.like.Like
 
 class ComicDetailActivity : AppCompatActivity() {
 
@@ -36,6 +37,17 @@ class ComicDetailActivity : AppCompatActivity() {
         val price = findViewById<TextView>(R.id.comic_detail_price)
         val description = findViewById<TextView>(R.id.comic_description)
         val tagMais = findViewById<TextView>(R.id.comic_mais)
+
+        Like.createAction(
+            likeButton = findViewById<ImageButton>(R.id.comic_fav_icon)
+        ).doubleClick(
+            likeAction = {
+                it.setBackgroundResource(R.drawable.ic_heart_border)
+            },
+            unlikeAction = {
+                it.setBackgroundResource(R.drawable.ic_full_heart)
+            }
+        )
 
         backBtn.setOnClickListener {
             onBackPressed()

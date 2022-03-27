@@ -73,11 +73,11 @@
         android:layout_marginStart="15dp"
         />
 
-    <ImageView
+    <ImageButton
         android:id="@+id/fav_icon"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:src="@drawable/ic_full_heart"
+        android:background="@drawable/ic_heart_border"
         app:layout_constraintTop_toTopOf="@id/fav_item_box"
         app:layout_constraintBottom_toBottomOf="@id/fav_item_box"
         app:layout_constraintEnd_toEndOf="@id/fav_item_box"

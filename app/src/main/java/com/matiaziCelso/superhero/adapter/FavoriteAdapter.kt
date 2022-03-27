@@ -3,12 +3,14 @@ package com.matiaziCelso.superhero.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.matiaziCelso.superhero.R
 import com.matiaziCelso.superhero.models.ComicItem
+import com.matiaziCelso.superhero.utils.like.Like
 
 
 class FavoriteAdapter(private val items: List<ComicItem>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -25,8 +27,8 @@ class FavoriteAdapter(private val items: List<ComicItem>): RecyclerView.Adapter<
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when(holder){
-            is FavoriteViewHolder -> holder.favBind(items[position])
+        if(holder is FavoriteViewHolder){
+            holder.favBind(items[position])
         }
     }
 
@@ -40,6 +42,19 @@ class FavoriteViewHolder(view: View): RecyclerView.ViewHolder(view){
     private val title: TextView = view.findViewById<TextView>(R.id.fav_title)
     private val number: TextView = view.findViewById<TextView>(R.id.fav_item_number)
     private val release: TextView = view.findViewById<TextView>(R.id.fav_item_release)
+
+    init {
+        Like.createAction(
+            likeButton = view.findViewById<ImageButton>(R.id.fav_icon)
+        ).doubleClick(
+            likeAction = {
+                it.setBackgroundResource(R.drawable.ic_heart_border)
+            },
+            unlikeAction = {
+                it.setBackgroundResource(R.drawable.ic_full_heart)
+            }
+        )
+    }
 
     fun favBind(item: ComicItem){
         Glide.with(image.context).load(item.image).into(image)
