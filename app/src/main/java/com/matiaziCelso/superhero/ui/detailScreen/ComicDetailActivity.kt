@@ -16,11 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.matiaziCelso.superhero.R
-import com.matiaziCelso.superhero.adapter.CharactersAdapter
-import com.matiaziCelso.superhero.adapter.HomeAdapter
-import com.matiaziCelso.superhero.mock.CharactersMock
-import com.matiaziCelso.superhero.models.CharacterItem
-import com.matiaziCelso.superhero.models.ComicItem
 import com.matiaziCelso.superhero.utils.like.Like
 import com.matiaziCelso.superhero.ui.adapter.CharactersAdapter
 import com.matiaziCelso.superhero.ui.adapter.HomeAdapter

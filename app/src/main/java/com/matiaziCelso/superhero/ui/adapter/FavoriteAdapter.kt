@@ -9,9 +9,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.matiaziCelso.superhero.R
-import com.matiaziCelso.superhero.models.ComicItem
-import com.matiaziCelso.superhero.utils.like.Like
 import com.matiaziCelso.superhero.data.models.ComicItem
+import com.matiaziCelso.superhero.utils.like.Like
 
 
 class FavoriteAdapter(
@@ -33,7 +32,8 @@ class FavoriteAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if(holder is FavoriteViewHolder){
-            holder.favBind(items[position])
+//            holder.favBind(items[position])
+            holder.favBind(items[position], action, action2)
         }
     }
 
