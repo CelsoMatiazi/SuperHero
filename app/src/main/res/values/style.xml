@@ -6,8 +6,8 @@
     </style>
 
     <style name="ShapeAppearanceOverlay.App.SelectedCornerRadius" parent="">
-        <item name="cornerSizeTopLeft">20dp</item>
-        <item name="cornerSizeBottomLeft">20dp</item>
+        <item name="cornerSizeTopLeft">15dp</item>
+        <item name="cornerSizeBottomLeft">15dp</item>
     </style>
 
     <style name="ImageBorder" parent="">
@@ -20,6 +20,13 @@
 
     <style name="iconBackCircle" parent="">
         <item name="cornerSize">20dp</item>
+    </style>
+
+
+    <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <item name="android:background">@color/darkGrey</item>
+        <item name="android:textColor">@color/red</item>
     </style>
 
 

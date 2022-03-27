@@ -5,16 +5,21 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.matiaziCelso.superhero.R
-import com.matiaziCelso.superhero.adapter.HomeAdapter
-import com.matiaziCelso.superhero.mock.ComicsMock
-import com.matiaziCelso.superhero.models.CharacterItem
-import com.matiaziCelso.superhero.models.ComicItem
+import com.matiaziCelso.superhero.ui.adapter.HomeAdapter
+import com.matiaziCelso.superhero.data.mock.ComicsMock
+import com.matiaziCelso.superhero.data.models.CharacterItem
+import com.matiaziCelso.superhero.data.models.ComicItem
+import com.matiaziCelso.superhero.viewModel.HomeViewModel
 
 class CharacterDetailActivity : AppCompatActivity() {
+
+    private val repository: ComicsMock = ComicsMock.instance
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_character_detail)
@@ -30,18 +35,19 @@ class CharacterDetailActivity : AppCompatActivity() {
         val description = findViewById<TextView>(R.id.character_description)
 
 
+
         backBtn.setOnClickListener {
             onBackPressed()
         }
-
 
         Glide.with(banner.context).load(characterItem?.image).into(banner)
         name.text = characterItem?.name
         description.text = characterItem?.description
 
+
         val recycler = findViewById<RecyclerView>(R.id.character_mais_recycler)
         recycler.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        recycler.adapter = HomeAdapter(ComicsMock.comics()){
+        recycler.adapter = HomeAdapter(repository.comics()){
             sendToComicDetail(it)
         }
     }

@@ -1,17 +1,18 @@
-package com.matiaziCelso.superhero.adapter
+package com.matiaziCelso.superhero.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.imageview.ShapeableImageView
 import com.matiaziCelso.superhero.R
-import com.matiaziCelso.superhero.models.CharacterItem
+import com.matiaziCelso.superhero.data.models.CharacterItem
 
 class CharactersAdapter(
-    private val items: MutableList<CharacterItem>,
+    private val items: List<CharacterItem>,
     private val action: (character: CharacterItem) -> Unit
     ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -29,7 +30,7 @@ class CharactersAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder){
-            is CharacterViewHolder -> holder.bind(items[position], action)
+            is CharacterViewHolder -> holder.bind(items[position],action)
         }
     }
 
@@ -45,7 +46,6 @@ class CharacterViewHolder(view: View): RecyclerView.ViewHolder(view){
     fun bind(item: CharacterItem, action: (CharacterItem) -> Unit){
         name.text = item.name
         Glide.with(img.context).load(item.image).into(img)
-
         img.setOnClickListener { action.invoke(item) }
     }
 
