@@ -3,6 +3,7 @@ package com.matiaziCelso.superhero.ui.detailScreen
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ImageButton
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.matiaziCelso.superhero.R
+import com.matiaziCelso.superhero.utils.like.Like
 import com.matiaziCelso.superhero.ui.adapter.CharactersAdapter
 import com.matiaziCelso.superhero.ui.adapter.HomeAdapter
 import com.matiaziCelso.superhero.data.CartItems
@@ -67,6 +69,17 @@ class ComicDetailActivity : AppCompatActivity() {
         switchAddToCart(comicItem!!)
         setFavIcon(comicItem)
 
+
+        Like.createAction(
+            likeButton = findViewById<ImageButton>(R.id.comic_fav_icon)
+        ).doubleClick(
+            likeAction = {
+                it.setBackgroundResource(R.drawable.ic_heart_border)
+            },
+            unlikeAction = {
+                it.setBackgroundResource(R.drawable.ic_full_heart)
+            }
+        )
 
         backBtn.setOnClickListener {
             onBackPressed()
