@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.isVisible
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -51,18 +52,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         homeMenuFilter.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
-                println("OnTAB")
                 if (tab != null) {
-                    println(tab.contentDescription)
-
                     when(tab.contentDescription){
                         "Home" -> setFragment(menuOneFragment)
-                        "Populares" -> setFragment(menuTwoFragment)
-                        "Lançamentos" -> setFragment(menuThreeFragment)
+                        "Comics" -> setFragment(menuTwoFragment)
+                        "Personagens" -> setFragment(menuThreeFragment)
                         "Especiais" -> setFragment(menuFourFragment)
                     }
-
-
                 }
             }
 
@@ -77,10 +73,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private fun setFragment(fragment: Fragment){
 
-        val fragmentTransaction = fragmentManager?.beginTransaction()
+        val fragmentTransaction = parentFragmentManager.beginTransaction()
         fragmentTransaction
-            ?.replace(R.id.fragment_container_home, fragment)
-            fragmentTransaction?.commit()
+            .replace(R.id.fragment_container_home, fragment)
+            fragmentTransaction.commit()
 
     }
 

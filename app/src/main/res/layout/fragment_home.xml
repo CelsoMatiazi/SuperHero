@@ -65,13 +65,13 @@
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/populares"
+                android:text="Comics"
             />
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/lan_amentos"
+                android:text="Personagens"
             />
 
             <com.google.android.material.tabs.TabItem
