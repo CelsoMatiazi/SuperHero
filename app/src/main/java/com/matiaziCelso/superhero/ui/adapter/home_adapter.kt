@@ -46,14 +46,11 @@ class ComicViewHolder(view: View): RecyclerView.ViewHolder(view){
 
     private val image : ImageView = view.findViewById(R.id.comic_front)
 
-
-
     fun bind(item: ComicItem, action: (ComicItem) -> Unit){
 
-        val urlimge = item.image.replace("http://", "https://")
+        val urlImage = item.image.replace("http://", "https://")
 
-        //Glide.with(image.context).load(item.image).into(image)
-        Glide.with(image.context).load(urlimge).into(image)
+        Glide.with(image.context).load(urlImage).into(image)
         image.setOnClickListener { action.invoke(item) }
 
     }
