@@ -1,4 +1,4 @@
-package com.matiaziCelso.superhero.ui.home
+package com.matiaziCelso.superhero.ui.home.menu_filter
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,15 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import com.matiaziCelso.superhero.R
 
-
-class MenuFourFragment : Fragment() {
+class MenuTwoFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_menu_four, container, false)
+        return inflater.inflate(R.layout.fragment_menu_two, container, false)
     }
+
 
 }

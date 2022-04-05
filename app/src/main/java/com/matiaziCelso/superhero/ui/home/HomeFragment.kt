@@ -1,32 +1,14 @@
 package com.matiaziCelso.superhero.ui.home
 
-import android.content.Intent
-import com.matiaziCelso.superhero.ui.adapter.HomeAdapter
 import android.os.Bundle
-import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import android.view.View
-import android.view.ViewGroup
-import android.widget.TableLayout
-import android.widget.Toast
-import androidx.cardview.widget.CardView
-import androidx.constraintlayout.widget.ConstraintSet
-import androidx.core.view.isVisible
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
 import com.matiaziCelso.superhero.R
-import com.matiaziCelso.superhero.data.mock.CharactersMock
-import com.matiaziCelso.superhero.data.models.CharacterItem
-import com.matiaziCelso.superhero.data.models.ComicItem
-import com.matiaziCelso.superhero.data.models.MarvelComic
-import com.matiaziCelso.superhero.ui.detailScreen.CharacterDetailActivity
-import com.matiaziCelso.superhero.ui.detailScreen.ComicDetailActivity
-import com.matiaziCelso.superhero.viewModel.HomeViewModel
+import com.matiaziCelso.superhero.ui.home.menu_filter.MenuFourFragment
+import com.matiaziCelso.superhero.ui.home.menu_filter.MenuOneFragment
+import com.matiaziCelso.superhero.ui.home.menu_filter.MenuThreeFragment
+import com.matiaziCelso.superhero.ui.home.menu_filter.MenuTwoFragment
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
 

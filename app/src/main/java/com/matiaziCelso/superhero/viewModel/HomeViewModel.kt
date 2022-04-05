@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.matiaziCelso.superhero.data.Repository.MarvelComicsRepository
-import com.matiaziCelso.superhero.data.mock.ComicsMock
 import com.matiaziCelso.superhero.data.models.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
@@ -15,17 +14,24 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    private val repository: ComicsMock = ComicsMock.instance,
     private val marvelRepository: MarvelComicsRepository = MarvelComicsRepository.instance,
 ): ViewModel() {
 
-    var loading1 = true
-    var loading2 = true
-    var loading3 = true
-    var loading4 = true
-    var loading5 = true
-    var loading6 = true
+    private var loading5 = true
+    private var loading1 = true
+    private var loading2 = true
+    private var loading3 = true
+    private var loading4 = true
+    private var loading6 = true
     private val noDescription = "TOP SECRET\nA descrição desse comic é confidencial e seu conteudo é conhecido apenas pelo Pentágono e pela SHILD."
+    private var itemsSearch = listOf<String>()
+
+    private val comicsSearchList = listOf(
+        "Iron man", "Thor", "X-men", "Avengers", "America", "Wolverine", "Vision",
+        "Black Panther", "Deadpool", "Hulk", "Spider-Man",
+        "Ant-Man", "Empyre", "Civil War", "Falcon", "Thanos", "Venom", "Strange",
+        "Guardians of the Galaxy"
+    )
 
 
     private val _loading = MutableLiveData(false)
@@ -60,31 +66,39 @@ class HomeViewModel(
     val recycler6: MutableLiveData<List<ComicItem>>
         get() = _recycler6
 
+    private val _titles = MutableLiveData<List<String>>()
+    val titles: MutableLiveData<List<String>>
+        get() = _titles
+
+
+    init {
+        itemsSearch = comicsSearchList.asSequence().shuffled().take(6).toList()
+    }
 
 
     //region getComics
     fun getComics1(){
-        loadMarvelComics("iron man", _recycler1, 1)
+        loadMarvelComics(itemsSearch[0], _recycler1, 1)
     }
 
     fun getComics2(){
-        loadMarvelComics("avengers", _recycler2, 2)
+        loadMarvelComics(itemsSearch[1], _recycler2, 2)
     }
 
     fun getComics3(){
-        loadMarvelComics("iron man", _recycler3, 3)
+        loadMarvelComics(itemsSearch[2], _recycler3, 3)
     }
 
     fun getComics4(){
-        loadMarvelComics("x-men", _recycler4, 4)
+        loadMarvelComics(itemsSearch[3], _recycler4, 4)
     }
 
     fun getComics5(){
-        loadMarvelComics("thor", _recycler5, 5)
+        loadMarvelComics(itemsSearch[4], _recycler5, 5)
     }
 
     fun getComics6(){
-        loadMarvelComics("america", _recycler6, 6)
+        loadMarvelComics(itemsSearch[5], _recycler6, 6)
     }
     //endregion
 
@@ -102,6 +116,7 @@ class HomeViewModel(
                     val comicConvert: List<ComicItem> = it.data.results.map { comic ->
                         convertComicItem(comic)
                     }
+                      _titles.postValue(itemsSearch)
                       recycler.postValue(comicConvert.shuffled())
                 }
         }
@@ -115,8 +130,8 @@ class HomeViewModel(
             description = comic.description ?: noDescription,
             value = comic.prices[0].price,
             isFavorite = false,
-            characters = listOf<CharacterItem>(),
-            more = listOf<ComicItem>(),
+            characters = listOf(),
+            more = listOf(),
             id = comic.id
         )
     }

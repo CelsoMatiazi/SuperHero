@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/amber"
-    tools:context=".ui.home.MenuThreeFragment">
+    tools:context=".ui.home.menu_filter.MenuThreeFragment">
 
 
 </FrameLayout>

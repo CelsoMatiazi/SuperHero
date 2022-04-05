@@ -1,11 +1,10 @@
-package com.matiaziCelso.superhero.ui.home
+package com.matiaziCelso.superhero.ui.home.menu_filter
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.core.view.isVisible
@@ -41,6 +40,14 @@ class MenuOneFragment : Fragment(R.layout.fragment_home_menu) {
     private lateinit var recycler5: RecyclerView
     private lateinit var recycler6: RecyclerView
 
+    private lateinit var title_0: TextView
+    private lateinit var title_1: TextView
+    private lateinit var title_2: TextView
+    private lateinit var title_3: TextView
+    private lateinit var title_4: TextView
+    private lateinit var title_5: TextView
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -49,6 +56,13 @@ class MenuOneFragment : Fragment(R.layout.fragment_home_menu) {
         characterTwo = view.findViewById(R.id.img_persoangem_2)
         loadingState = view.findViewById(R.id.home_loading)
         homeState = view.findViewById(R.id.home_body)
+
+        title_0 = view.findViewById(R.id.home_title_0)
+        title_1 = view.findViewById(R.id.home_title_1)
+        title_2 = view.findViewById(R.id.home_title_2)
+        title_3 = view.findViewById(R.id.home_title_3)
+        title_4 = view.findViewById(R.id.home_title_4)
+        title_5 = view.findViewById(R.id.home_title_5)
 
         recycler = view.findViewById(R.id.home_recycler_1)
         recycler.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.HORIZONTAL, false)
@@ -105,6 +119,15 @@ class MenuOneFragment : Fragment(R.layout.fragment_home_menu) {
         viewModel.loading.observe(viewLifecycleOwner) {
             loadingState.isVisible = it
             homeState.isVisible = !it
+        }
+
+        viewModel.titles.observe(viewLifecycleOwner){
+            title_0.text = it[0]
+            title_1.text = it[1]
+            title_2.text = it[2]
+            title_3.text = it[3]
+            title_4.text = it[4]
+            title_5.text = it[5]
         }
 
         viewModel.recycler1.observe(viewLifecycleOwner){ items ->
