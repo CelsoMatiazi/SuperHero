@@ -113,9 +113,9 @@ class ComicDetailActivity : AppCompatActivity() {
         }
 
 
+        viewModel.loadComicCharacters(comicItem.id)
         //Carregamento da lista de personagens -> Id: 43495
-//        viewModel.loadComicCharacters(comicItem.id)
-        viewModel.loadComicCharacters(43495)
+//        viewModel.loadComicCharacters(43495)
         observer()
     }
 

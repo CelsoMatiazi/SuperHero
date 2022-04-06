@@ -3,22 +3,21 @@ package com.matiaziCelso.superhero.ui.home
 import android.content.Intent
 import com.matiaziCelso.superhero.ui.adapter.HomeAdapter
 import android.os.Bundle
-import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import android.view.View
-import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
-import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.matiaziCelso.superhero.R
 import com.matiaziCelso.superhero.data.mock.CharactersMock
 import com.matiaziCelso.superhero.data.models.CharacterItem
 import com.matiaziCelso.superhero.data.models.ComicItem
-import com.matiaziCelso.superhero.data.models.MarvelComic
 import com.matiaziCelso.superhero.ui.detailScreen.CharacterDetailActivity
 import com.matiaziCelso.superhero.ui.detailScreen.ComicDetailActivity
 import com.matiaziCelso.superhero.viewModel.HomeViewModel
@@ -30,7 +29,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private val charactersRepository: CharactersMock = CharactersMock.instance
 
     private lateinit var characterOne: CardView
+    private lateinit var characterOneTextReceiver: TextView
+    private lateinit var characterOneImageReceiver: ImageView
+    private lateinit var characterOneReceiver: CharacterItem
     private lateinit var characterTwo: CardView
+    private lateinit var characterTwoTextReceiver: TextView
+    private lateinit var characterTwoImageReceiver: ImageView
+    private lateinit var characterTwoReceiver: CharacterItem
     private lateinit var loadingState : View
     private lateinit var homeState : View
 
@@ -47,7 +52,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         super.onViewCreated(view, savedInstanceState)
 
         characterOne = view.findViewById(R.id.img_persoangem_1)
+        characterOneTextReceiver = view.findViewById(R.id.characterOneText)
+        characterOneImageReceiver = view.findViewById(R.id.characterOneImage)
         characterTwo = view.findViewById(R.id.img_persoangem_2)
+        characterTwoTextReceiver = view.findViewById(R.id.characterTwoText)
+        characterTwoImageReceiver = view.findViewById(R.id.characterTwoImage)
+
         loadingState = view.findViewById(R.id.home_loading)
         homeState = view.findViewById(R.id.home_body)
 
@@ -74,15 +84,21 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         recycler6 = view.findViewById(R.id.home_recycler_6)
         recycler6.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.HORIZONTAL, false)
 
+        requisicaoAPI()
+        observer()
 
+        //Tornar os personagens em destaque da tela responsivos ao toque:
         characterOne.setOnClickListener {
-            sendToCharacter(charactersRepository.captainAmerica())
+            if(characterOneReceiver != null){sendToCharacter(characterOneReceiver)}
         }
 
         characterTwo.setOnClickListener {
-            sendToCharacter(charactersRepository.ironMan())
+            if(characterTwoReceiver != null){sendToCharacter(characterTwoReceiver)}
         }
 
+    }
+
+    private fun requisicaoAPI(){
         //viewModel.loadComics()
         viewModel.getComics1()
         viewModel.getComics2()
@@ -90,11 +106,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         viewModel.getComics4()
         viewModel.getComics5()
         viewModel.getComics6()
-        observer()
-
+        viewModel.loadComicCharacters()
     }
-
-
 
     private fun observer(){
 
@@ -143,6 +156,19 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             recycler6.adapter = HomeAdapter(items){
                 sendToDetail(it)
             }
+        }
+        viewModel.returnedFirstCharacter.observe(viewLifecycleOwner){
+            characterOneReceiver = it
+            characterOneTextReceiver.text = it.name
+            val urlimge = it.image.replace("http://", "https://")
+            Glide.with(this).load(urlimge).into(characterOneImageReceiver)
+        }
+
+        viewModel.returnedSecondCharacter.observe(viewLifecycleOwner){
+            characterTwoReceiver = it
+            characterTwoTextReceiver.text = it.name
+            val urlimge = it.image.replace("http://", "https://")
+            Glide.with(this).load(urlimge).into(characterTwoImageReceiver)
         }
     }
 

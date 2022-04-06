@@ -18,6 +18,7 @@ data class ComicItem(
 
 @Parcelize
 data class CharacterItem(
+    val id: Int,
     val name: String,
     val image: String,
     val description: String

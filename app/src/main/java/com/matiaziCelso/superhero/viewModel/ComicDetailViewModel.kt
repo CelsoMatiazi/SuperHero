@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 
 class ComicDetailViewModel(private val marvelRepository: MarvelComicsRepository = MarvelComicsRepository.instance): ViewModel() {
 
-    private val noDescription = "TOP SECRET\nA descrição desse heroi é confidencial e seu conteudo é conhecido apenas pelo Pentágono e pela SHILD."
+    private val noDescription = "TOP SECRET\nA descrição desse heroi é confidencial e seu conteudo é conhecido apenas pelo Pentágono e pela SHIELD."
 
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean>
@@ -34,7 +34,7 @@ class ComicDetailViewModel(private val marvelRepository: MarvelComicsRepository 
 
     fun loadComicCharacters(comicId: Int){
         viewModelScope.launch(Dispatchers.IO) {
-            marvelRepository.fetchCharacters(comicId)
+            marvelRepository.fetchCharactersById(comicId)
                 .onStart { _loading.postValue(true) }
                 .catch { _error.postValue(true) }
                 .onCompletion { _loading.postValue(false) }
@@ -53,6 +53,7 @@ class ComicDetailViewModel(private val marvelRepository: MarvelComicsRepository 
         println("Description")
         println(character.description)
         return CharacterItem(
+            id = character.id,
             name = character.name,
             image = tempImg.replace("http://", "https://"),
             description =  emptyString(character.description)
