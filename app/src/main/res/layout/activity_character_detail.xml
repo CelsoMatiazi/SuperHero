@@ -1,111 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
-<ScrollView
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/black">
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
+        android:id="@+id/characterDetail_screen"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_height="match_parent"
         android:layout_width="match_parent"
+        android:background="@color/black">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            tools:context=".ui.detailScreen.CharacterDetailActivity">
+
+
+            <ImageView
+                android:id="@+id/character_detail_banner"
+                android:layout_width="match_parent"
+                android:layout_height="190dp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/logo3"
+                tools:scaleType="centerCrop"
+            />
+
+
+            <ImageView
+                android:id="@+id/character_detail_back_btn"
+                android:layout_width="35dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_back_icon_rounded"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_margin="15dp"
+
+            />
+
+
+            <TextView
+                android:id="@+id/character_detail_title"
+                app:layout_constraintTop_toBottomOf="@id/character_detail_banner"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Iron Man"
+                android:textColor="@color/amber"
+                android:textStyle="bold"
+                android:textSize="26sp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+            />
+
+            <TextView
+                android:id="@+id/character_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/character_detail_title"
+                android:layout_marginTop="10dp"
+                android:layout_marginHorizontal="15dp"
+                android:textColor="@color/grey"
+                android:textSize="16sp"
+                android:justificationMode="inter_word"
+                tools:text="Danny Rand está de volta à ação como Punho de Ferro no Universo
+    Marvel. A Marvel Comics anunciou esta semana, via o site Nerdist,
+    que o veterano escritor Larry Hama se juntará ao artista David
+    Wachter para a minissérie em seis edições Iron Fist: Heart of the
+    Dragon"
+                />
+
+
+            <TextView
+                android:id="@+id/comic_mais"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mais"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/character_description"
+                android:textColor="@color/amber"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="10dp"
+                />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/amber"
+                app:layout_constraintStart_toEndOf="@id/comic_mais"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/comic_mais"
+                app:layout_constraintTop_toTopOf="@id/comic_mais"
+                android:layout_marginEnd="15dp"
+                android:layout_marginStart="5dp"
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/character_mais_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                app:layout_constraintTop_toBottomOf="@id/comic_mais"
+                android:layout_marginTop="10dp"
+                android:layout_marginHorizontal="15dp"
+                />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+    <include
+        android:id="@+id/characterDetail_loading"
         android:layout_height="wrap_content"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        tools:context=".ui.detailScreen.CharacterDetailActivity">
-
-
-        <ImageView
-            android:id="@+id/character_detail_banner"
-            android:layout_width="match_parent"
-            android:layout_height="190dp"
-            app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/logo3"
-            tools:scaleType="centerCrop"
+        android:layout_width="match_parent"
+        layout="@layout/activity_loading"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         />
-
-
-        <ImageView
-            android:id="@+id/character_detail_back_btn"
-            android:layout_width="35dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_back_icon_rounded"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_margin="15dp"
-
-        />
-
-
-        <TextView
-            android:id="@+id/character_detail_title"
-            app:layout_constraintTop_toBottomOf="@id/character_detail_banner"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Iron Man"
-            android:textColor="@color/amber"
-            android:textStyle="bold"
-            android:textSize="26sp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="10dp"
-        />
-
-        <TextView
-            android:id="@+id/character_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/character_detail_title"
-            android:layout_marginTop="10dp"
-            android:layout_marginHorizontal="15dp"
-            android:textColor="@color/grey"
-            android:textSize="16sp"
-            android:justificationMode="inter_word"
-            tools:text="Danny Rand está de volta à ação como Punho de Ferro no Universo
-Marvel. A Marvel Comics anunciou esta semana, via o site Nerdist,
-que o veterano escritor Larry Hama se juntará ao artista David
-Wachter para a minissérie em seis edições Iron Fist: Heart of the
-Dragon"
-            />
-
-
-        <TextView
-            android:id="@+id/comic_mais"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Mais"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/character_description"
-            android:textColor="@color/amber"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="10dp"
-            />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:background="@color/amber"
-            app:layout_constraintStart_toEndOf="@id/comic_mais"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/comic_mais"
-            app:layout_constraintTop_toTopOf="@id/comic_mais"
-            android:layout_marginEnd="15dp"
-            android:layout_marginStart="5dp"
-            />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/character_mais_recycler"
-            android:layout_width="match_parent"
-            android:layout_height="220dp"
-            app:layout_constraintTop_toBottomOf="@id/comic_mais"
-            android:layout_marginTop="10dp"
-            android:layout_marginHorizontal="15dp"
-            />
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-</ScrollView>

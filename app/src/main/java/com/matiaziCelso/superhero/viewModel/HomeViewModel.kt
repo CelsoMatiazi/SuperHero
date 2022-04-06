@@ -25,9 +25,10 @@ class HomeViewModel(
     var loading4 = true
     var loading5 = true
     var loading6 = true
-    private val noDescription = "TOP SECRET\nA descrição desse comic é confidencial e seu conteudo é conhecido apenas pelo Pentágono e pela SHILD."
+    private val noDescription = "TOP SECRET\nA descrição desse comic é confidencial e seu conteudo é conhecido apenas pelo Pentágono e pela SHIELD."
 
 
+    //region viewModel
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean>
         get() = _loading
@@ -60,6 +61,16 @@ class HomeViewModel(
     val recycler6: MutableLiveData<List<ComicItem>>
         get() = _recycler6
 
+    private val _returnedFirstCharacter = MutableLiveData<CharacterItem>()
+    val returnedFirstCharacter: MutableLiveData<CharacterItem>
+        get() = _returnedFirstCharacter
+
+    private val _returnedSecondCharacter = MutableLiveData<CharacterItem>()
+    val returnedSecondCharacter: MutableLiveData<CharacterItem>
+        get() = _returnedSecondCharacter
+
+
+//endregion
 
 
     //region getComics
@@ -88,6 +99,7 @@ class HomeViewModel(
     }
     //endregion
 
+    //region Carregar os comics:
     private fun loadMarvelComics(
         comic: String,
         recycler: MutableLiveData<List<ComicItem>>,
@@ -102,7 +114,7 @@ class HomeViewModel(
                     val comicConvert: List<ComicItem> = it.data.results.map { comic ->
                         convertComicItem(comic)
                     }
-                      recycler.postValue(comicConvert.shuffled())
+                    recycler.postValue(comicConvert.shuffled())
                 }
         }
     }
@@ -120,8 +132,38 @@ class HomeViewModel(
             id = comic.id
         )
     }
+//endregion
 
+    //region Carregar os dois personagens de destaque:
+    fun loadComicCharacters(){
+        viewModelScope.launch(Dispatchers.IO) {
+            marvelRepository.fetchCharacters()
+                .onStart { _loading.postValue(true) }
+                .catch { _error.postValue(true) }
+                .onCompletion { _loading.postValue(false) }
+                .collect {
+                    val firstCharacter = convertCharacterItem(it.data.results[0])
+                    val secondCharacter = convertCharacterItem(it.data.results[1])
+                    _returnedFirstCharacter.postValue(firstCharacter)
+                    _returnedSecondCharacter.postValue(secondCharacter)
+                    }
+                }
+        }
 
+    private fun convertCharacterItem(character: MarvelCharacter): CharacterItem{
+        val tempImg = "${character.thumbnail.path}.${character.thumbnail.extension}"
+
+        println("Description")
+        println(character.description)
+        return CharacterItem(
+            id = character.id,
+            name = character.name,
+            image = tempImg.replace("http://", "https://"),
+            description =  emptyString(character.description)
+//            comics = character.comics.items
+        )
+    }
+    //endregion
 
     private fun loadingStatus(position: Int) {
 
@@ -142,6 +184,12 @@ class HomeViewModel(
                              loading6 && !loading1)
         )
 
+    }
+    private fun emptyString(txt: String?): String{
+        return txt?.ifEmpty {
+            noDescription
+        } ?: noDescription
+        return noDescription
     }
 
 }

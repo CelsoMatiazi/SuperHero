@@ -122,16 +122,16 @@
                 >
 
                 <ImageView
+                    android:id="@+id/characterOneImage"
                     android:layout_width="match_parent"
                     android:layout_height="180dp"
-                    android:src="@drawable/img_user"
                     android:scaleType="fitXY"
                     android:contentDescription="@string/user" />
 
                 <TextView
+                    android:id="@+id/characterOneText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/capitao_america"
                     android:textColor="@color/amber"
                     android:textStyle="bold"
                     android:textSize="28sp"
@@ -220,16 +220,16 @@
                 >
 
                 <ImageView
+                    android:id="@+id/characterTwoImage"
                     android:layout_width="match_parent"
                     android:layout_height="180dp"
-                    android:src="@drawable/iron_man"
                     android:scaleType="fitXY"
                     android:contentDescription="@string/user" />
 
                 <TextView
+                    android:id="@+id/characterTwoText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Iron Man"
                     android:textColor="@color/amber"
                     android:textStyle="bold"
                     android:textSize="28sp"
