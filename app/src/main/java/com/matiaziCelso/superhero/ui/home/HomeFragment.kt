@@ -54,9 +54,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         characterOne = view.findViewById(R.id.img_persoangem_1)
         characterOneTextReceiver = view.findViewById(R.id.characterOneText)
         characterOneImageReceiver = view.findViewById(R.id.characterOneImage)
+        characterTwo = view.findViewById(R.id.img_persoangem_2)
         characterTwoTextReceiver = view.findViewById(R.id.characterTwoText)
         characterTwoImageReceiver = view.findViewById(R.id.characterTwoImage)
-        characterTwo = view.findViewById(R.id.img_persoangem_2)
 
         loadingState = view.findViewById(R.id.home_loading)
         homeState = view.findViewById(R.id.home_body)
@@ -84,15 +84,21 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         recycler6 = view.findViewById(R.id.home_recycler_6)
         recycler6.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.HORIZONTAL, false)
 
+        requisicaoAPI()
+        observer()
 
-//        characterOne.setOnClickListener {
-//            sendToCharacter(characterOneReceiver)
-//        }
-//
-//        characterTwo.setOnClickListener {
-//            sendToCharacter(characterTwoReceiver)
-//        }
+        //Tornar os personagens em destaque da tela responsivos ao toque:
+        characterOne.setOnClickListener {
+            if(characterOneReceiver != null){sendToCharacter(characterOneReceiver)}
+        }
 
+        characterTwo.setOnClickListener {
+            if(characterTwoReceiver != null){sendToCharacter(characterTwoReceiver)}
+        }
+
+    }
+
+    private fun requisicaoAPI(){
         //viewModel.loadComics()
         viewModel.getComics1()
         viewModel.getComics2()
@@ -101,11 +107,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         viewModel.getComics5()
         viewModel.getComics6()
         viewModel.loadComicCharacters()
-        observer()
-
     }
-
-
 
     private fun observer(){
 
@@ -156,12 +158,14 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             }
         }
         viewModel.returnedFirstCharacter.observe(viewLifecycleOwner){
+            characterOneReceiver = it
             characterOneTextReceiver.text = it.name
             val urlimge = it.image.replace("http://", "https://")
             Glide.with(this).load(urlimge).into(characterOneImageReceiver)
         }
 
         viewModel.returnedSecondCharacter.observe(viewLifecycleOwner){
+            characterTwoReceiver = it
             characterTwoTextReceiver.text = it.name
             val urlimge = it.image.replace("http://", "https://")
             Glide.with(this).load(urlimge).into(characterTwoImageReceiver)

@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import kotlin.random.Random
 
 class HomeViewModel(
     private val repository: ComicsMock = ComicsMock.instance,
@@ -142,8 +143,8 @@ class HomeViewModel(
                 .catch { _error.postValue(true) }
                 .onCompletion { _loading.postValue(false) }
                 .collect {
-                    val firstCharacter = convertCharacterItem(it.data.results[0])
-                    val secondCharacter = convertCharacterItem(it.data.results[1])
+                    val firstCharacter = convertCharacterItem(it.data.results[Random.nextInt(0,19)])
+                    val secondCharacter = convertCharacterItem(it.data.results[Random.nextInt(0,19)])
                     _returnedFirstCharacter.postValue(firstCharacter)
                     _returnedSecondCharacter.postValue(secondCharacter)
                     }
