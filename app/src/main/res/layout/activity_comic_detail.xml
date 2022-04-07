@@ -132,15 +132,9 @@
                 app:layout_constraintTop_toBottomOf="@id/img_item_detail"
                 android:layout_marginTop="30dp"
                 android:layout_marginHorizontal="15dp"
-                android:textColor="@color/grey"
+                android:textColor="@color/gray"
                 android:textSize="16sp"
-                android:justificationMode="inter_word"
-                tools:text="Danny Rand está de volta à ação como Punho de Ferro no Universo
-Marvel. A Marvel Comics anunciou esta semana, via o site Nerdist,
-que o veterano escritor Larry Hama se juntará ao artista David
-Wachter para a minissérie em seis edições Iron Fist: Heart of the
-Dragon"
-                />
+                android:justificationMode="inter_word" />
 
 
             <FrameLayout

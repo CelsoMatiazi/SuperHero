@@ -50,7 +50,7 @@
             app:tabBackground="@drawable/tabs_selector"
             android:background="@color/darkGrey"
             app:tabSelectedTextColor="@color/darkGrey"
-            app:tabTextColor="@color/grey"
+            app:tabTextColor="@color/gray"
             app:tabTextAppearance="@style/CustomTabText"
             app:tabIndicatorHeight="0dp"
             >
