@@ -24,5 +24,6 @@
     <string name="pagamento_recusado">Pagamento Recusado</string>
     <string name="pagamento_pendente">Pagamento Pendente</string>
     <string name="pagamento_aprovado">Pagamento Aprovado</string>
+    <string name="foto_do_usuario">Foto do usuario</string>
 
 </resources>
