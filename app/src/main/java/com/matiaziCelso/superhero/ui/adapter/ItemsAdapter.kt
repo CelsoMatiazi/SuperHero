@@ -1,4 +1,4 @@
-package com.matiaziCelso.superhero.adapter
+package com.matiaziCelso.superhero.ui.adapter
 
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -8,10 +8,9 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.matiaziCelso.superhero.R
-import com.matiaziCelso.superhero.models.ItemsItem
-import kotlin.math.pow
+import com.matiaziCelso.superhero.data.models.BoughtItem
 
-class ItemsAdapter(private val itens: List<ItemsItem>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ItemsAdapter(private val itens: List<BoughtItem>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflator = LayoutInflater.from(parent.context)
@@ -43,7 +42,7 @@ class ItemViewHolder(view: View): RecyclerView.ViewHolder(view){
     private val barDown: View = view.findViewById<View>(R.id.item_bar_down)
 
 
-    fun bind(item: ItemsItem, index: Int, length: Int ){
+    fun bind(item: BoughtItem, index: Int, length: Int ){
         day.text = item.day
         month.text = item.month
         title.text = "Titulo: ${item.title}"
@@ -61,8 +60,8 @@ class ItemViewHolder(view: View): RecyclerView.ViewHolder(view){
             }
              0 -> {
                  status.text = status.context.getString(R.string.pagamento_pendente)
-                 status.setTextColor(Color.YELLOW)
-                 price.setTextColor(Color.YELLOW)
+                 status.setTextColor(Color.parseColor("#ECAC2B"))
+                 price.setTextColor(Color.parseColor("#ECAC2B"))
              }
              1 -> status.text = status.context.getString(R.string.pagamento_aprovado)
         }

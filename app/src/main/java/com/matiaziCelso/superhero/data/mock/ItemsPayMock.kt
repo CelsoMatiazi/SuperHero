@@ -1,55 +1,54 @@
-package com.matiaziCelso.superhero.mock
+package com.matiaziCelso.superhero.data.mock
 
-import com.matiaziCelso.superhero.models.ComicItem
-import com.matiaziCelso.superhero.models.ItemsItem
+import com.matiaziCelso.superhero.data.models.BoughtItem
 
 class ItemsPayMock {
 
-    fun itemsPay() : MutableList<ItemsItem>{
+    fun boughtItems() : MutableList<BoughtItem>{
         return mutableListOf(
-            ItemsItem(
+            BoughtItem(
                 "Huck",
                 "12",
                 "Dez",
                 0,
                 9.50
             ),
-            ItemsItem(
+            BoughtItem(
                 "Thor",
                 "19",
                 "Dez",
                 0,
                 9.00
             ),
-            ItemsItem(
+            BoughtItem(
                 "Iron Man",
                 "25",
                 "Dez",
                 -1,
                 6.99
             ),
-            ItemsItem(
+            BoughtItem(
                 "Avengers",
                 "01",
                 "Jan",
                 1,
                 19.99
             ),
-            ItemsItem(
+            BoughtItem(
                 "Capitain Marvel",
                 "12",
                 "Fev",
                 1,
                 5.99
             ),
-            ItemsItem(
+            BoughtItem(
                 "Huck",
                 "12",
                 "Dez",
                 0,
                 9.99
             ),
-            ItemsItem(
+            BoughtItem(
                 "Huck",
                 "12",
                 "Dez",
