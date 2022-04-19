@@ -49,7 +49,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private val googleSignInOptions : GoogleSignInOptions
         get() = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestIdToken(getString(R.string.web_token_id))
             .requestEmail()
             .requestProfile()
             .build()
@@ -97,20 +97,23 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
 
     private fun loginWithEmailAndPassword(){
-        loader.isVisible = true
-        analytics.logEvent(FirebaseAnalytics.Event.LOGIN){
-            param(FirebaseAnalytics.Param.METHOD, "Email")
-        }
-        auth.signInWithEmailAndPassword(email.text.toString(), password.text.toString())
-            .addOnCompleteListener {
-                loader.isVisible = false
-                if(it.isSuccessful){
-                    sendToHome()
-                }else{
-                    showDialog("Verifique seu email e senha e tente novamente.")
-                    //Toast.makeText(requireContext(), "Falha no Login", Toast.LENGTH_LONG).show()
-                }
+        if(email.text!!.isNotEmpty() || password.text!!.isNotEmpty()){
+            loader.isVisible = true
+            analytics.logEvent(FirebaseAnalytics.Event.LOGIN){
+                param(FirebaseAnalytics.Param.METHOD, "Email")
             }
+            auth.signInWithEmailAndPassword(email.text.toString(), password.text.toString())
+                .addOnCompleteListener {
+                    loader.isVisible = false
+                    if(it.isSuccessful){
+                        sendToHome()
+                    }else{
+                        showDialog("Verifique seu email e senha e tente novamente.")
+                        //Toast.makeText(requireContext(), "Falha no Login", Toast.LENGTH_LONG).show()
+                    }
+                }
+        }
+
     }
 
 
