@@ -16,10 +16,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.Task
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.ktx.Firebase
 import com.matiaziCelso.superhero.R
 import com.matiaziCelso.superhero.ui.home.HomeActivity
 import com.matiaziCelso.superhero.utils.FacebookCustomCallback
@@ -35,6 +39,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private val callbackManager = CallbackManager.Factory.create()
     private val loginManager = LoginManager.getInstance()
+
+    private lateinit var analytics: FirebaseAnalytics
 
     private val googleSignInRequest = registerForActivityResult(
         GoogleLogInActivityContract(),
@@ -53,7 +59,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
+        analytics = Firebase.analytics
         auth = FirebaseAuth.getInstance()
 
         val googleBtn: MaterialButton = view.findViewById(R.id.login_google)
@@ -92,6 +98,9 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private fun loginWithEmailAndPassword(){
         loader.isVisible = true
+        analytics.logEvent(FirebaseAnalytics.Event.LOGIN){
+            param(FirebaseAnalytics.Param.METHOD, "Email")
+        }
         auth.signInWithEmailAndPassword(email.text.toString(), password.text.toString())
             .addOnCompleteListener {
                 loader.isVisible = false
@@ -121,6 +130,9 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
 
     private fun loginWithGoogle(token: String){
+        analytics.logEvent(FirebaseAnalytics.Event.LOGIN){
+            param(FirebaseAnalytics.Param.METHOD, "Google")
+        }
         val credential = GoogleAuthProvider.getCredential(token, null)
         auth.signInWithCredential(credential)
             .addOnCompleteListener {
@@ -134,7 +146,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 showDialog(it.message.toString())
             }
     }
-
 
 
     private fun loginWithFacebook(){
@@ -160,6 +171,9 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private fun handleFacebookAccessToken(token: AccessToken) {
         Log.d(TAG, "handleFacebookAccessToken:$token")
+        analytics.logEvent(FirebaseAnalytics.Event.LOGIN){
+            param(FirebaseAnalytics.Param.METHOD, "Facebook")
+        }
         val credential = FacebookAuthProvider.getCredential(token.token)
         auth.signInWithCredential(credential)
             .addOnCompleteListener { task ->
