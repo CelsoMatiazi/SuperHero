@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.view.isVisible
+import com.airbnb.lottie.LottieAnimationView
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.Task
 import com.google.android.material.button.MaterialButton
@@ -28,6 +30,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     private lateinit var auth: FirebaseAuth
     private lateinit var email: TextInputEditText
     private lateinit var password: TextInputEditText
+    private lateinit var loader: LottieAnimationView
 
     private val googleSignInRequest = registerForActivityResult(
         GoogleLogInActivityContract(),
@@ -56,6 +59,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         email = view.findViewById(R.id.login_email_txt)
         password = view.findViewById(R.id.login_pass_txt)
 
+        loader = view.findViewById(R.id.login_loader)
+
         register.setOnClickListener {
             activity?.supportFragmentManager?.beginTransaction()
                 ?.replace(R.id.login_frag_container, RegisterFragment())
@@ -76,8 +81,10 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
 
     private fun loginWithEmailAndPassword(){
+        loader.isVisible = true
         auth.signInWithEmailAndPassword(email.text.toString(), password.text.toString())
             .addOnCompleteListener {
+                loader.isVisible = false
                 if(it.isSuccessful){
                     sendToHome()
                 }else{
@@ -89,13 +96,15 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
 
     private fun onGoogleSignInResult(result: GoogleLogInActivityContract.Result?) {
+        loader.isVisible = true
         if(result is GoogleLogInActivityContract.Result.Success){
             val token = result.googleSignInAccount.idToken
-            Log.d(TAG, "TOKEN => $token")
+            Log.d(TAG, "TOKEN GOOGLE => $token")
             token?.let {
                 loginWithGoogle(token)
             }
         }else{
+            loader.isVisible = false
             showDialog("Tente novamente mais tarde.")
         }
     }
@@ -109,6 +118,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 if(Result.isSuccessful){
                     sendToHome()
                 }
+                loader.isVisible = false
             }
             .addOnFailureListener {
                 showDialog(it.message.toString())

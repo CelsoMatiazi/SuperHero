@@ -176,5 +176,21 @@
         />
 
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/login_loader"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:lottie_rawRes="@raw/ironman_loader"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        android:elevation="5dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
+    />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
