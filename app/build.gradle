@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-android-extensions'
     id "org.jetbrains.kotlin.kapt"
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -36,6 +37,8 @@ android {
 }
 
 dependencies {
+    implementation 'com.google.firebase:firebase-auth-ktx:21.0.3'
+
 //  ------------- Room Database ORM Dependencies -------------
     def room_version = "2.4.1"
 
