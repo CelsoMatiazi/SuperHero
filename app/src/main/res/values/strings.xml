@@ -26,4 +26,7 @@
     <string name="pagamento_aprovado">Pagamento Aprovado</string>
     <string name="foto_do_usuario">Foto do usuario</string>
 
+    <string name="facebook_app_id">700780411342362</string>
+    <string name="facebook_client_token">6ca71c6c8a9a805d1a6f173e6fdd0146</string>
+
 </resources>
