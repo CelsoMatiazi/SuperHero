@@ -1,15 +1,19 @@
 package com.matiaziCelso.superhero.ui.login
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.view.isVisible
+import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.matiaziCelso.superhero.R
+import com.matiaziCelso.superhero.ui.home.HomeActivity
 
 
 class RegisterFragment : Fragment(R.layout.fragment_register) {
@@ -19,6 +23,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
     private lateinit var email: TextInputEditText
     private lateinit var pass1: TextInputEditText
     private lateinit var pass2: TextInputEditText
+    private lateinit var loader: LottieAnimationView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -30,6 +35,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
         email = view.findViewById(R.id.user_email_txt)
         pass1 = view.findViewById(R.id.user_pass1)
         pass2 = view.findViewById(R.id.user_pass2)
+        loader = view.findViewById(R.id.register_loader)
 
         returnLogin.setOnClickListener {
            activity?.onBackPressed()
@@ -63,15 +69,15 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
     }
 
     private fun createNewAccount(){
+        loader.isVisible = true
         auth.createUserWithEmailAndPassword(email.text.toString(), pass1.text.toString())
             .addOnCompleteListener {
                 if(it.isSuccessful){
-                    Toast.makeText(requireContext(), "Login success", Toast.LENGTH_LONG).show()
+                    sendToHome()
                 }else{
                     showDialog(it.exception?.message.toString())
-
-                    //Toast.makeText(requireContext(), "Falha no Login", Toast.LENGTH_LONG).show()
                 }
+                loader.isVisible = false
             }
     }
 
@@ -85,6 +91,12 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
             .setPositiveButton("OK") { dialog, _ ->
                 dialog.dismiss()
             }.show()
+    }
+
+
+    private fun sendToHome(){
+        val intent = Intent(context, HomeActivity::class.java)
+        startActivity(intent)
     }
 
 

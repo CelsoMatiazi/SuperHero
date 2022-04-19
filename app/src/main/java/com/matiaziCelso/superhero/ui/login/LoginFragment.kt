@@ -123,10 +123,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             .addOnFailureListener {
                 showDialog(it.message.toString())
             }
-
     }
-
-
 
 
     private fun sendToHome(){
