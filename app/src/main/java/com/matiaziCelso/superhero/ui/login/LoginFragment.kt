@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.TextView
 import com.matiaziCelso.superhero.R
+import com.matiaziCelso.superhero.ui.TesteDB
 import com.matiaziCelso.superhero.ui.home.HomeActivity
 import com.matiaziCelso.superhero.ui.loadingScreen.LoadingActivity
 
@@ -27,7 +28,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         }
 
         login.setOnClickListener(){
-            val intent = Intent(it.context, HomeActivity::class.java)
+//            val intent = Intent(it.context, HomeActivity::class.java)
+            val intent = Intent(it.context, TesteDB::class.java)
 
             startActivity(intent)
         }

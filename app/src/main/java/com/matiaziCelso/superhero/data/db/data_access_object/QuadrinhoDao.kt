@@ -1,9 +1,6 @@
 package com.matiaziCelso.superhero.data.db.data_access_object
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 import com.matiaziCelso.superhero.data.db.entities.QuadrinhoEntity
 
 
@@ -20,7 +17,7 @@ interface QuadrinhoDao {
     """)
     fun getOne(id: Int?, external_id: String?): QuadrinhoEntity
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun create(body: QuadrinhoEntity)
 
     @Query("""
