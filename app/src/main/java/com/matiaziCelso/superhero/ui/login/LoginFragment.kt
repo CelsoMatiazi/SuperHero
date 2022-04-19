@@ -1,23 +1,65 @@
 package com.matiaziCelso.superhero.ui.login
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.os.Message
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.view.isVisible
+import com.airbnb.lottie.LottieAnimationView
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.tasks.Task
+import com.google.android.material.button.MaterialButton
+import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import com.matiaziCelso.superhero.R
+import com.matiaziCelso.superhero.data.FavItems
+import com.matiaziCelso.superhero.data.models.ComicItem
 import com.matiaziCelso.superhero.ui.home.HomeActivity
-import com.matiaziCelso.superhero.ui.loadingScreen.LoadingActivity
+import com.matiaziCelso.superhero.utils.GoogleLogInActivityContract
 
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
+
+    private lateinit var auth: FirebaseAuth
+    private lateinit var email: TextInputEditText
+    private lateinit var password: TextInputEditText
+    private lateinit var loader: LottieAnimationView
+
+    private val googleSignInRequest = registerForActivityResult(
+        GoogleLogInActivityContract(),
+        ::onGoogleSignInResult
+    )
+
+    private val googleSignInOptions : GoogleSignInOptions
+        get() = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .requestProfile()
+            .build()
+
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+        auth = FirebaseAuth.getInstance()
+
+        val googleBtn: MaterialButton = view.findViewById(R.id.login_google)
+
         val register : TextView = view.findViewById(R.id.txt_cadastrar)
         val login : TextView = view.findViewById(R.id.login_entrar_btn)
+        email = view.findViewById(R.id.login_email_txt)
+        password = view.findViewById(R.id.login_pass_txt)
+
+        loader = view.findViewById(R.id.login_loader)
 
         register.setOnClickListener {
             activity?.supportFragmentManager?.beginTransaction()
@@ -27,12 +69,81 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         }
 
         login.setOnClickListener(){
-            val intent = Intent(it.context, HomeActivity::class.java)
+            loginWithEmailAndPassword()
+        }
 
-            startActivity(intent)
+
+        googleBtn.setOnClickListener {
+            googleSignInRequest.launch(googleSignInOptions)
         }
 
     }
 
+
+    private fun loginWithEmailAndPassword(){
+        loader.isVisible = true
+        auth.signInWithEmailAndPassword(email.text.toString(), password.text.toString())
+            .addOnCompleteListener {
+                loader.isVisible = false
+                if(it.isSuccessful){
+                    sendToHome()
+                }else{
+                    showDialog("Verifique seu email e senha e tente novamente.")
+                    //Toast.makeText(requireContext(), "Falha no Login", Toast.LENGTH_LONG).show()
+                }
+            }
+    }
+
+
+    private fun onGoogleSignInResult(result: GoogleLogInActivityContract.Result?) {
+        loader.isVisible = true
+        if(result is GoogleLogInActivityContract.Result.Success){
+            val token = result.googleSignInAccount.idToken
+            Log.d(TAG, "TOKEN GOOGLE => $token")
+            token?.let {
+                loginWithGoogle(token)
+            }
+        }else{
+            loader.isVisible = false
+            showDialog("Tente novamente mais tarde.")
+        }
+    }
+
+
+    private fun loginWithGoogle(token: String){
+        val credential = GoogleAuthProvider.getCredential(token, null)
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener {
+                    Result: Task<AuthResult> ->
+                if(Result.isSuccessful){
+                    sendToHome()
+                }
+                loader.isVisible = false
+            }
+            .addOnFailureListener {
+                showDialog(it.message.toString())
+            }
+    }
+
+
+    private fun sendToHome(){
+        val intent = Intent(context, HomeActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun showDialog(message: String){
+        val alertDialog = AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle)
+        alertDialog
+            .setTitle("Super Hero")
+            .setMessage("Desculpe, não conseguimos efetuar o login.\n$message")
+            .setCancelable(false)
+            .setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss()
+            }.show()
+    }
+
+    companion object{
+        const val TAG = "SOCIAL_LOGIN"
+    }
 
 }

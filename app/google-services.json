@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "401208676758",
+    "project_id": "superhero-832ee",
+    "storage_bucket": "superhero-832ee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:401208676758:android:9cf3b5e712e9c6a3558db7",
+        "android_client_info": {
+          "package_name": "com.matiaziCelso.superhero"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "401208676758-2ib0ejkbn0onu9gdqfdvr1qogovf1627.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbydoN2ds43jmIy9vzxY6chgqpaG4aioU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "401208676758-2ib0ejkbn0onu9gdqfdvr1qogovf1627.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
