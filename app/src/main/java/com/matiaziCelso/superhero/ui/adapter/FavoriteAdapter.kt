@@ -13,7 +13,7 @@ import com.matiaziCelso.superhero.data.models.ComicItem
 
 class FavoriteAdapter(
     private val items: List<ComicItem>,
-    private val action: (ComicItem) -> Unit,
+    private val action: (Int) -> Unit,
     private val action2: (ComicItem) -> Unit,
     ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -47,12 +47,12 @@ class FavoriteViewHolder(view: View): RecyclerView.ViewHolder(view){
     private val favIcon: ImageView = view.findViewById(R.id.fav_icon)
     private val itemView: View = view.findViewById(R.id.favorite_view)
 
-    fun favBind(item: ComicItem, action: (ComicItem) -> Unit, action2: (ComicItem) -> Unit){
+    fun favBind(item: ComicItem, action: (Int) -> Unit, action2: (ComicItem) -> Unit){
         Glide.with(image.context).load(item.image).into(image)
         title.text = item.title
         number.text = "numero: #12123"
         release.text = "lançamento: 12/12/12"
-        favIcon.setOnClickListener { action.invoke(item) }
+        favIcon.setOnClickListener { action.invoke(item.id) }
         itemView.setOnClickListener { action2.invoke(item) }
     }
 }

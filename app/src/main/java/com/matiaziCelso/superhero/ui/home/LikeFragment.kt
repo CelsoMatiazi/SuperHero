@@ -1,5 +1,6 @@
 package com.matiaziCelso.superhero.ui.home
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
@@ -22,7 +23,7 @@ class LikeFragment : Fragment(R.layout.fragment_like) {
     private lateinit var emptyFav: ImageView
     private lateinit var recycler : RecyclerView
     private var items : List<ComicItem>
-    private lateinit var database : AppDatabase
+    private var database : AppDatabase
 
     init {
         items = listOf()
@@ -33,7 +34,7 @@ class LikeFragment : Fragment(R.layout.fragment_like) {
         super.onViewCreated(view, savedInstanceState)
 
         items = iniciarFavoritos()
-        recycler = view.findViewById<RecyclerView>(R.id.fav_recycle)
+        recycler = view.findViewById(R.id.fav_recycle)
         recycler.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)
         recycler.adapter = FavoriteAdapter(items,{
 
@@ -49,29 +50,28 @@ class LikeFragment : Fragment(R.layout.fragment_like) {
 
     }
 
-//    override fun onStop() {
-//        super.onStop()
-//        DataBaseFactory.destroyInstance()
-//    }
 
 
     private fun whenItemsIsEmpty(){
         emptyFav.isVisible = items.isEmpty()
     }
 
-//    private fun removeItem(comic: ComicItem){
-//        items.remove(comic)
-//    }
+    private fun removeItem(id: Int){
+        database.favoritos().delete(id)
+        items = iniciarFavoritos()
+    }
 
-    private fun showDialog(comic: ComicItem){
+    @SuppressLint("NotifyDataSetChanged")
+    private fun showDialog(id: Int){
         val alertDialog = AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle)
         alertDialog
             .setTitle("Super Hero")
             .setMessage("Deseja remover esse item dos favoritos?")
             .setCancelable(false)
             .setPositiveButton("Sim") { _, _ ->
-//                items.remove(comic)
-                recycler.adapter?.notifyDataSetChanged()
+                removeItem(id)
+//                recycler.adapter?.notifyDataSetChanged()
+                recycler.adapter = FavoriteAdapter(items,{ showDialog(it) },{ sendToDetail(it) })
                 whenItemsIsEmpty()
             }
             .setNegativeButton("Não") { dialog, _ ->
@@ -89,7 +89,7 @@ class LikeFragment : Fragment(R.layout.fragment_like) {
 
         var savedList = database.favoritos().getAll().map{
             ComicItem(
-                title = "Origins of Marvel Comics",
+                title = it.title,
                 value = it.value,
                 description = it.description,
                 image = it.image,

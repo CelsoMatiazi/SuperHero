@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -34,7 +35,11 @@ class ComicDetailActivity : AppCompatActivity() {
     private lateinit var loadingState : View
     private lateinit var homeState : View
 
-    private lateinit var database: AppDatabase
+    private var database: AppDatabase
+
+    init{
+        database = DataBaseFactory.getAppDataBase()
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -105,11 +110,6 @@ class ComicDetailActivity : AppCompatActivity() {
         observer()
     }
 
-//    override fun onStop() {
-//        DataBaseFactory.destroyInstance()
-//        super.onStop()
-//    }
-
 
     private fun switchAddToCart(comic: ComicItem){
         if(CartItems.items.filter { it.image == comic.image}.getOrNull(0) != null){
@@ -119,23 +119,24 @@ class ComicDetailActivity : AppCompatActivity() {
     }
 
     private fun setFavIcon(comic: ComicItem){
-//        if(FavItems.items.filter { it.image == comic.image }.getOrNull(0) != null){
-//            comicFavIcon.setImageResource(R.drawable.ic_full_heart)
-//        }else{
-//            comicFavIcon.setImageResource(R.drawable.ic_heart_border)
-//        }
+        val lista = database.favoritos().comicIsInDatabase(comic.id) //Por ora este é o "filtro" que consegui implementar.
+
+        if(lista.isNotEmpty()){
+            comicFavIcon.setImageResource(R.drawable.ic_full_heart)
+        }else{
+            comicFavIcon.setImageResource(R.drawable.ic_heart_border)
+        }
     }
 
     private fun addFavItem(comic: ComicItem){
 
         val converter = ListaFavoritosEntity(
+            title = comic.title,
             image = comic.image,
             description = comic.description,
             value = comic.value,
             id = comic.id
         )
-
-        database = DataBaseFactory.getAppDataBase()
         database.favoritos().create(converter)
 //        if(FavItems.items.filter { it.image == comic.image }.getOrNull(0) != null){
 //
