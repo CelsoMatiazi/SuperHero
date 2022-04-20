@@ -7,7 +7,10 @@ import com.matiaziCelso.superhero.R
 import com.matiaziCelso.superhero.data.db.AppDatabase
 import com.matiaziCelso.superhero.data.db.DataBaseFactory
 import com.matiaziCelso.superhero.data.db.entities.CarrinhoEntity
+import com.matiaziCelso.superhero.data.db.entities.FavoritoEntity
+import com.matiaziCelso.superhero.data.db.entities.ListaFavoritosEntity
 import com.matiaziCelso.superhero.data.db.entities.QuadrinhoEntity
+import com.matiaziCelso.superhero.data.models.ComicItem
 
 class TesteDB : AppCompatActivity(R.layout.activity_teste_db) {
     private lateinit var dbroom: AppDatabase
@@ -21,7 +24,7 @@ class TesteDB : AppCompatActivity(R.layout.activity_teste_db) {
             save()
         }
 
-        dbroom = DataBaseFactory.getAppDataBase(this)
+        dbroom = DataBaseFactory.getAppDataBase()
 
     }
 
@@ -31,18 +34,18 @@ class TesteDB : AppCompatActivity(R.layout.activity_teste_db) {
     }
 
     private fun save(){
-        val comic = QuadrinhoEntity(
-            externalId = "1",
-            dataCadastro = null,
-            dataUpdate = null,
-            nome = "Doctor Strange",
-            dataLancamento = null,
-            descricao = "Deu certo!",
-            valor = 22.57
+        val comic = ComicItem(
+            title = "Origins of Marvel Comics",
+            value = 19.99,
+            image = "https://m.media-amazon.com/images/I/61KFLylOgPL.jpg",
+            isFavorite = false,
+            more = mutableListOf(),
+            characters = mutableListOf(),
+            id=1
         )
 
-        dbroom.quadrinho().create(comic)
-        val savedComics = dbroom.quadrinho().getAll()
-        println(savedComics)
+//        dbroom.favoritos().create(ListaFavoritosEntity(comic = "comic"))
+//        val savedComics = dbroom.favoritos().getAll()
+//        println(savedComics)
     }
 }

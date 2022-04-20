@@ -28,9 +28,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         }
 
         login.setOnClickListener(){
-//            val intent = Intent(it.context, HomeActivity::class.java)
-            val intent = Intent(it.context, TesteDB::class.java)
-
+            val intent = Intent(it.context, HomeActivity::class.java)
             startActivity(intent)
         }
 

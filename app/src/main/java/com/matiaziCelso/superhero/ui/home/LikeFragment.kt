@@ -25,6 +25,7 @@ class LikeFragment : Fragment(R.layout.fragment_like) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        FavItems.iniciarFavoritos()
         recycler = view.findViewById<RecyclerView>(R.id.fav_recycle)
         recycler.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)
         recycler.adapter = FavoriteAdapter(FavItems.items,{

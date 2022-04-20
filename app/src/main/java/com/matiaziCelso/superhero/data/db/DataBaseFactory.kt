@@ -2,13 +2,15 @@ package com.matiaziCelso.superhero.data.db
 
 import android.content.Context
 import androidx.room.Room
+import java.lang.IllegalStateException
 
 object DataBaseFactory {
     private var instance: AppDatabase? = null
 
     @JvmStatic
-    fun getAppDataBase(context: Context) = instance ?: build(context)
-    private fun build(context: Context): AppDatabase {
+    fun getAppDataBase() = instance ?: throw IllegalStateException("database isn't initialized")
+
+    fun build(context: Context): AppDatabase {
         val database = Room.databaseBuilder(
             context.applicationContext,
             AppDatabase::class.java,"database"

@@ -9,6 +9,7 @@ import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import com.matiaziCelso.superhero.R
+import com.matiaziCelso.superhero.ui.TesteDB
 import com.matiaziCelso.superhero.ui.login.LoginActivity
 import com.matiaziCelso.superhero.viewModel.HomeViewModel
 
@@ -23,6 +24,7 @@ class splashScreen : AppCompatActivity() {
 
         Handler(Looper.getMainLooper()).postDelayed({
             startActivity(Intent(this, LoginActivity::class.java))
+//            startActivity(Intent(this, TesteDB::class.java))
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
             finish()
         }, 4000)

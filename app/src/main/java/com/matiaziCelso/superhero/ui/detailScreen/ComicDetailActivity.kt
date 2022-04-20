@@ -7,10 +7,8 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -19,11 +17,12 @@ import com.matiaziCelso.superhero.ui.adapter.CharactersAdapter
 import com.matiaziCelso.superhero.ui.adapter.HomeAdapter
 import com.matiaziCelso.superhero.data.CartItems
 import com.matiaziCelso.superhero.data.FavItems
-import com.matiaziCelso.superhero.data.mock.CharactersMock
+import com.matiaziCelso.superhero.data.db.AppDatabase
+import com.matiaziCelso.superhero.data.db.DataBaseFactory
+import com.matiaziCelso.superhero.data.db.entities.ListaFavoritosEntity
 import com.matiaziCelso.superhero.data.models.CharacterItem
 import com.matiaziCelso.superhero.data.models.ComicItem
 import com.matiaziCelso.superhero.viewModel.ComicDetailViewModel
-import com.matiaziCelso.superhero.viewModel.HomeViewModel
 
 
 class ComicDetailActivity : AppCompatActivity() {
@@ -36,7 +35,7 @@ class ComicDetailActivity : AppCompatActivity() {
     private lateinit var loadingState : View
     private lateinit var homeState : View
 
-    private val charactersRepository: CharactersMock = CharactersMock.instance
+    private lateinit var database: AppDatabase
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +45,8 @@ class ComicDetailActivity : AppCompatActivity() {
 
         val extras : Bundle? = intent.extras
         val comicItem: ComicItem? = extras?.getParcelable("comicItem")
+
+        database = DataBaseFactory.getAppDataBase()
 
         //val banner = findViewById<ImageView>(R.id.comic_detail_banner)
         val backBtn = findViewById<ImageView>(R.id.comic_detail_back_btn)
@@ -101,9 +102,12 @@ class ComicDetailActivity : AppCompatActivity() {
 
 
         viewModel.loadComicCharacters(comicItem.id)
-        //Carregamento da lista de personagens -> Id: 43495
-//        viewModel.loadComicCharacters(43495)
         observer()
+    }
+
+    override fun onStop() {
+        DataBaseFactory.destroyInstance()
+        super.onStop()
     }
 
 
@@ -123,17 +127,26 @@ class ComicDetailActivity : AppCompatActivity() {
     }
 
     private fun addFavItem(comic: ComicItem){
-        if(FavItems.items.filter { it.image == comic.image }.getOrNull(0) != null){
-            
-            FavItems.items.map {
-                if(comic.image == it.image){
-                    FavItems.items.remove(it)
-                }
-            }
 
-        }else{
-            FavItems.items.add(comic)
-        }
+        val converter = ListaFavoritosEntity(
+            image = comic.image,
+            description = comic.description,
+            value = comic.value,
+            id = comic.id
+        )
+
+        database.favoritos().create(converter)
+//        if(FavItems.items.filter { it.image == comic.image }.getOrNull(0) != null){
+//
+//            FavItems.items.map {
+//                if(comic.image == it.image){
+//                    FavItems.items.remove(it)
+//                }
+//            }
+//
+//        }else{
+//            FavItems.items.add(comic)
+//        }
     }
 
     private fun sendComicToDetail(item: ComicItem){

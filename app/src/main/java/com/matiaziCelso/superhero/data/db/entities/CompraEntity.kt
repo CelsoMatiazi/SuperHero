@@ -8,6 +8,9 @@ import java.util.*
 @Entity(
     tableName = "compra"
 )
+
+//Esse é o carrinho.
+
 data class CompraEntity(
     @PrimaryKey(autoGenerate = true) val id: Int? = null,
     @ColumnInfo(name = "external_id") val externalId: String,
