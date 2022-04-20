@@ -11,6 +11,9 @@ object DataBaseFactory {
     fun getAppDataBase() = instance ?: throw IllegalStateException("database isn't initialized")
 
     fun build(context: Context): AppDatabase {
+        val currentInstance = instance
+        if(currentInstance != null) return currentInstance
+
         val database = Room.databaseBuilder(
             context.applicationContext,
             AppDatabase::class.java,"database"

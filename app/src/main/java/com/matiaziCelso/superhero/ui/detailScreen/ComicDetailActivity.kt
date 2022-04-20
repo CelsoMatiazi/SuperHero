@@ -16,7 +16,6 @@ import com.matiaziCelso.superhero.R
 import com.matiaziCelso.superhero.ui.adapter.CharactersAdapter
 import com.matiaziCelso.superhero.ui.adapter.HomeAdapter
 import com.matiaziCelso.superhero.data.CartItems
-import com.matiaziCelso.superhero.data.FavItems
 import com.matiaziCelso.superhero.data.db.AppDatabase
 import com.matiaziCelso.superhero.data.db.DataBaseFactory
 import com.matiaziCelso.superhero.data.db.entities.ListaFavoritosEntity
@@ -43,10 +42,9 @@ class ComicDetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_comic_detail)
         supportActionBar?.hide()
 
+        //region Inicialização de variáveis
         val extras : Bundle? = intent.extras
         val comicItem: ComicItem? = extras?.getParcelable("comicItem")
-
-        database = DataBaseFactory.getAppDataBase()
 
         //val banner = findViewById<ImageView>(R.id.comic_detail_banner)
         val backBtn = findViewById<ImageView>(R.id.comic_detail_back_btn)
@@ -64,6 +62,8 @@ class ComicDetailActivity : AppCompatActivity() {
         addCartBtn = findViewById(R.id.comic_add_btn)
         addCartDoneBtn = findViewById(R.id.comic_add_done)
         comicFavIcon = findViewById(R.id.comic_fav_icon)
+
+        //endregion
 
         switchAddToCart(comicItem!!)
         setFavIcon(comicItem)
@@ -105,10 +105,10 @@ class ComicDetailActivity : AppCompatActivity() {
         observer()
     }
 
-    override fun onStop() {
-        DataBaseFactory.destroyInstance()
-        super.onStop()
-    }
+//    override fun onStop() {
+//        DataBaseFactory.destroyInstance()
+//        super.onStop()
+//    }
 
 
     private fun switchAddToCart(comic: ComicItem){
@@ -119,11 +119,11 @@ class ComicDetailActivity : AppCompatActivity() {
     }
 
     private fun setFavIcon(comic: ComicItem){
-        if(FavItems.items.filter { it.image == comic.image }.getOrNull(0) != null){
-            comicFavIcon.setImageResource(R.drawable.ic_full_heart)
-        }else{
-            comicFavIcon.setImageResource(R.drawable.ic_heart_border)
-        }
+//        if(FavItems.items.filter { it.image == comic.image }.getOrNull(0) != null){
+//            comicFavIcon.setImageResource(R.drawable.ic_full_heart)
+//        }else{
+//            comicFavIcon.setImageResource(R.drawable.ic_heart_border)
+//        }
     }
 
     private fun addFavItem(comic: ComicItem){
@@ -135,6 +135,7 @@ class ComicDetailActivity : AppCompatActivity() {
             id = comic.id
         )
 
+        database = DataBaseFactory.getAppDataBase()
         database.favoritos().create(converter)
 //        if(FavItems.items.filter { it.image == comic.image }.getOrNull(0) != null){
 //

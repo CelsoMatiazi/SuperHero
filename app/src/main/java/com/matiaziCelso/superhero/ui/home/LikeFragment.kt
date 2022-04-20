@@ -10,8 +10,9 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.matiaziCelso.superhero.R
+import com.matiaziCelso.superhero.data.db.AppDatabase
 import com.matiaziCelso.superhero.ui.adapter.FavoriteAdapter
-import com.matiaziCelso.superhero.data.FavItems
+import com.matiaziCelso.superhero.data.db.DataBaseFactory
 import com.matiaziCelso.superhero.data.models.ComicItem
 import com.matiaziCelso.superhero.ui.detailScreen.ComicDetailActivity
 
@@ -20,15 +21,21 @@ class LikeFragment : Fragment(R.layout.fragment_like) {
 
     private lateinit var emptyFav: ImageView
     private lateinit var recycler : RecyclerView
+    private var items : List<ComicItem>
+    private lateinit var database : AppDatabase
 
+    init {
+        items = listOf()
+        database = DataBaseFactory.getAppDataBase()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        FavItems.iniciarFavoritos()
+        items = iniciarFavoritos()
         recycler = view.findViewById<RecyclerView>(R.id.fav_recycle)
         recycler.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)
-        recycler.adapter = FavoriteAdapter(FavItems.items,{
+        recycler.adapter = FavoriteAdapter(items,{
 
             showDialog(it)
 
@@ -42,14 +49,19 @@ class LikeFragment : Fragment(R.layout.fragment_like) {
 
     }
 
+//    override fun onStop() {
+//        super.onStop()
+//        DataBaseFactory.destroyInstance()
+//    }
+
 
     private fun whenItemsIsEmpty(){
-        emptyFav.isVisible = FavItems.items.isEmpty()
+        emptyFav.isVisible = items.isEmpty()
     }
 
-    private fun removeItem(comic: ComicItem){
-        FavItems.items.remove(comic)
-    }
+//    private fun removeItem(comic: ComicItem){
+//        items.remove(comic)
+//    }
 
     private fun showDialog(comic: ComicItem){
         val alertDialog = AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle)
@@ -58,7 +70,7 @@ class LikeFragment : Fragment(R.layout.fragment_like) {
             .setMessage("Deseja remover esse item dos favoritos?")
             .setCancelable(false)
             .setPositiveButton("Sim") { _, _ ->
-                FavItems.items.remove(comic)
+//                items.remove(comic)
                 recycler.adapter?.notifyDataSetChanged()
                 whenItemsIsEmpty()
             }
@@ -71,6 +83,23 @@ class LikeFragment : Fragment(R.layout.fragment_like) {
         val intent = Intent(context, ComicDetailActivity::class.java)
         intent.putExtra("comicItem", item)
         startActivity(intent)
+    }
+
+    fun iniciarFavoritos(): MutableList<ComicItem>{
+
+        var savedList = database.favoritos().getAll().map{
+            ComicItem(
+                title = "Origins of Marvel Comics",
+                value = it.value,
+                description = it.description,
+                image = it.image,
+                isFavorite = false,
+                more = mutableListOf(),
+                characters = mutableListOf(),
+                id = it.id
+            )
+        }
+        return savedList as MutableList<ComicItem>
     }
 
 }
