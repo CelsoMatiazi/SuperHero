@@ -25,6 +25,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.ktx.Firebase
 import com.matiaziCelso.superhero.R
+import com.matiaziCelso.superhero.ui.TesteDB
 import com.matiaziCelso.superhero.ui.home.HomeActivity
 import com.matiaziCelso.superhero.utils.FacebookCustomCallback
 import com.matiaziCelso.superhero.utils.GoogleLogInActivityContract
@@ -80,7 +81,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         }
 
         login.setOnClickListener(){
-            loginWithEmailAndPassword()
+//            loginWithEmailAndPassword()
+            sendToHome()
         }
 
 

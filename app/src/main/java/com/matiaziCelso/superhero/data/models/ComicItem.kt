@@ -1,6 +1,7 @@
 package com.matiaziCelso.superhero.data.models
 
 import android.os.Parcelable
+import com.matiaziCelso.superhero.data.db.entities.ListaFavoritosEntity
 import kotlinx.android.parcel.Parcelize
 
 

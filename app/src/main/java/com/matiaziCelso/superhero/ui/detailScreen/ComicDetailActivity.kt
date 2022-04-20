@@ -10,7 +10,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -18,12 +17,12 @@ import com.matiaziCelso.superhero.R
 import com.matiaziCelso.superhero.ui.adapter.CharactersAdapter
 import com.matiaziCelso.superhero.ui.adapter.HomeAdapter
 import com.matiaziCelso.superhero.data.CartItems
-import com.matiaziCelso.superhero.data.FavItems
-import com.matiaziCelso.superhero.data.mock.CharactersMock
+import com.matiaziCelso.superhero.data.db.AppDatabase
+import com.matiaziCelso.superhero.data.db.DataBaseFactory
+import com.matiaziCelso.superhero.data.db.entities.ListaFavoritosEntity
 import com.matiaziCelso.superhero.data.models.CharacterItem
 import com.matiaziCelso.superhero.data.models.ComicItem
 import com.matiaziCelso.superhero.viewModel.ComicDetailViewModel
-import com.matiaziCelso.superhero.viewModel.HomeViewModel
 
 
 class ComicDetailActivity : AppCompatActivity() {
@@ -36,7 +35,11 @@ class ComicDetailActivity : AppCompatActivity() {
     private lateinit var loadingState : View
     private lateinit var homeState : View
 
-    private val charactersRepository: CharactersMock = CharactersMock.instance
+    private var database: AppDatabase
+
+    init{
+        database = DataBaseFactory.getAppDataBase()
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,6 +47,7 @@ class ComicDetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_comic_detail)
         supportActionBar?.hide()
 
+        //region Inicialização de variáveis
         val extras : Bundle? = intent.extras
         val comicItem: ComicItem? = extras?.getParcelable("comicItem")
 
@@ -63,6 +67,8 @@ class ComicDetailActivity : AppCompatActivity() {
         addCartBtn = findViewById(R.id.comic_add_btn)
         addCartDoneBtn = findViewById(R.id.comic_add_done)
         comicFavIcon = findViewById(R.id.comic_fav_icon)
+
+        //endregion
 
         switchAddToCart(comicItem!!)
         setFavIcon(comicItem)
@@ -101,8 +107,6 @@ class ComicDetailActivity : AppCompatActivity() {
 
 
         viewModel.loadComicCharacters(comicItem.id)
-        //Carregamento da lista de personagens -> Id: 43495
-//        viewModel.loadComicCharacters(43495)
         observer()
     }
 
@@ -115,7 +119,9 @@ class ComicDetailActivity : AppCompatActivity() {
     }
 
     private fun setFavIcon(comic: ComicItem){
-        if(FavItems.items.filter { it.image == comic.image }.getOrNull(0) != null){
+        val lista = database.favoritos().comicIsInDatabase(comic.id) //Por ora este é o "filtro" que consegui implementar.
+
+        if(lista.isNotEmpty()){
             comicFavIcon.setImageResource(R.drawable.ic_full_heart)
         }else{
             comicFavIcon.setImageResource(R.drawable.ic_heart_border)
@@ -123,16 +129,19 @@ class ComicDetailActivity : AppCompatActivity() {
     }
 
     private fun addFavItem(comic: ComicItem){
-        if(FavItems.items.filter { it.image == comic.image }.getOrNull(0) != null){
-            
-            FavItems.items.map {
-                if(comic.image == it.image){
-                    FavItems.items.remove(it)
-                }
-            }
+        val lista = database.favoritos().comicIsInDatabase(comic.id) //Por ora este é o "filtro" que consegui implementar.
 
+        if(lista.isNotEmpty()){
+            database.favoritos().delete(comic.id)
         }else{
-            FavItems.items.add(comic)
+            val converter = ListaFavoritosEntity(
+                title = comic.title,
+                image = comic.image,
+                description = comic.description,
+                value = comic.value,
+                id = comic.id
+            )
+            database.favoritos().create(converter)
         }
     }
 
