@@ -129,26 +129,20 @@ class ComicDetailActivity : AppCompatActivity() {
     }
 
     private fun addFavItem(comic: ComicItem){
+        val lista = database.favoritos().comicIsInDatabase(comic.id) //Por ora este é o "filtro" que consegui implementar.
 
-        val converter = ListaFavoritosEntity(
-            title = comic.title,
-            image = comic.image,
-            description = comic.description,
-            value = comic.value,
-            id = comic.id
-        )
-        database.favoritos().create(converter)
-//        if(FavItems.items.filter { it.image == comic.image }.getOrNull(0) != null){
-//
-//            FavItems.items.map {
-//                if(comic.image == it.image){
-//                    FavItems.items.remove(it)
-//                }
-//            }
-//
-//        }else{
-//            FavItems.items.add(comic)
-//        }
+        if(lista.isNotEmpty()){
+            database.favoritos().delete(comic.id)
+        }else{
+            val converter = ListaFavoritosEntity(
+                title = comic.title,
+                image = comic.image,
+                description = comic.description,
+                value = comic.value,
+                id = comic.id
+            )
+            database.favoritos().create(converter)
+        }
     }
 
     private fun sendComicToDetail(item: ComicItem){
