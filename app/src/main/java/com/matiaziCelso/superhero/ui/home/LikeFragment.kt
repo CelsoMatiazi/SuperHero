@@ -51,7 +51,6 @@ class LikeFragment : Fragment(R.layout.fragment_like) {
     }
 
 
-
     private fun whenItemsIsEmpty(){
         emptyFav.isVisible = items.isEmpty()
     }
