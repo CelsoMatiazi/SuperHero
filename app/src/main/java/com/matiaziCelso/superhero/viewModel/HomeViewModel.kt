@@ -142,8 +142,6 @@ class HomeViewModel(
             description = comic.description ?: noDescription,
             value = comic.prices[0].price,
             isFavorite = false,
-            characters = listOf(),
-            more = listOf(),
             id = comic.id
         )
     }

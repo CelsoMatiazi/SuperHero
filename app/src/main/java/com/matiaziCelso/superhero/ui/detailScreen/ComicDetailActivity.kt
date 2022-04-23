@@ -97,13 +97,13 @@ class ComicDetailActivity : AppCompatActivity() {
         val recycler = findViewById<RecyclerView>(R.id.comic_mais_recycler)
         recycler.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
-        recycler.adapter = HomeAdapter(comicItem.more){
-            sendComicToDetail(it)
-        }
-
-        if(comicItem.more.isEmpty()){
-            tagMais.text = ""
-        }
+//        recycler.adapter = HomeAdapter(comicItem.more){
+//            sendComicToDetail(it)
+//        }
+//
+//        if(comicItem.more.isEmpty()){
+//            tagMais.text = ""
+//        }
 
 
         viewModel.loadComicCharacters(comicItem.id)
@@ -121,7 +121,7 @@ class ComicDetailActivity : AppCompatActivity() {
     private fun setFavIcon(comic: ComicItem){
         val lista = database.favoritos().comicIsInDatabase(comic.id) //Por ora este é o "filtro" que consegui implementar.
 
-        if(lista.isNotEmpty()){
+        if(lista>0){
             comicFavIcon.setImageResource(R.drawable.ic_full_heart)
         }else{
             comicFavIcon.setImageResource(R.drawable.ic_heart_border)
@@ -131,7 +131,7 @@ class ComicDetailActivity : AppCompatActivity() {
     private fun addFavItem(comic: ComicItem){
         val lista = database.favoritos().comicIsInDatabase(comic.id) //Por ora este é o "filtro" que consegui implementar.
 
-        if(lista.isNotEmpty()){
+        if(lista>0){
             database.favoritos().delete(comic.id)
         }else{
             val converter = ListaFavoritosEntity(

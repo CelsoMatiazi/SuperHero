@@ -60,7 +60,6 @@ class LikeFragment : Fragment(R.layout.fragment_like) {
         items = iniciarFavoritos()
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     private fun showDialog(id: Int){
         val alertDialog = AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle)
         alertDialog
@@ -69,7 +68,6 @@ class LikeFragment : Fragment(R.layout.fragment_like) {
             .setCancelable(false)
             .setPositiveButton("Sim") { _, _ ->
                 removeItem(id)
-//                recycler.adapter?.notifyDataSetChanged()
                 recycler.adapter = FavoriteAdapter(items,{ showDialog(it) },{ sendToDetail(it) })
                 whenItemsIsEmpty()
             }
@@ -93,8 +91,6 @@ class LikeFragment : Fragment(R.layout.fragment_like) {
                 description = it.description,
                 image = it.image,
                 isFavorite = false,
-                more = mutableListOf(),
-                characters = mutableListOf(),
                 id = it.id
             )
         }

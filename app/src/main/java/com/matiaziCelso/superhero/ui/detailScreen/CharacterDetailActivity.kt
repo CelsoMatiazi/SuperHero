@@ -13,16 +13,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.matiaziCelso.superhero.R
 import com.matiaziCelso.superhero.ui.adapter.HomeAdapter
-import com.matiaziCelso.superhero.data.mock.ComicsMock
 import com.matiaziCelso.superhero.data.models.CharacterItem
 import com.matiaziCelso.superhero.data.models.ComicItem
 import com.matiaziCelso.superhero.viewModel.CharacterDetailViewModel
-import com.matiaziCelso.superhero.viewModel.ComicDetailViewModel
-import com.matiaziCelso.superhero.viewModel.HomeViewModel
 
 class CharacterDetailActivity : AppCompatActivity() {
 
-    private val repository: ComicsMock = ComicsMock.instance
     private val viewModel: CharacterDetailViewModel by viewModels()
     private lateinit var recycler: RecyclerView
     private lateinit var loadingState : View

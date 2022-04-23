@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.matiaziCelso.superhero.R
-import com.matiaziCelso.superhero.data.mock.CharactersMock
 import com.matiaziCelso.superhero.data.models.CharacterItem
 import com.matiaziCelso.superhero.data.models.ComicItem
 import com.matiaziCelso.superhero.ui.adapter.HomeAdapter
@@ -27,8 +26,6 @@ class MenuOneFragment : Fragment(R.layout.fragment_home_menu) {
 
     //region Atribuição de variáveis
     private val viewModel: HomeViewModel by viewModels()
-
-    private val charactersRepository: CharactersMock = CharactersMock.instance
 
     private lateinit var characterOne: CardView
     private lateinit var characterOneTextReceiver: TextView

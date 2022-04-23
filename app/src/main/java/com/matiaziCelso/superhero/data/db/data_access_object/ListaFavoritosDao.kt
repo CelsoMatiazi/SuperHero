@@ -17,8 +17,8 @@ interface ListaFavoritosDao {
     @Query("select * from listaFavoritos") //Inserir o nome da tabela desejada.
     fun getAll(): List<ListaFavoritosEntity>
 
-    @Query("select * from listaFavoritos where listaFavoritos.id = :id")
-    fun comicIsInDatabase(id: Int?): List<ListaFavoritosEntity>
+    @Query("select count(id) from listaFavoritos where listaFavoritos.id = :id")
+    fun comicIsInDatabase(id: Int?): Int
 
     @Query("""delete from listaFavoritos where listaFavoritos.id = :id""")
     fun delete(id: Int?)

@@ -57,7 +57,6 @@ class ComicDetailViewModel(private val marvelRepository: MarvelComicsRepository 
             name = character.name,
             image = tempImg.replace("http://", "https://"),
             description =  emptyString(character.description)
-//            comics = character.comics.items
         )
     }
 
