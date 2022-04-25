@@ -16,6 +16,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SuperHero">
         <activity
+            android:name=".ui.home.user_settings.HelpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.home.user_settings.PrivacyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.home.user_settings.UserSettingsActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.TesteDB"
             android:exported="false" />
         <activity
@@ -43,14 +52,17 @@
             </intent-filter>
         </activity>
 
-        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
-        <meta-data android:name="com.facebook.sdk.ClientToken" android:value="@string/facebook_client_token"/>
-        <activity android:name="com.facebook.FacebookActivity"
-            android:configChanges=
-                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+        <meta-data
+            android:name="com.facebook.sdk.ClientToken"
+            android:value="@string/facebook_client_token" />
+
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name" />
-
-
     </application>
 
 </manifest>

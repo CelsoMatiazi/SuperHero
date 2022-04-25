@@ -14,7 +14,7 @@
         <item name="cornerSize">15dp</item>
     </style>
     <style name="ImageCircle" parent="">
-        <item name="cornerSize">50dp</item>
+        <item name="cornerSize">50%</item>
     </style>
     <style name="iconBackCircle" parent="">
         <item name="cornerSize">20dp</item>
