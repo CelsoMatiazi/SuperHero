@@ -14,10 +14,13 @@ interface MarvelApi {
 
     @GET("comics")
     suspend fun  getMarvelComics(@Query("title") comic :String) : ComicsResponse
+
     @GET("characters")
     suspend fun  getMarvelCharacter() : CharacterResponse
+
     @GET("comics/{comicId}/characters")
     suspend fun getMarvelComicsCharacters(@Path("comicId") comicId: Int): CharacterResponse
+
     @GET("characters/{characterId}/comics")
     suspend fun getMarvelCharacterComics(@Path("characterId") characterId: Int): ComicsResponse
 

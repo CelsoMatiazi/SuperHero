@@ -37,7 +37,7 @@ class HomeMenuTwoViewModel(
 
 
     init {
-        itemsSearch = listasPadrao.comics.asSequence().shuffled().take(6).toList()
+        itemsSearch = listasPadrao.comics.asSequence().shuffled().take(1).toList()
     }
 
     //endregion

@@ -81,7 +81,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         }
 
         login.setOnClickListener(){
-//            loginWithEmailAndPassword()
+            loginWithEmailAndPassword()
             sendToHome()
         }
 

@@ -17,6 +17,7 @@ import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import com.matiaziCelso.superhero.R
 import com.matiaziCelso.superhero.ui.TesteDB
+import com.matiaziCelso.superhero.ui.home.HomeActivity
 import com.matiaziCelso.superhero.ui.login.LoginActivity
 import com.matiaziCelso.superhero.viewModel.HomeViewModel
 import java.security.MessageDigest
@@ -32,11 +33,13 @@ class splashScreen : AppCompatActivity() {
         this.supportActionBar?.hide()
         window.statusBarColor = ContextCompat.getColor(this, R.color.black)
 
-        Handler(Looper.getMainLooper()).postDelayed({
-            startActivity(Intent(this, LoginActivity::class.java))
-//            startActivity(Intent(this, TesteDB::class.java))
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-            finish()
-        }, 4000)
+//        Handler(Looper.getMainLooper()).postDelayed({
+//            startActivity(Intent(this, LoginActivity::class.java))
+//            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+//            finish()
+//        }, 4000)
+
+        //Efeitos de teste, COMENTAR!
+        startActivity(Intent(this, HomeActivity::class.java))
     }
 }
