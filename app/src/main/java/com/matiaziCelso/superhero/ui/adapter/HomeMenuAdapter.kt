@@ -4,12 +4,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.matiaziCelso.superhero.R
 import com.matiaziCelso.superhero.data.models.ComicItem
 
-class HomeMenuAdapter(private val items: List<ComicItem>, private val action: (comicItem : ComicItem) -> Unit): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class HomeMenuAdapter(
+//                      private val action: (comicItem : ComicItem) -> Unit
+): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    private val diffUtil = AsyncListDiffer(this,DIFF_UTIL)
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflator = LayoutInflater.from(parent.context)
 
@@ -24,12 +31,29 @@ class HomeMenuAdapter(private val items: List<ComicItem>, private val action: (c
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder){
-            is MenuItemViewHolder -> holder.bind(items[position], action)
+            is MenuItemViewHolder -> holder.bind(diffUtil.currentList[position])
         }
     }
 
     override fun getItemCount(): Int {
-        return items.size
+        return diffUtil.currentList.size
+    }
+
+    fun updateList(newItems: List<ComicItem>){
+        diffUtil.submitList(newItems)
+    }
+
+    companion object{
+        val DIFF_UTIL = object: DiffUtil.ItemCallback<ComicItem>(){
+            override fun areItemsTheSame(oldItem: ComicItem, newItem: ComicItem): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(oldItem: ComicItem, newItem: ComicItem): Boolean {
+                return oldItem == newItem
+            }
+
+        }
     }
 }
 
@@ -37,12 +61,12 @@ class MenuItemViewHolder(view: View): RecyclerView.ViewHolder(view){
 
     private val image : ImageView = view.findViewById(R.id.menu_item_front)
 
-    fun bind(item: ComicItem, action: (ComicItem) -> Unit){
+    fun bind(item: ComicItem){
 
         val urlImage = item.image.replace("http://", "https://")
 
         Glide.with(image.context).load(urlImage).into(image)
-        image.setOnClickListener { action.invoke(item) }
+//        image.setOnClickListener { action.invoke(item) }
 
     }
 }

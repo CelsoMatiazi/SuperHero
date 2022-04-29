@@ -44,10 +44,11 @@ class HomeMenuTwoViewModel(
 
     //region Carregar os comics:
     fun loadMarvelComics(
-        comic: String
+        comic: String,
+        offset: Int
     ){
         viewModelScope.launch(Dispatchers.IO) {
-            marvelRepository.fetchComics(comic)
+            marvelRepository.fetchComics(comic, offset)
                 .onStart { _loading.postValue(true) }
                 .catch { _error.postValue(true) }
                 .onCompletion { _loading.postValue(false) }

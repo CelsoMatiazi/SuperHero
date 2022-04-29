@@ -89,27 +89,27 @@ class HomeViewModel(
 
     //region getComics
     fun getComics1(){
-        loadMarvelComics(itemsSearch[0], _recycler1, 1)
+        loadMarvelComics(itemsSearch[0], _recycler1, 1,1)
     }
 
     fun getComics2(){
-        loadMarvelComics(itemsSearch[1], _recycler2, 2)
+        loadMarvelComics(itemsSearch[1], _recycler2, 2,1)
     }
 
     fun getComics3(){
-        loadMarvelComics(itemsSearch[2], _recycler3, 3)
+        loadMarvelComics(itemsSearch[2], _recycler3, 3,1)
     }
 
     fun getComics4(){
-        loadMarvelComics(itemsSearch[3], _recycler4, 4)
+        loadMarvelComics(itemsSearch[3], _recycler4, 4,1)
     }
 
     fun getComics5(){
-        loadMarvelComics(itemsSearch[4], _recycler5, 5)
+        loadMarvelComics(itemsSearch[4], _recycler5, 5,1)
     }
 
     fun getComics6(){
-        loadMarvelComics(itemsSearch[5], _recycler6, 6)
+        loadMarvelComics(itemsSearch[5], _recycler6, 6,1)
     }
     //endregion
 
@@ -117,10 +117,11 @@ class HomeViewModel(
     private fun loadMarvelComics(
         comic: String,
         recycler: MutableLiveData<List<ComicItem>>,
-        position: Int
+        position: Int,
+        offset: Int
     ){
         viewModelScope.launch(Dispatchers.IO) {
-            marvelRepository.fetchComics(comic)
+            marvelRepository.fetchComics(comic,offset)
                 .onStart { _loading.postValue(true) }
                 .catch { _error.postValue(true) }
                 .onCompletion { loadingStatus(position) }

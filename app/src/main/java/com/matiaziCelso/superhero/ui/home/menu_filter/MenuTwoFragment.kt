@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.matiaziCelso.superhero.R
@@ -22,18 +23,20 @@ import com.matiaziCelso.superhero.viewModel.HomeMenuTwoViewModel
 
 class MenuTwoFragment : Fragment(R.layout.fragment_home_menu_two) {
     private lateinit var recycler: RecyclerView
+    private lateinit var adapter: HomeMenuAdapter
     private val viewModel: HomeMenuTwoViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        adapter = HomeMenuAdapter()
+        recycler.adapter = adapter
         recycler = view.findViewById(R.id.home_menu_two_recycler_1)
         recycler.layoutManager = StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL)
 
         val comicAleatorio = listasPadrao.comics.asSequence().shuffled().take(2).toList()
-        for (item in comicAleatorio){
-            viewModel.loadMarvelComics(item)
-        }
+
+        setScrollView()
         observer()
 
     }
@@ -46,9 +49,26 @@ class MenuTwoFragment : Fragment(R.layout.fragment_home_menu_two) {
 
     private fun observer(){
         viewModel.returnedComics.observe(viewLifecycleOwner){listOfComics ->
-            recycler.adapter = HomeMenuAdapter(listOfComics){comic ->
-                sendToDetail(comic)
-            }
+            recycler.adapter = HomeMenuAdapter()
+        }
+    }
+
+    private fun setScrollView(){
+        var offset: Int = 1
+        recycler.run{
+            addOnScrollListener(object: RecyclerView.OnScrollListener(){
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    val target = recyclerView.layoutManager as LinearLayoutManager?
+                    val totalItemCount = target!!.itemCount
+                    val lastVisible = target.findLastVisibleItemPosition()
+                    val lastItem = lastVisible + 5 >=totalItemCount
+                    if(totalItemCount>0 && lastItem){
+                        offset++
+                        viewModel.loadMarvelComics("Spider-Man",offset)
+                    }
+                }
+            })
         }
     }
 }
