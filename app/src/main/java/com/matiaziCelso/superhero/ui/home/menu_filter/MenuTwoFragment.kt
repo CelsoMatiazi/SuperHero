@@ -25,17 +25,21 @@ class MenuTwoFragment : Fragment(R.layout.fragment_home_menu_two) {
     private lateinit var recycler: RecyclerView
     private lateinit var adapter: HomeMenuAdapter
     private val viewModel: HomeMenuTwoViewModel by viewModels()
+    private var offset = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        recycler = view.findViewById(R.id.home_menu_two_recycler_1)
         adapter = HomeMenuAdapter()
         recycler.adapter = adapter
-        recycler = view.findViewById(R.id.home_menu_two_recycler_1)
-        recycler.layoutManager = StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL)
+//        recycler.layoutManager = StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL)
+
+        recycler.layoutManager = LinearLayoutManager(view.context)
 
         val comicAleatorio = listasPadrao.comics.asSequence().shuffled().take(2).toList()
 
+        viewModel.loadMarvelComics("Spider-Man",0)
         setScrollView()
         observer()
 
@@ -49,12 +53,12 @@ class MenuTwoFragment : Fragment(R.layout.fragment_home_menu_two) {
 
     private fun observer(){
         viewModel.returnedComics.observe(viewLifecycleOwner){listOfComics ->
-            recycler.adapter = HomeMenuAdapter()
+            adapter.updateList(listOfComics)
         }
     }
 
     private fun setScrollView(){
-        var offset: Int = 1
+
         recycler.run{
             addOnScrollListener(object: RecyclerView.OnScrollListener(){
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -63,12 +67,16 @@ class MenuTwoFragment : Fragment(R.layout.fragment_home_menu_two) {
                     val totalItemCount = target!!.itemCount
                     val lastVisible = target.findLastVisibleItemPosition()
                     val lastItem = lastVisible + 5 >=totalItemCount
-                    if(totalItemCount>0 && lastItem){
-                        offset++
+                    if(totalItemCount>0 && lastItem && offset<40){
+                        offset += 18
                         viewModel.loadMarvelComics("Spider-Man",offset)
+                        Toast.makeText(view?.context,totalItemCount.toString(),Toast.LENGTH_SHORT).show()
                     }
                 }
             })
         }
     }
 }
+/*
+if(totalItemCount>0 && lastItem &&loader.isvisible.not()) -> Colocar no observer o loading
+ */

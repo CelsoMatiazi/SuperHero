@@ -16,6 +16,7 @@ class HomeMenuAdapter(
 ): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val diffUtil = AsyncListDiffer(this,DIFF_UTIL)
+    private val lista = mutableListOf<ComicItem>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflator = LayoutInflater.from(parent.context)
@@ -40,7 +41,8 @@ class HomeMenuAdapter(
     }
 
     fun updateList(newItems: List<ComicItem>){
-        diffUtil.submitList(newItems)
+//        diffUtil.submitList(newItems) -> Desse jeito o adapter substitui a lista inteira
+        diffUtil.submitList(diffUtil.currentList.plus(newItems))    //Desse jeito, o Adapter adiciona novos elementos ao final.
     }
 
     companion object{
