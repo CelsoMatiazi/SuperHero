@@ -38,8 +38,9 @@ android {
 }
 
 dependencies {
-    implementation 'com.google.firebase:firebase-analytics-ktx:20.1.2'
-    implementation 'com.google.firebase:firebase-crashlytics-ktx:18.2.9'
+    implementation 'com.google.firebase:firebase-database-ktx:20.0.4'
+    implementation 'com.google.firebase:firebase-storage-ktx:20.0.1'
+    implementation 'com.google.firebase:firebase-messaging-ktx:23.0.3'
 
 
 //  ------------- Room Database ORM Dependencies -------------
@@ -87,7 +88,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx:21.0.3'
     implementation platform('com.google.firebase:firebase-bom:29.3.0')
     implementation 'com.google.android.gms:play-services-auth:20.1.0'
-    implementation 'com.facebook.android:facebook-login:12.0.0'
+    implementation 'com.facebook.android:facebook-login:latest.release'
+    implementation 'com.google.firebase:firebase-analytics-ktx:20.1.2'
+    implementation 'com.google.firebase:firebase-crashlytics-ktx:18.2.9'
+    implementation 'com.google.android.gms:play-services-measurement-api:20.1.2'
+
 
     //lottie animation
     implementation "com.airbnb.android:lottie:3.4.0"

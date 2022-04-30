@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="250dp"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/user_border"
     android:layout_gravity="end"
     android:layout_marginTop="10dp"
@@ -19,15 +19,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="50dp"
+        android:elevation="3dp"
         app:cardCornerRadius="90dp">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/user_loader_anim"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:lottie_rawRes="@raw/load_user"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            android:elevation="5dp"
+        />
 
         <ImageView
             android:id="@+id/user_img"
+            android:elevation="0dp"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:src="@drawable/img_user"
+            tools:src="@drawable/img_user"
             android:scaleType="centerCrop"
-            android:contentDescription="@string/foto_do_usuario" />
+            android:contentDescription="@string/foto_do_usuario"
+        />
     </androidx.cardview.widget.CardView>
 
 
@@ -38,7 +51,7 @@
         app:layout_constraintTop_toBottomOf="@id/img_user"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="Jose da Silva"
+        tools:text="Jose da Silva"
         android:textColor="@color/gray"
         android:layout_marginTop="15dp"
     />

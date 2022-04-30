@@ -25,7 +25,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.ktx.Firebase
 import com.matiaziCelso.superhero.R
-import com.matiaziCelso.superhero.ui.TesteDB
 import com.matiaziCelso.superhero.ui.home.HomeActivity
 import com.matiaziCelso.superhero.utils.FacebookCustomCallback
 import com.matiaziCelso.superhero.utils.GoogleLogInActivityContract
@@ -82,7 +81,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
         login.setOnClickListener(){
             loginWithEmailAndPassword()
-//            sendToHome()
         }
 
 
@@ -95,6 +93,14 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         }
 
         registerFacebookCallback()
+        isLogged()
+    }
+
+
+    private fun isLogged(){
+        if(auth.currentUser != null){
+            sendToHome()
+        }
     }
 
 
@@ -155,6 +161,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private fun loginWithFacebook(){
         loader.isVisible = true
+
         loginManager.logInWithReadPermissions(
             this,
             callbackManager,
@@ -162,9 +169,12 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     }
 
     private fun registerFacebookCallback() {
+        Log.d(TAG, "FACEBOOK CALLBACK")
         loginManager.registerCallback(callbackManager, FacebookCustomCallback {
             if(it is FacebookCustomCallback.Result.Success){
                 handleFacebookAccessToken(it.token)
+            }else{
+                Log.d(TAG, "FACEBOOK NOT SUCCESS")
             }
             if(it is FacebookCustomCallback.Result.Error){
                 showDialog(it.exception.message.toString())
@@ -175,7 +185,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
 
     private fun handleFacebookAccessToken(token: AccessToken) {
-        Log.d(TAG, "handleFacebookAccessToken:$token")
+        Log.d(TAG, "AccessToken:$token")
         analytics.logEvent(FirebaseAnalytics.Event.LOGIN){
             param(FirebaseAnalytics.Param.METHOD, "Facebook")
         }
@@ -190,6 +200,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             .addOnFailureListener {
                 loader.isVisible = false
                 showDialog(it.message.toString())
+                Log.d("FACEBOOK",it.message.toString() )
             }
 
     }
