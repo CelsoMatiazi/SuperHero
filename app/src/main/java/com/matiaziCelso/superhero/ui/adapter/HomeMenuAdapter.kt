@@ -45,6 +45,10 @@ class HomeMenuAdapter(
         diffUtil.submitList(diffUtil.currentList.plus(newItems))    //Desse jeito, o Adapter adiciona novos elementos ao final.
     }
 
+    fun returnList(): MutableList<ComicItem> {
+        return diffUtil.currentList
+    }
+
     companion object{
         val DIFF_UTIL = object: DiffUtil.ItemCallback<ComicItem>(){
             override fun areItemsTheSame(oldItem: ComicItem, newItem: ComicItem): Boolean {

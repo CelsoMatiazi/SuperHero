@@ -24,25 +24,38 @@ import com.matiaziCelso.superhero.viewModel.HomeMenuTwoViewModel
 class MenuTwoFragment : Fragment(R.layout.fragment_home_menu_two) {
     private lateinit var recycler: RecyclerView
     private lateinit var adapter: HomeMenuAdapter
+    private var comicList = mutableListOf<ComicItem>()
     private val viewModel: HomeMenuTwoViewModel by viewModels()
     private var offset = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         recycler = view.findViewById(R.id.home_menu_two_recycler_1)
         adapter = HomeMenuAdapter()
         recycler.adapter = adapter
+        if(comicList.isEmpty().not()){
+            adapter.updateList(comicList)
+        }
 //        recycler.layoutManager = StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL)
 
         recycler.layoutManager = LinearLayoutManager(view.context)
 
         val comicAleatorio = listasPadrao.comics.asSequence().shuffled().take(2).toList()
 
+        //TODO("Inicializar um comic aleatório, e combinar diversos resultados de comics")
         viewModel.loadMarvelComics("Spider-Man",0)
+
         setScrollView()
         observer()
 
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        comicList = adapter.returnList()
+        Toast.makeText(context,"Entrei aqui",Toast.LENGTH_LONG).show()
     }
 
     private fun sendToDetail(item: ComicItem) {
