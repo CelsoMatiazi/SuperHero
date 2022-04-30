@@ -11,12 +11,9 @@ import com.bumptech.glide.Glide
 import com.matiaziCelso.superhero.R
 import com.matiaziCelso.superhero.data.models.ComicItem
 
-class HomeMenuAdapter(
-//                      private val action: (comicItem : ComicItem) -> Unit
-): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class HomeMenuAdapter(private val action: (comicItem : ComicItem) -> Unit): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val diffUtil = AsyncListDiffer(this,DIFF_UTIL)
-    private val lista = mutableListOf<ComicItem>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflator = LayoutInflater.from(parent.context)
@@ -32,7 +29,7 @@ class HomeMenuAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder){
-            is MenuItemViewHolder -> holder.bind(diffUtil.currentList[position])
+            is MenuItemViewHolder -> holder.bind(diffUtil.currentList[position],action)
         }
     }
 
@@ -67,12 +64,12 @@ class MenuItemViewHolder(view: View): RecyclerView.ViewHolder(view){
 
     private val image : ImageView = view.findViewById(R.id.menu_item_front)
 
-    fun bind(item: ComicItem){
+    fun bind(item: ComicItem, action: (ComicItem) -> Unit){
 
         val urlImage = item.image.replace("http://", "https://")
 
         Glide.with(image.context).load(urlImage).into(image)
-//        image.setOnClickListener { action.invoke(item) }
+        image.setOnClickListener { action.invoke(item) }
 
     }
 }
