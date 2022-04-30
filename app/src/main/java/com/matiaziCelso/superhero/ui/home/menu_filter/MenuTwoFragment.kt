@@ -31,21 +31,20 @@ class MenuTwoFragment : Fragment(R.layout.fragment_home_menu_two) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
+        //region Atribuições Recycler
         recycler = view.findViewById(R.id.home_menu_two_recycler_1)
         adapter = HomeMenuAdapter()
         recycler.adapter = adapter
         if(comicList.isEmpty().not()){
             adapter.updateList(comicList)
         }
-//        recycler.layoutManager = StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL)
-
-        recycler.layoutManager = LinearLayoutManager(view.context)
+        recycler.layoutManager = GridLayoutManager(view.context,3)
 
         val comicAleatorio = listasPadrao.comics.asSequence().shuffled().take(2).toList()
 
         //TODO("Inicializar um comic aleatório, e combinar diversos resultados de comics")
         viewModel.loadMarvelComics("Spider-Man",0)
+        //endregion
 
         setScrollView()
         observer()
@@ -76,7 +75,8 @@ class MenuTwoFragment : Fragment(R.layout.fragment_home_menu_two) {
             addOnScrollListener(object: RecyclerView.OnScrollListener(){
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
-                    val target = recyclerView.layoutManager as LinearLayoutManager?
+//                    val target = recyclerView.layoutManager as LinearLayoutManager?
+                    val target = recyclerView.layoutManager as GridLayoutManager?
                     val totalItemCount = target!!.itemCount
                     val lastVisible = target.findLastVisibleItemPosition()
                     val lastItem = lastVisible + 5 >=totalItemCount
