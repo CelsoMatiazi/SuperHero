@@ -28,6 +28,7 @@
         <entry key="app/src/main/res/drawable/ic_close.xml" value="0.111" />
         <entry key="app/src/main/res/drawable/ic_heart_border.xml" value="0.111" />
         <entry key="app/src/main/res/drawable/ic_icon_share.xml" value="0.111" />
+        <entry key="app/src/main/res/drawable/ic_user.xml" value="0.1415" />
         <entry key="app/src/main/res/drawable/img_cart_item.xml" value="0.1205" />
         <entry key="app/src/main/res/drawable/left_corner_radius.xml" value="0.182" />
         <entry key="app/src/main/res/drawable/rounded_outline.xml" value="0.1205" />
@@ -58,7 +59,7 @@
         <entry key="app/src/main/res/layout/fragment_menu_three.xml" value="0.20520833333333333" />
         <entry key="app/src/main/res/layout/fragment_menu_two.xml" value="0.20520833333333333" />
         <entry key="app/src/main/res/layout/fragment_register.xml" value="0.20205128205128206" />
-        <entry key="app/src/main/res/layout/fragment_user.xml" value="0.5206971677559913" />
+        <entry key="app/src/main/res/layout/fragment_user.xml" value="0.33" />
         <entry key="app/src/main/res/layout/itens_item_layout.xml" value="0.33" />
         <entry key="app/src/main/res/layout/personagem_circle_layout.xml" value="0.5" />
         <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.20520833333333333" />

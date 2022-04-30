@@ -21,6 +21,7 @@ import com.matiaziCelso.superhero.ui.adapter.HomeAdapter
 import com.matiaziCelso.superhero.ui.detailScreen.CharacterDetailActivity
 import com.matiaziCelso.superhero.ui.detailScreen.ComicDetailActivity
 import com.matiaziCelso.superhero.viewModel.HomeViewModel
+import com.matiaziCelso.superhero.viewModel.UserViewModel
 
 
 class MenuOneFragment : Fragment(R.layout.fragment_home_menu) {
@@ -127,7 +128,6 @@ class MenuOneFragment : Fragment(R.layout.fragment_home_menu) {
         }
         //endregion
 
-
     }
 
     private fun observer() {
@@ -216,7 +216,6 @@ class MenuOneFragment : Fragment(R.layout.fragment_home_menu) {
     }
 
     private fun requisicaoAPI() {
-        //viewModel.loadComics()
         viewModel.getComics1()
         viewModel.getComics2()
         viewModel.getComics3()

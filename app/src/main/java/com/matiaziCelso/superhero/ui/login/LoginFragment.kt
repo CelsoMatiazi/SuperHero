@@ -93,6 +93,14 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         }
 
         registerFacebookCallback()
+        isLogged()
+    }
+
+
+    private fun isLogged(){
+        if(auth.currentUser != null){
+            sendToHome()
+        }
     }
 
 
@@ -153,6 +161,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private fun loginWithFacebook(){
         loader.isVisible = true
+
         loginManager.logInWithReadPermissions(
             this,
             callbackManager,
@@ -191,6 +200,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             .addOnFailureListener {
                 loader.isVisible = false
                 showDialog(it.message.toString())
+                Log.d("FACEBOOK",it.message.toString() )
             }
 
     }
