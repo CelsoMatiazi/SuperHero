@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,10 +28,14 @@ class MenuTwoFragment : Fragment(R.layout.fragment_home_menu_two) {
     private lateinit var adapter: HomeMenuAdapter
     private var comicList = mutableListOf<ComicItem>()
     private val viewModel: HomeMenuTwoViewModel by viewModels()
-    private var offset = 0
+    private lateinit var homeState: View
+    private lateinit var loadingState: View
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        loadingState = view.findViewById(R.id.home_menu_two_loading)
+        homeState = view.findViewById(R.id.home_menu_two_body)
 
         //region Atribuições Recycler
         recycler = view.findViewById(R.id.home_menu_two_recycler_1)
@@ -43,10 +48,6 @@ class MenuTwoFragment : Fragment(R.layout.fragment_home_menu_two) {
         }
         recycler.layoutManager = GridLayoutManager(view.context,3)
 
-        //TODO("Inicializar um comic aleatório, e combinar diversos resultados de comics")
-        viewModel.loadMarvelComics(listasPadrao.aleatorizarComic(),0)
-        //endregion
-
         setScrollView()
         observer()
 
@@ -55,7 +56,6 @@ class MenuTwoFragment : Fragment(R.layout.fragment_home_menu_two) {
     override fun onDestroyView() {
         super.onDestroyView()
         comicList = adapter.returnList()
-//        Toast.makeText(context,"Entrei aqui",Toast.LENGTH_LONG).show()
     }
 
     private fun sendToDetail(item: ComicItem) {
@@ -68,10 +68,14 @@ class MenuTwoFragment : Fragment(R.layout.fragment_home_menu_two) {
         viewModel.returnedComics.observe(viewLifecycleOwner){listOfComics ->
             adapter.updateList(listOfComics)
         }
+        viewModel.loading.observe(viewLifecycleOwner){
+            loadingState.isVisible = it
+            homeState.isVisible = !it
+        }
     }
 
     private fun setScrollView(){
-
+        viewModel.loadMarvelComics(null,(0 until 200).random())
         recycler.run{
             addOnScrollListener(object: RecyclerView.OnScrollListener(){
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -81,8 +85,7 @@ class MenuTwoFragment : Fragment(R.layout.fragment_home_menu_two) {
                     val lastVisible = target.findLastVisibleItemPosition()
                     val lastItem = lastVisible + 5 >=totalItemCount
                     if(totalItemCount>0 && lastItem){
-                        offset += 18
-                        viewModel.loadMarvelComics(listasPadrao.aleatorizarComic(),offset)
+                        viewModel.loadMarvelComics(null,(0 until 200).random())
                     }
                 }
             })

@@ -34,6 +34,9 @@ android {
         jvmTarget = '1.8'
     }
     apply plugin: 'kotlin-kapt'
+    buildFeatures {
+        viewBinding true
+    }
 
 }
 
@@ -41,6 +44,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics-ktx:20.1.2'
     implementation 'com.google.firebase:firebase-crashlytics-ktx:18.2.9'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
 
 
 //  ------------- Room Database ORM Dependencies -------------
