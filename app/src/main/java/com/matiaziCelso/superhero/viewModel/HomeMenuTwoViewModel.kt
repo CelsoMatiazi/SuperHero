@@ -43,10 +43,7 @@ class HomeMenuTwoViewModel(
     //endregion
 
     //region Carregar os comics:
-    fun loadMarvelComics(
-        comic: String,
-        offset: Int
-    ){
+    fun loadMarvelComics(comic: String? = null, offset: Int){
         viewModelScope.launch(Dispatchers.IO) {
             marvelRepository.fetchComics(comic, offset)
                 .onStart { _loading.postValue(true) }
@@ -56,7 +53,7 @@ class HomeMenuTwoViewModel(
                     val comicConvert: List<ComicItem> = it.data.results.map { comic ->
                         convertComicItem(comic)
                     }
-                      _returnedComics.postValue(comicConvert)
+                    _returnedComics.postValue(comicConvert)
                 }
         }
     }
@@ -82,4 +79,3 @@ class HomeMenuTwoViewModel(
     }
 
 }
-

@@ -13,7 +13,7 @@ import retrofit2.http.QueryName
 interface MarvelApi {
 
     @GET("comics")
-    suspend fun  getMarvelComics(@Query("title") comic :String,
+    suspend fun  getMarvelComics(@Query("title") comic :String? = null,
                                  @Query("offset") offset :Int,
                                  @Query("limit") limit :Int = 18) : ComicsResponse
 
