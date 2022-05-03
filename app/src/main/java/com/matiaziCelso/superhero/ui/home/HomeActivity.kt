@@ -8,7 +8,7 @@ import com.matiaziCelso.superhero.R
 import androidx.core.content.ContextCompat
 
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity(){
 
     private lateinit var homeFragment: HomeFragment
     private lateinit var itemFragment: ItemsFragment
@@ -47,7 +47,6 @@ class HomeActivity : AppCompatActivity() {
             }
             true
         }
-
     }
 
     private fun setFragment(fragment: Fragment){
@@ -58,8 +57,6 @@ class HomeActivity : AppCompatActivity() {
             setCustomAnimations(
                 R.anim.enter_right_to_left,
                 R.anim.exit_right_to_left,
-//                R.anim.enter_left_to_right,
-//                R.anim.exit_left_to_right
             ).
             replace(R.id.fragment_container, fragment)
             fragmentTransaction.commit()
@@ -68,8 +65,7 @@ class HomeActivity : AppCompatActivity() {
             val fragmentTransaction = supportFragmentManager.beginTransaction()
             fragmentTransaction
                 .setCustomAnimations(
-//                  R.anim.enter_right_to_left,
-//                  R.anim.exit_right_to_left,
+
                     R.anim.enter_left_to_right,
                     R.anim.exit_left_to_right
                 ).

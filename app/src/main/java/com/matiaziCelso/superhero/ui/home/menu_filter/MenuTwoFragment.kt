@@ -3,39 +3,35 @@ package com.matiaziCelso.superhero.ui.home.menu_filter
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.Button
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.matiaziCelso.superhero.R
-import com.matiaziCelso.superhero.data.mock.listasPadrao
-import com.matiaziCelso.superhero.data.models.CharacterItem
 import com.matiaziCelso.superhero.data.models.ComicItem
-import com.matiaziCelso.superhero.ui.adapter.HomeAdapter
 import com.matiaziCelso.superhero.ui.adapter.HomeMenuAdapter
 import com.matiaziCelso.superhero.ui.detailScreen.ComicDetailActivity
 import com.matiaziCelso.superhero.viewModel.HomeMenuTwoViewModel
-import java.util.*
 
-class MenuTwoFragment : Fragment(R.layout.fragment_home_menu_two) {
+class MenuTwoFragment : Fragment(R.layout.fragment_home_menu_two){
     private lateinit var recycler: RecyclerView
     private lateinit var adapter: HomeMenuAdapter
     private var comicList = mutableListOf<ComicItem>()
     private val viewModel: HomeMenuTwoViewModel by viewModels()
     private lateinit var homeState: View
     private lateinit var loadingState: View
+    private lateinit var bannerState: View
+    private lateinit var refreshButton: Button
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         loadingState = view.findViewById(R.id.home_menu_two_loading)
         homeState = view.findViewById(R.id.home_menu_two_body)
+        bannerState = view.findViewById(R.id.home_menu_two_banner)
+        refreshButton = view.findViewById(R.id.error_button)
 
         //region Atribuições Recycler
         recycler = view.findViewById(R.id.home_menu_two_recycler_1)
@@ -43,10 +39,17 @@ class MenuTwoFragment : Fragment(R.layout.fragment_home_menu_two) {
             sendToDetail(it)
         }
         recycler.adapter = adapter
+
         if(comicList.isEmpty().not()){
             adapter.updateList(comicList)
         }
         recycler.layoutManager = GridLayoutManager(view.context,3)
+        //endregion
+
+        refreshButton.setOnClickListener {
+            viewModel.loadMarvelComics(null,(0 until 200).random())
+            observer()
+        }
 
         setScrollView()
         observer()
@@ -72,6 +75,9 @@ class MenuTwoFragment : Fragment(R.layout.fragment_home_menu_two) {
             loadingState.isVisible = it
             homeState.isVisible = !it
         }
+        viewModel.error.observe(viewLifecycleOwner){
+            bannerState.isVisible = it
+        }
     }
 
     private fun setScrollView(){
@@ -84,7 +90,7 @@ class MenuTwoFragment : Fragment(R.layout.fragment_home_menu_two) {
                     val totalItemCount = target!!.itemCount
                     val lastVisible = target.findLastVisibleItemPosition()
                     val lastItem = lastVisible + 5 >=totalItemCount
-                    if(totalItemCount>0 && lastItem){
+                    if(totalItemCount>0 && lastItem && loadingState.isVisible.not()){
                         viewModel.loadMarvelComics(null,(0 until 200).random())
                     }
                 }
@@ -92,6 +98,3 @@ class MenuTwoFragment : Fragment(R.layout.fragment_home_menu_two) {
         }
     }
 }
-/*
-if(totalItemCount>0 && lastItem &&loader.isvisible.not()) -> Colocar no observer o loading
- */

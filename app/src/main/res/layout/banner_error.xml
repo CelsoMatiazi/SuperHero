@@ -3,32 +3,35 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="54dp"
+    android:background="@color/black"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
         android:id="@+id/error_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/error_message"
+        android:text="@string/mensagem_erro"
+        android:textColor="@color/white"
         app:layout_constraintTop_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginStart="16dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="8dp" />
+        android:layout_marginBottom="10dp" />
 
     <Button
         android:id="@+id/error_button"
         android:layout_width="wrap_content"
         android:layout_height="36dp"
-        android:text="@string/recarregar_api"
+        android:text="@string/recarregar"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@id/error_text"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="36dp"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="10dp"
         style="@style/Widget.MaterialComponents.Button.TextButton"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

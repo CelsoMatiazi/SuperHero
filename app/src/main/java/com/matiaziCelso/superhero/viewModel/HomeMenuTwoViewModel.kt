@@ -54,6 +54,7 @@ class HomeMenuTwoViewModel(
                         convertComicItem(comic)
                     }
                     _returnedComics.postValue(comicConvert)
+                    _error.postValue(false)
                 }
         }
     }
