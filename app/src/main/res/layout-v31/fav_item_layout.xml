@@ -8,19 +8,6 @@
     android:id="@+id/favorite_view"
     >
 
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/fav_img"
-        android:layout_width="80dp"
-        android:layout_height="0dp"
-        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.SelectedCornerRadius"
-        app:layout_constraintTop_toTopOf="@id/fav_item_box"
-        app:layout_constraintStart_toStartOf="@id/fav_item_box"
-        app:layout_constraintBottom_toBottomOf="@id/fav_item_box"
-        tools:src="@drawable/img_user"
-        android:scaleType="fitXY"
-        android:layout_margin="2.5dp"
-    />
-
 
     <View
         android:id="@+id/fav_item_box"
@@ -32,7 +19,19 @@
         />
 
 
-
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/fav_img"
+        android:layout_width="80dp"
+        android:layout_height="0dp"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.SelectedCornerRadius"
+        app:layout_constraintTop_toTopOf="@id/fav_item_box"
+        app:layout_constraintStart_toStartOf="@id/fav_item_box"
+        app:layout_constraintBottom_toBottomOf="@id/fav_item_box"
+        tools:src="@drawable/img_user"
+        android:scaleType="fitXY"
+        android:layout_margin="2.5dp"
+        android:clipToOutline="true"
+        android:contentDescription="Comics Item" />
 
     <TextView
         android:id="@+id/fav_title"

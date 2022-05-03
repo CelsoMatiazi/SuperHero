@@ -7,7 +7,7 @@
 
 
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="vertical"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -24,7 +24,6 @@
             android:src="@drawable/ic_back_icon_rounded"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_margin="15dp"
             />
 
 
@@ -36,19 +35,23 @@
             style="@style/white_18_bold"
             android:textSize="24sp"
             android:layout_marginBottom="15dp"
+            app:layout_constraintStart_toEndOf="@id/privacy_back_btn"
+            app:layout_constraintTop_toTopOf="@id/privacy_back_btn"
+            android:layout_marginStart="15dp"
             />
 
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/gray"
             android:textSize="16sp"
             android:justificationMode="inter_word"
+            app:layout_constraintTop_toBottomOf="@id/privacy_back_btn"
             android:text="This privacy policy describes the processing of information provided or collected on the sites and applications where this privacy policy is posted, whether on our digital properties or on applications we make available on third-party sites or platforms. It also describes the processing of guest information provided to us or collected by us offline in our physical properties, such as in our stores, theme parks, resorts, and cruise ships, or through our guest call centers. We follow this privacy policy in accordance with applicable law in the places where we operate. In some cases, we may provide additional data privacy notices specific to certain products, practices, or regions. Those terms are to be read in conjunction with this policy.
 Please keep in mind that when you provide information to us on a third-party site or platform (for example, via our applications), the information you provide may be separately collected by the third-party site or platform. The information we collect is covered by this privacy policy, and the information the third-party site or platform collects is subject to the third-party site or platform’s privacy practices. Privacy choices you have made on the third-party site or platform will not apply to our use of the information we have collected directly through our applications. Please also keep in mind that our sites and applications may contain links to other sites not owned or controlled by us and we are not responsible for the privacy practices of those sites. We encourage you to be aware when you leave our sites or applications and to read the privacy policies of other sites that may collect your personal information. We collect two basic types of information – personal information (as defined in this policy) and anonymous information (as defined in this policy) – and we may use personal and anonymous information to create a third type of information, aggregate information (also defined in this policy).   In particular, we collect:"
             />
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>
 

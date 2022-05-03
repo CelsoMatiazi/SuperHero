@@ -88,6 +88,23 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="200dp"
         android:src="@drawable/cart_empty"
+        android:visibility="gone"
+    />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/cart_anim"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        app:lottie_rawRes="@raw/clock_anim"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        android:elevation="5dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/cart_button_finalizar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="200dp"
+        android:layout_marginStart="30dp"
         />
 
 
@@ -100,7 +117,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:text="Finalizar"
         android:layout_marginHorizontal="14dp"
-
+        android:visibility="gone"
         />
 
 

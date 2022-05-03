@@ -3,16 +3,18 @@ package com.matiaziCelso.superhero.ui.detailScreen
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import com.matiaziCelso.superhero.R
 import com.matiaziCelso.superhero.ui.adapter.CharactersAdapter
 import com.matiaziCelso.superhero.ui.adapter.HomeAdapter
@@ -35,12 +37,10 @@ class ComicDetailActivity : AppCompatActivity() {
     private lateinit var loadingState : View
     private lateinit var homeState : View
 
-    private var database: AppDatabase
+    private var database: AppDatabase = DataBaseFactory.getAppDataBase()
 
-    init{
-        database = DataBaseFactory.getAppDataBase()
-    }
-
+    private var firebaseDB = FirebaseDatabase.getInstance()
+    private val auth = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,17 +51,16 @@ class ComicDetailActivity : AppCompatActivity() {
         val extras : Bundle? = intent.extras
         val comicItem: ComicItem? = extras?.getParcelable("comicItem")
 
-        //val banner = findViewById<ImageView>(R.id.comic_detail_banner)
         val backBtn = findViewById<ImageView>(R.id.comic_detail_back_btn)
         val cover = findViewById<ImageView>(R.id.img_item_detail)
         val title = findViewById<TextView>(R.id.comic_detail_title)
         val price = findViewById<TextView>(R.id.comic_detail_price)
         val description = findViewById<TextView>(R.id.comic_description)
         val tagMais = findViewById<TextView>(R.id.comic_mais)
-        loadingState = findViewById<View>(R.id.comicDetail_loading)
-        homeState = findViewById<View>(R.id.comicDetail_screen)
+        loadingState = findViewById(R.id.comicDetail_loading)
+        homeState = findViewById(R.id.comicDetail_screen)
 
-        recyclerCharacters = findViewById<RecyclerView>(R.id.comic_personagens_recycler)
+        recyclerCharacters = findViewById(R.id.comic_personagens_recycler)
         recyclerCharacters.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
         addCartBtn = findViewById(R.id.comic_add_btn)
@@ -79,8 +78,9 @@ class ComicDetailActivity : AppCompatActivity() {
         }
 
         addCartBtn.setOnClickListener {
-            CartItems.items.add(comicItem)
-            switchAddToCart(comicItem)
+//            CartItems.items.add(comicItem)
+//            switchAddToCart(comicItem)
+            saveItemOnFirebase(comicItem)
         }
 
         comicFavIcon.setOnClickListener {
@@ -88,7 +88,6 @@ class ComicDetailActivity : AppCompatActivity() {
            setFavIcon(comicItem)
         }
 
-        //Glide.with(banner.context).load(comicItem?.image).into(banner)
         Glide.with(cover.context).load(comicItem.image).into(cover)
         title.text = comicItem.title
         price.text = "R$ ${String.format("%.2f", comicItem.value)}"
@@ -108,6 +107,20 @@ class ComicDetailActivity : AppCompatActivity() {
 
         viewModel.loadComicCharacters(comicItem.id)
         observer()
+    }
+
+
+    private fun saveItemOnFirebase(item: ComicItem){
+        val ref = firebaseDB.getReference(auth.currentUser!!.uid)
+        val key = "cart"
+        val id = item.id.toString()
+        ref.child(key).child(id).setValue(item).addOnSuccessListener {
+            CartItems.items.add(item)
+            switchAddToCart(item)
+        }
+        .addOnFailureListener{
+            Log.d("CART", "ERRO")
+        }
     }
 
 

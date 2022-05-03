@@ -1,6 +1,5 @@
 package com.matiaziCelso.superhero.ui.home
 
-
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -17,6 +16,7 @@ import com.matiaziCelso.superhero.R
 import com.matiaziCelso.superhero.ui.home.user_settings.HelpActivity
 import com.matiaziCelso.superhero.ui.home.user_settings.PrivacyActivity
 import com.matiaziCelso.superhero.ui.home.user_settings.UserSettingsActivity
+import com.matiaziCelso.superhero.ui.login.LoginActivity
 import com.matiaziCelso.superhero.viewModel.UserViewModel
 
 
@@ -32,6 +32,12 @@ class UserFragment : Fragment(R.layout.fragment_user) {
     private lateinit var logout : TextView
     private lateinit var userImg : ImageView
     private lateinit var userAnim : LottieAnimationView
+
+    override fun onResume() {
+        super.onResume()
+        userViewModel.getUserData()
+        observe()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -65,11 +71,13 @@ class UserFragment : Fragment(R.layout.fragment_user) {
 
         logout.setOnClickListener {
             auth.signOut()
-            activity?.onBackPressed()
+            val intent = Intent(context, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intent)
         }
 
-        userViewModel.getUserData()
-        observe()
+        //userViewModel.getUserData()
+        //observe()
     }
 
     private fun observe() {

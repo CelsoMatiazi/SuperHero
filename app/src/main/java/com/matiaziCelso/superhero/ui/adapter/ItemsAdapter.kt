@@ -1,14 +1,17 @@
 package com.matiaziCelso.superhero.ui.adapter
 
 import android.graphics.Color
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.matiaziCelso.superhero.R
 import com.matiaziCelso.superhero.data.models.BoughtItem
+
 
 class ItemsAdapter(private val itens: List<BoughtItem>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -22,6 +25,7 @@ class ItemsAdapter(private val itens: List<BoughtItem>): RecyclerView.Adapter<Re
         )
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder){
             is ItemViewHolder -> holder.bind(itens[position], position, itens.size)
@@ -42,10 +46,11 @@ class ItemViewHolder(view: View): RecyclerView.ViewHolder(view){
     private val barDown: View = view.findViewById<View>(R.id.item_bar_down)
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun bind(item: BoughtItem, index: Int, length: Int ){
         day.text = item.day
         month.text = item.month
-        title.text = "Titulo: ${item.title}"
+        title.text = "Titulo: ${item.title.take(25)}"
         price.text = "R$ ${String.format("%.2f", item.price)}"
 
 

@@ -60,7 +60,7 @@ class LikeFragment : Fragment(R.layout.fragment_like) {
         items = iniciarFavoritos()
     }
 
-    @SuppressLint("NotifyDataSetChanged")
+    //@SuppressLint("NotifyDataSetChanged")
     private fun showDialog(id: Int){
         val alertDialog = AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle)
         alertDialog
@@ -86,7 +86,7 @@ class LikeFragment : Fragment(R.layout.fragment_like) {
 
     fun iniciarFavoritos(): MutableList<ComicItem>{
 
-        var savedList = database.favoritos().getAll().map{
+        val savedList = database.favoritos().getAll().map{
             ComicItem(
                 title = it.title,
                 value = it.value,
