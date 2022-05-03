@@ -79,7 +79,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 ?.commit()
         }
 
-        login.setOnClickListener(){
+        login.setOnClickListener {
             loginWithEmailAndPassword()
         }
 
