@@ -48,6 +48,7 @@ class MenuTwoFragment : Fragment(R.layout.fragment_home_menu_two){
 
         refreshButton.setOnClickListener {
             viewModel.loadMarvelComics(null,(0 until 200).random())
+            bannerState.isVisible = loadingState.isVisible.not()
             observer()
         }
 
@@ -73,7 +74,7 @@ class MenuTwoFragment : Fragment(R.layout.fragment_home_menu_two){
         }
         viewModel.loading.observe(viewLifecycleOwner){
             loadingState.isVisible = it
-            homeState.isVisible = !it
+//            homeState.isVisible = !it
         }
         viewModel.error.observe(viewLifecycleOwner){
             bannerState.isVisible = it
@@ -91,7 +92,7 @@ class MenuTwoFragment : Fragment(R.layout.fragment_home_menu_two){
                     val lastVisible = target.findLastVisibleItemPosition()
                     val lastItem = lastVisible + 5 >=totalItemCount
                     if(totalItemCount>0 && lastItem && loadingState.isVisible.not()){
-                        viewModel.loadMarvelComics(null,(0 until 200).random())
+                        viewModel.loadMarvelComics(null,(0 until 1000).random())
                     }
                 }
             })
