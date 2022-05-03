@@ -15,8 +15,8 @@ class MarvelComicsRepository(private val api: MarvelApi = MarvelApi.instance) {
         emit(api.getMarvelComics(comic,offset))
     }.flowOn(Dispatchers.IO)
 
-    fun fetchCharacters() : Flow<CharacterResponse> = flow {
-        emit(api.getMarvelCharacter())
+    fun fetchCharacters(offset: Int? = null) : Flow<CharacterResponse> = flow {
+        emit(api.getMarvelCharacter(offset))
     }.flowOn(Dispatchers.IO)
 
     fun fetchCharactersById(comicId: Int) : Flow<CharacterResponse> = flow {
