@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -27,6 +28,7 @@ class MenuFourFragment : Fragment(R.layout.fragment_home_menu_four){
     private lateinit var refreshButton: Button
     private var offset: Int = 0
     private var newRequest: Boolean = true
+    private var totalOfResults: Int = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -50,7 +52,7 @@ class MenuFourFragment : Fragment(R.layout.fragment_home_menu_four){
         //endregion
 
         refreshButton.setOnClickListener {
-            offset+=18
+            offset+=19
             viewModel.loadMarvelComics(null,offset)
             bannerState.isVisible = loadingState.isVisible.not()
             observer()
@@ -86,6 +88,9 @@ class MenuFourFragment : Fragment(R.layout.fragment_home_menu_four){
         viewModel.newRequestAllowed.observe(viewLifecycleOwner){
             newRequest = it
         }
+        viewModel.totalNumberOfComics.observe(viewLifecycleOwner){
+            totalOfResults = it
+        }
     }
 
     private fun setScrollView(){
@@ -98,9 +103,9 @@ class MenuFourFragment : Fragment(R.layout.fragment_home_menu_four){
                     val totalItemCount = target!!.itemCount
                     val lastVisible = target.findLastVisibleItemPosition()
                     val lastItem = lastVisible + 5 >=totalItemCount
-                    if(totalItemCount>0 && lastItem && newRequest){
-                        offset+=18
-                        !newRequest
+                    if(totalItemCount>0 && lastItem && newRequest && offset< totalOfResults){
+                        offset+=19
+                        newRequest = newRequest.not()
                         viewModel.loadMarvelComics(null,offset)
                     }
                 }

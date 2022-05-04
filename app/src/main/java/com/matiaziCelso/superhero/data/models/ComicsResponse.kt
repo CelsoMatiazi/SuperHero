@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 //region ComicsResponse
 data class ComicsResponse(val data: Results)
 
-data class Results(val offset: Int, val results: List<MarvelComic>)
+data class Results(val offset: Int, val total: Int, val results: List<MarvelComic>)
 
 data class MarvelComic(
     val id: Int,

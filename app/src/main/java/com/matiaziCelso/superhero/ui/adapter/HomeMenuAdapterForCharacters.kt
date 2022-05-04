@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -21,7 +22,7 @@ class HomeMenuAdapterForCharacters(private val action: (characterItem : Characte
 
         return MenuItemViewHolderForCharacters(
             inflator.inflate(
-                R.layout.menu_item_front,
+                R.layout.menu_rounded_character_front,
                 parent,
                 false
             )
@@ -62,7 +63,8 @@ class HomeMenuAdapterForCharacters(private val action: (characterItem : Characte
 
 class MenuItemViewHolderForCharacters(view: View): RecyclerView.ViewHolder(view){
 
-    private val image : ImageView = view.findViewById(R.id.menu_item_front)
+    private val image : ImageView = view.findViewById(R.id.menu_rounded_character_front_image)
+    private val text : TextView = view.findViewById(R.id.menu_rounded_character_front_text)
 
     fun bind(item: CharacterItem, action: (CharacterItem) -> Unit){
 
@@ -70,6 +72,7 @@ class MenuItemViewHolderForCharacters(view: View): RecyclerView.ViewHolder(view)
 
         Glide.with(image.context).load(urlImage).into(image)
         image.setOnClickListener { action.invoke(item) }
+        text.text = item.name
 
     }
 }

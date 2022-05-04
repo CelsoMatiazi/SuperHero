@@ -39,6 +39,10 @@ class HomeMenuFourViewModel(
     val newRequestAllowed: MutableLiveData<Boolean>
         get() = _newRequestAllowed
 
+    private val _totalNumberOfComics = MutableLiveData<Int>()
+    val totalNumberOfComics: MutableLiveData<Int>
+        get() = _totalNumberOfComics
+
 
     init {
         itemsSearch = listasPadrao.comics.asSequence().shuffled().take(1).toList()
@@ -60,6 +64,7 @@ class HomeMenuFourViewModel(
                     _returnedComics.postValue(comicConvert)
                     _error.postValue(false)
                     _newRequestAllowed.postValue(true)
+                    _totalNumberOfComics.postValue(it.data.total)
                 }
         }
     }
