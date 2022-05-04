@@ -35,6 +35,10 @@ class HomeMenuFourViewModel(
     val returnedComics: MutableLiveData<List<ComicItem>>
         get() = _returnedComics
 
+    private val _newRequestAllowed = MutableLiveData<Boolean>()
+    val newRequestAllowed: MutableLiveData<Boolean>
+        get() = _newRequestAllowed
+
 
     init {
         itemsSearch = listasPadrao.comics.asSequence().shuffled().take(1).toList()
@@ -43,7 +47,7 @@ class HomeMenuFourViewModel(
     //endregion
 
     //region Carregar os comics:
-    fun loadMarvelComics(comic: String? = null, offset: Int, dateDescriptor: String? = null){
+    fun loadMarvelComics(comic: String? = null, offset: Int, dateDescriptor: String = "thisMonth"){
         viewModelScope.launch(Dispatchers.IO) {
             marvelRepository.fetchComics(comic, offset,dateDescriptor)
                 .onStart { _loading.postValue(true) }
@@ -55,6 +59,7 @@ class HomeMenuFourViewModel(
                     }
                     _returnedComics.postValue(comicConvert)
                     _error.postValue(false)
+                    _newRequestAllowed.postValue(true)
                 }
         }
     }

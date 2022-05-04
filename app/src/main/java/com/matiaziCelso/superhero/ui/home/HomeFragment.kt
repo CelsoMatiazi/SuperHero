@@ -38,7 +38,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                         "Home" -> setFragment(menuOneFragment)
                         "Comics" -> setFragment(menuTwoFragment)
                         "Personagens" -> setFragment(menuThreeFragment)
-                        "Especiais" -> setFragment(menuFourFragment)
+                        "Este mês!" -> setFragment(menuFourFragment)
                     }
                 }
             }

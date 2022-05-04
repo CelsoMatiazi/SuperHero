@@ -25,6 +25,8 @@ class MenuFourFragment : Fragment(R.layout.fragment_home_menu_four){
     private lateinit var loadingState: View
     private lateinit var bannerState: View
     private lateinit var refreshButton: Button
+    private var offset: Int = 0
+    private var newRequest: Boolean = true
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -48,7 +50,8 @@ class MenuFourFragment : Fragment(R.layout.fragment_home_menu_four){
         //endregion
 
         refreshButton.setOnClickListener {
-            viewModel.loadMarvelComics(null,(0 until 200).random())
+            offset+=18
+            viewModel.loadMarvelComics(null,offset)
             bannerState.isVisible = loadingState.isVisible.not()
             observer()
         }
@@ -74,16 +77,19 @@ class MenuFourFragment : Fragment(R.layout.fragment_home_menu_four){
             adapter.updateList(listOfComics)
         }
         viewModel.loading.observe(viewLifecycleOwner){
-            loadingState.isVisible = it
+            loadingState.isVisible = it && comicList.isEmpty().not()
 //            homeState.isVisible = !it
         }
         viewModel.error.observe(viewLifecycleOwner){
             bannerState.isVisible = it
         }
+        viewModel.newRequestAllowed.observe(viewLifecycleOwner){
+            newRequest = it
+        }
     }
 
     private fun setScrollView(){
-        viewModel.loadMarvelComics(null,(0 until 200).random())
+        viewModel.loadMarvelComics(null,offset)
         recycler.run{
             addOnScrollListener(object: RecyclerView.OnScrollListener(){
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -92,9 +98,10 @@ class MenuFourFragment : Fragment(R.layout.fragment_home_menu_four){
                     val totalItemCount = target!!.itemCount
                     val lastVisible = target.findLastVisibleItemPosition()
                     val lastItem = lastVisible + 5 >=totalItemCount
-                    if(totalItemCount>0 && lastItem && loadingState.isVisible.not()){
-//                        viewModel.loadMarvelComics(null,(0 until 1000).random(),"thisMonth")
-                        viewModel.loadMarvelComics(null,0,"thisMonth")
+                    if(totalItemCount>0 && lastItem && newRequest){
+                        offset+=18
+                        !newRequest
+                        viewModel.loadMarvelComics(null,offset)
                     }
                 }
             })
