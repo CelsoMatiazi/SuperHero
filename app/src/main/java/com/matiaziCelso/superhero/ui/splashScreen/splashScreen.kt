@@ -2,12 +2,14 @@ package com.matiaziCelso.superhero.ui.splashScreen
 
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.drawable.AnimationDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Base64
 import android.util.Log
+import android.widget.ImageView
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
@@ -25,6 +27,8 @@ import java.security.MessageDigest
 
 class splashScreen : AppCompatActivity() {
 
+    private lateinit var animation: AnimationDrawable
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
@@ -32,11 +36,17 @@ class splashScreen : AppCompatActivity() {
         this.supportActionBar?.hide()
         window.statusBarColor = ContextCompat.getColor(this, R.color.black)
 
+
+        val imagem = findViewById<ImageView>(R.id.splash_bg_animation)
+
+        imagem.setBackgroundResource(R.drawable.bg_animation_list)
+        animation = imagem.background as AnimationDrawable
+        animation.start()
+
         Handler(Looper.getMainLooper()).postDelayed({
             startActivity(Intent(this, LoginActivity::class.java))
-//            startActivity(Intent(this, TesteDB::class.java))
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
             finish()
-        }, 4000)
+        }, 6000)
     }
 }

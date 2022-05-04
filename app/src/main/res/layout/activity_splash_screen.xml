@@ -8,6 +8,13 @@
     app:layoutDescription="@xml/activity_splash_screen_scene"
     tools:context=".ui.splashScreen.splashScreen">
 
+
+    <ImageView
+        android:id="@+id/splash_bg_animation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+    />
+
     <ImageView
         android:id="@+id/img_1"
         android:layout_width="40dp"

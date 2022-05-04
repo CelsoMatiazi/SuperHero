@@ -20,6 +20,7 @@ import com.matiaziCelso.superhero.data.CartItems
 import com.matiaziCelso.superhero.ui.adapter.ItemsAdapter
 import com.matiaziCelso.superhero.data.mock.ItemsPayMock
 import com.matiaziCelso.superhero.data.models.BoughtItem
+import okhttp3.internal.notifyAll
 
 
 class ItemsFragment : Fragment(R.layout.fragment_itens) {
@@ -29,6 +30,8 @@ class ItemsFragment : Fragment(R.layout.fragment_itens) {
     private lateinit var recycler : RecyclerView
     private lateinit var animation: LottieAnimationView
     private lateinit var emptyItems: ImageView
+    var data = mutableListOf<BoughtItem>()
+    private lateinit var adapter: ItemsAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -37,24 +40,27 @@ class ItemsFragment : Fragment(R.layout.fragment_itens) {
         animation = view.findViewById(R.id.items_anim)
         emptyItems = view.findViewById(R.id.items_isEmpty)
 
-        recycler.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)
+        adapter = ItemsAdapter()
 
+        recycler.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)
+        recycler.adapter = adapter
+
+        animation.isVisible = true
         getPurchasesData()
     }
 
     private fun getPurchasesData(){
         val ref = firebaseDB.getReference(auth.currentUser!!.uid)
         val key = "Purchases"
-        val data = mutableListOf<BoughtItem>()
-
         ref.child(key).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val items = snapshot.getValue<HashMap<String, MutableList<BoughtItem>>>()
+                data = mutableListOf<BoughtItem>()
                 items?.let {
                     it.values.toList().map { purchase ->
                         data.addAll(purchase)
                     }
-                    recycler.adapter = ItemsAdapter(data)
+                    adapter.updateList(data)
                 }
                 animation.isVisible = false
                 emptyItems.isVisible = data.isEmpty()
@@ -64,6 +70,7 @@ class ItemsFragment : Fragment(R.layout.fragment_itens) {
                 Log.d("ITEMS", "ON CANCELLED -> $error")
             }
         })
+
     }
 
 }

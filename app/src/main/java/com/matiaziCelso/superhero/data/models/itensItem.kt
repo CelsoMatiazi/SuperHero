@@ -4,7 +4,7 @@ import com.google.firebase.database.IgnoreExtraProperties
 
 
 @IgnoreExtraProperties
-class BoughtItem(
+data class BoughtItem(
 
     val title: String = "",
     val day: String = "",

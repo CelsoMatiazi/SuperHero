@@ -16,6 +16,7 @@
         <entry key="..\:/SuperHero/app/src/main/res/layout/personagem_circle_layout.xml" value="0.20516304347826086" />
         <entry key="app/src/main/res/drawable/backgroung_header_card_top.xml" value="0.11354166666666667" />
         <entry key="app/src/main/res/drawable/backround_footer_card.xml" value="0.17314814814814813" />
+        <entry key="app/src/main/res/drawable/bg_animation_list.xml" value="0.136" />
         <entry key="app/src/main/res/drawable/border_cardview.xml" value="0.13" />
         <entry key="app/src/main/res/drawable/border_cart_item.xml" value="0.1205" />
         <entry key="app/src/main/res/drawable/cart_date_border.xml" value="0.128" />
@@ -40,7 +41,7 @@
         <entry key="app/src/main/res/layout/activity_card_pay.xml" value="0.20520833333333333" />
         <entry key="app/src/main/res/layout/activity_character_detail.xml" value="0.20520833333333333" />
         <entry key="app/src/main/res/layout/activity_comic_detail.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_help.xml" value="0.20520833333333333" />
+        <entry key="app/src/main/res/layout/activity_help.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.20520833333333333" />
         <entry key="app/src/main/res/layout/activity_loading.xml" value="0.20205128205128206" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.20205128205128206" />
@@ -48,7 +49,7 @@
         <entry key="app/src/main/res/layout/activity_payment.xml" value="0.20520833333333333" />
         <entry key="app/src/main/res/layout/activity_pix_pay.xml" value="0.20520833333333333" />
         <entry key="app/src/main/res/layout/activity_privacy.xml" value="0.20520833333333333" />
-        <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.20205128205128206" />
+        <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.14678899082568808" />
         <entry key="app/src/main/res/layout/activity_user_settings.xml" value="0.18" />
         <entry key="app/src/main/res/layout/cart_item_layout.xml" value="0.3825242718446602" />
         <entry key="app/src/main/res/layout/comic_front.xml" value="0.20520833333333333" />
@@ -56,14 +57,14 @@
         <entry key="app/src/main/res/layout/fragment_cart.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.2" />
         <entry key="app/src/main/res/layout/fragment_home_menu.xml" value="0.20520833333333333" />
-        <entry key="app/src/main/res/layout/fragment_itens.xml" value="0.12" />
+        <entry key="app/src/main/res/layout/fragment_itens.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_like.xml" value="0.11944444444444445" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.20205128205128206" />
         <entry key="app/src/main/res/layout/fragment_menu_four.xml" value="0.20520833333333333" />
         <entry key="app/src/main/res/layout/fragment_menu_three.xml" value="0.20520833333333333" />
         <entry key="app/src/main/res/layout/fragment_menu_two.xml" value="0.20520833333333333" />
         <entry key="app/src/main/res/layout/fragment_register.xml" value="0.20205128205128206" />
-        <entry key="app/src/main/res/layout/fragment_user.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_user.xml" value="0.22" />
         <entry key="app/src/main/res/layout/itens_item_layout.xml" value="0.33" />
         <entry key="app/src/main/res/layout/personagem_circle_layout.xml" value="0.5" />
         <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.20520833333333333" />

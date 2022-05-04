@@ -28,6 +28,7 @@ class UserFragment : Fragment(R.layout.fragment_user) {
     private lateinit var userName : TextView
     private lateinit var userSettings : TextView
     private lateinit var privacy : TextView
+    private lateinit var pagamentos : TextView
     private lateinit var help : TextView
     private lateinit var logout : TextView
     private lateinit var userImg : ImageView
@@ -44,11 +45,10 @@ class UserFragment : Fragment(R.layout.fragment_user) {
 
         auth = FirebaseAuth.getInstance()
 
-        Log.d("FACEBOOK", "email -> ${auth.currentUser?.email}")
-
         userName = view.findViewById(R.id.user_name)
         userImg = view.findViewById(R.id.user_img)
         userSettings = view.findViewById(R.id.menu_1)
+        pagamentos = view.findViewById(R.id.menu_2)
         help = view.findViewById(R.id.menu_3)
         privacy = view.findViewById(R.id.menu_4)
         logout = view.findViewById(R.id.menu_5)
@@ -57,6 +57,17 @@ class UserFragment : Fragment(R.layout.fragment_user) {
         userSettings.setOnClickListener {
             val intent = Intent(context, UserSettingsActivity::class.java)
             startActivity(intent)
+        }
+
+        pagamentos.setOnClickListener {
+            val fragmentTransaction = parentFragmentManager.beginTransaction()
+            fragmentTransaction
+                .setCustomAnimations(
+                    R.anim.enter_left_to_right,
+                    R.anim.exit_left_to_right
+                ).
+                replace(R.id.fragment_container, ItemsFragment())
+            fragmentTransaction.commit()
         }
 
         help.setOnClickListener {

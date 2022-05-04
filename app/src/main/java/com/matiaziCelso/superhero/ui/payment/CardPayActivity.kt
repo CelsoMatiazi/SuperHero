@@ -147,6 +147,7 @@ class CardPayActivity : AppCompatActivity() {
     }
 
     private fun paymentStatusRandom(): Int {
-        return Random.nextInt(-1, 1)
+        val statusList = listOf(-1, 1, 1, 1, 1, 0, -1, 1, 0, 1)
+        return statusList[Random.nextInt(0, 9)]
     }
 }

@@ -1,57 +1,278 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/black"
-    android:padding="15dp"
-    tools:context=".ui.home.user_settings.HelpActivity">
-
-    <ImageView
-        android:id="@+id/help_back_btn"
-        android:layout_width="35dp"
-        android:layout_height="40dp"
-        android:src="@drawable/ic_back_icon_rounded"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-
-    />
+    android:layout_height="match_parent">
 
 
-    <TextView
-        android:id="@+id/help_title"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ajuda"
-        style="@style/white_18_bold"
-        android:textSize="26sp"
-        app:layout_constraintStart_toEndOf="@id/help_back_btn"
-        app:layout_constraintTop_toTopOf="@id/help_back_btn"
-        android:layout_marginStart="20dp"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:background="@color/black"
+        android:padding="15dp"
+        tools:context=".ui.home.user_settings.HelpActivity">
 
-    />
+        <ImageView
+            android:id="@+id/help_back_btn"
+            android:layout_width="35dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_back_icon_rounded"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
 
-    <TextView
-        android:id="@+id/help_item_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/help_back_btn"
-        app:layout_constraintStart_toStartOf="parent"
-        android:text="SuperHero"
-        style="@style/white_18_bold"
-        android:layout_marginTop="20dp"
-    />
+            />
 
-    <TextView
-        android:id="@+id/help_item_1_body"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/help_item_1"
-        app:layout_constraintStart_toStartOf="parent"
-        style="@style/gray_13_regular"
-        android:text="Uma loja virtual de quadrinhos da marvel, onde é possivel navegar por diversos titulos, personagens, pesquisar e favoritar seus quadrinhos favoritos."
 
-    />
+        <TextView
+            android:id="@+id/help_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ajuda"
+            style="@style/white_18_bold"
+            android:textSize="26sp"
+            app:layout_constraintStart_toEndOf="@id/help_back_btn"
+            app:layout_constraintTop_toTopOf="@id/help_back_btn"
+            android:layout_marginStart="20dp"
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            />
+
+        <TextView
+            android:id="@+id/help_item_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/help_back_btn"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="SUPER HERO"
+            style="@style/white_18_bold"
+            android:layout_marginTop="20dp"
+            />
+
+        <TextView
+            android:id="@+id/help_item_1_body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/help_item_1"
+            app:layout_constraintStart_toStartOf="parent"
+            style="@style/gray_13_regular"
+            android:text="Super Hero é um App desenvolvido no curso de Desenvolvimento Android da Digital House, sob a supervisão dos professores Denis Rocha e Jônatas Araújo, com a finalidade de simular o ambiente de  uma loja virtual de quadrinhos, proporcionando uma experiencia de compra, desde a pesquisa de títulos até a finalização com um pagamento fictício."
+
+            />
+
+
+
+        <TextView
+            android:id="@+id/help_item_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/help_item_1_body"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="LOGIN/CADASTRO"
+            style="@style/white_18_bold"
+            android:layout_marginTop="20dp"
+            />
+
+        <TextView
+            android:id="@+id/help_item_2_body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/help_item_2"
+            app:layout_constraintStart_toStartOf="parent"
+            style="@style/gray_13_regular"
+            android:text="Para acessar o App o usuário precisa realizar um cadastro simples informando apenas seu e-mail e definindo uma senha, ou se logar com sua rede social favorita Google/Facebook."
+
+            />
+
+
+        <TextView
+            android:id="@+id/help_item_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/help_item_2_body"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="HOME"
+            style="@style/white_18_bold"
+            android:layout_marginTop="20dp"
+            />
+
+        <TextView
+            android:id="@+id/help_item_3_body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/help_item_3"
+            app:layout_constraintStart_toStartOf="parent"
+            style="@style/gray_13_regular"
+            android:text="Na tela principal são exibidos alguns títulos segmentado por categorias existentes na franquia MARVEL, é possível navegar entre os menus ou realizar a pesquisa de um quadrinho ou personagem especifico, clicando em um quadrinho o usuário é direcionado para uma tela de detalhes, onde são exibidos os detalhes como titulo, preço, personagens relacionados etc..
+É possível favoritar o quadrinho, adicionar ao carrinho ou compartilhar com um amigo."
+
+            />
+
+
+        <TextView
+            android:id="@+id/help_item_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/help_item_3_body"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="FAVORITOS"
+            style="@style/white_18_bold"
+            android:layout_marginTop="20dp"
+            />
+
+        <TextView
+            android:id="@+id/help_item_4_body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/help_item_4"
+            app:layout_constraintStart_toStartOf="parent"
+            style="@style/gray_13_regular"
+            android:text="Na aba favoritos você encontra todos os quadrinhos que foram favoritados em sua pesquisa, podendo remove-lo do favoritos clicando no coração."
+
+            />
+
+
+
+        <TextView
+            android:id="@+id/help_item_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/help_item_4_body"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="CARRINHO"
+            style="@style/white_18_bold"
+            android:layout_marginTop="20dp"
+            />
+
+        <TextView
+            android:id="@+id/help_item_5_body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/help_item_5"
+            app:layout_constraintStart_toStartOf="parent"
+            style="@style/gray_13_regular"
+            android:text="Na aba Carrinho é possível visualizar todos os itens adicionados ao carrinho, é possível remover quadrinhos clicando no X, ou finalizar a compra onde o usuário será levado até a tela de pagamento."
+
+            />
+
+
+        <TextView
+            android:id="@+id/help_item_6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/help_item_5_body"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="PAGAMENTOS"
+            style="@style/white_18_bold"
+            android:layout_marginTop="20dp"
+            />
+
+        <TextView
+            android:id="@+id/help_item_6_body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/help_item_6"
+            app:layout_constraintStart_toStartOf="parent"
+            style="@style/gray_13_regular"
+            android:text="Para finalizar a compra o usuário deve selecionar a forma de pagamento, PIX ou CARTÃO.
+É importante lembrar que tratasse de um aplicativo fictício, onde NENHUM VALOR SERA DEBITADO, o fluxo apenas sugere a simulação de uma compra em um app de loja virtual."
+
+            />
+
+
+        <TextView
+            android:id="@+id/help_item_7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/help_item_6_body"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="PIX"
+            style="@style/white_18_bold"
+            android:layout_marginTop="20dp"
+            />
+
+        <TextView
+            android:id="@+id/help_item_7_body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/help_item_7"
+            app:layout_constraintStart_toStartOf="parent"
+            style="@style/gray_13_regular"
+            android:text="Para finalizar a compra é necessário copiar o código PIX informado na tela e clicar em FINALIZAR PEDIDO, sua compra será concluída quando o pagamento for confirmado."
+
+            />
+
+
+        <TextView
+            android:id="@+id/help_item_8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/help_item_7_body"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="CARTÃO"
+            style="@style/white_18_bold"
+            android:layout_marginTop="20dp"
+            />
+
+        <TextView
+            android:id="@+id/help_item_8_body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/help_item_8"
+            app:layout_constraintStart_toStartOf="parent"
+            style="@style/gray_13_regular"
+            android:text="Para finalizar a compra é necessário preencher os dados do cartão (DADOS FICTÍCIOS) e clicar em FINALIZAR PEDIDO, sua compra será concluída quando o pagamento for confirmado."
+
+            />
+
+        <TextView
+            android:id="@+id/help_item_9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/help_item_8_body"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="COMPRAS"
+            style="@style/white_18_bold"
+            android:layout_marginTop="20dp"
+            />
+
+        <TextView
+            android:id="@+id/help_item_9_body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/help_item_9"
+            app:layout_constraintStart_toStartOf="parent"
+            style="@style/gray_13_regular"
+            android:text="Na aba compras é possível ver todas as transações com titulo, data, valor e seu status."
+
+            />
+
+        <TextView
+            android:id="@+id/help_item_10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/help_item_9_body"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="PERFIL DO USUÁRIO"
+            style="@style/white_18_bold"
+            android:layout_marginTop="20dp"
+            />
+
+        <TextView
+            android:id="@+id/help_item_10_body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/help_item_10"
+            app:layout_constraintStart_toStartOf="parent"
+            style="@style/gray_13_regular"
+            android:text="Na aba de usuário é possível alterar alguns dados cadastrais como foto, nome, telefone e cpf, também é possível ler sobre a politica de privacidade e tirar algumas duvidas no item Ajuda, também é possível clicar em Sair e finalizar sua sessão de login."
+
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
+
+
