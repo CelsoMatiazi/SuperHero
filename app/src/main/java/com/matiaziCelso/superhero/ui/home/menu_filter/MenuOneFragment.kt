@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -38,6 +39,8 @@ class MenuOneFragment : Fragment(R.layout.fragment_home_menu) {
 
     private lateinit var homeState: View
     private lateinit var loadingState: View
+    private lateinit var bannerState: View
+    private lateinit var refreshButton: Button
 
     private lateinit var recycler: RecyclerView
     private lateinit var recycler2: RecyclerView
@@ -68,6 +71,9 @@ class MenuOneFragment : Fragment(R.layout.fragment_home_menu) {
         characterTwoImageReceiver = view.findViewById(R.id.characterTwoImage)
         loadingState = view.findViewById(R.id.home_loading)
         homeState = view.findViewById(R.id.home_body)
+        bannerState = view.findViewById(R.id.home_menu_one_banner)
+        bannerState.isVisible = false
+        refreshButton = view.findViewById(R.id.error_button)
 
         title_0 = view.findViewById(R.id.home_title_0)
         title_1 = view.findViewById(R.id.home_title_1)
@@ -110,6 +116,11 @@ class MenuOneFragment : Fragment(R.layout.fragment_home_menu) {
         requisicaoAPI()
         observer()
 
+        refreshButton.setOnClickListener {
+            requisicaoAPI()
+            observer()
+        }
+
         //region Tornar os personagens em destaque da tela responsivos ao toque:
         characterOne.setOnClickListener {
             if (characterOneReceiver != null) {
@@ -130,9 +141,7 @@ class MenuOneFragment : Fragment(R.layout.fragment_home_menu) {
     private fun observer() {
 
         viewModel.error.observe(viewLifecycleOwner) {
-            if (it) {
-                Toast.makeText(context, "Deu Erro", Toast.LENGTH_SHORT).show()
-            }
+            bannerState.isVisible = it
         }
 
         viewModel.loading.observe(viewLifecycleOwner) {

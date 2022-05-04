@@ -18,13 +18,13 @@ class HomeViewModel(
     private val marvelRepository: MarvelComicsRepository = MarvelComicsRepository.instance,
 ): ViewModel() {
 
-    private var loading5 = true
     private var loading1 = true
     private var loading2 = true
     private var loading3 = true
     private var loading4 = true
+    private var loading5 = true
     private var loading6 = true
-    private val noDescription = "TOP SECRET\nA descrição desse comic é confidencial e seu conteudo é conhecido apenas pelo Pentágono e pela SHILD."
+    private val noDescription = "TOP SECRET\nA descrição desse comic é confidencial e seu conteudo é conhecido apenas pelo Pentágono e pela SHIELD."
     private var itemsSearch = listOf<String>()
 
     private val comicsSearchList = listOf(
@@ -160,6 +160,7 @@ class HomeViewModel(
                     val secondCharacter = convertCharacterItem(it.data.results[Random.nextInt(0,19)])
                     _returnedFirstCharacter.postValue(firstCharacter)
                     _returnedSecondCharacter.postValue(secondCharacter)
+                    _error.postValue(false)
                     }
                 }
         }
@@ -189,12 +190,12 @@ class HomeViewModel(
             6 -> loading6 = false
         }
 
-        _loading.postValue(( loading1 &&
-                             loading2 &&
-                             loading3 &&
-                             loading4 &&
-                             loading5 &&
-                             loading6 && !loading1)
+        _loading.postValue(( loading1 ||
+                             loading2 ||
+                             loading3 ||
+                             loading4 ||
+                             loading5 ||
+                             loading6)
         )
 
     }

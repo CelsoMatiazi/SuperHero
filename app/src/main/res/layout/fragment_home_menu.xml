@@ -22,6 +22,7 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/layout_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp">
@@ -48,7 +49,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/home_recycler_1"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/tab_filter_bar"
                 android:layout_margin="10dp"
 
@@ -87,6 +88,7 @@
             </androidx.cardview.widget.CardView>
 
             <LinearLayout
+                android:id="@+id/layout_2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
@@ -112,7 +114,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/home_recycler_2"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/img_persoangem_1"
                 android:layout_margin="10dp"
 
@@ -121,6 +123,7 @@
 
 
             <LinearLayout
+                android:id="@+id/layout_3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
@@ -146,7 +149,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/home_recycler_3"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 />
 
@@ -165,7 +168,6 @@
                     android:id="@+id/characterTwoImage"
                     android:layout_width="match_parent"
                     android:layout_height="180dp"
-                    android:src="@drawable/iron_man"
                     android:scaleType="fitXY"
                     android:contentDescription="@string/user" />
 
@@ -191,6 +193,7 @@
 
 
             <LinearLayout
+                android:id="@+id/layout_4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -215,12 +218,13 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/home_recycler_4"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 />
 
 
             <LinearLayout
+                android:id="@+id/layout_5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -245,11 +249,12 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/home_recycler_5"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 />
 
             <LinearLayout
+                android:id="@+id/layout_6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -274,7 +279,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/home_recycler_6"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 />
 
@@ -287,6 +292,13 @@
         android:layout_width="match_parent"
         layout="@layout/activity_loading"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+    <include
+        android:id="@+id/home_menu_one_banner"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        layout="@layout/banner_error"
         app:layout_constraintBottom_toBottomOf="parent"
         />
 
