@@ -3,8 +3,8 @@ package com.matiaziCelso.superhero.ui.home
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
-import android.widget.SearchView
-import android.widget.Toast
+import android.widget.ImageView
+import androidx.appcompat.widget.SearchView
 import com.google.android.material.tabs.TabLayout
 import com.matiaziCelso.superhero.R
 import com.matiaziCelso.superhero.ui.home.menu_filter.MenuFourFragment
@@ -20,17 +20,25 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private lateinit var menuTwoFragment: MenuTwoFragment
     private lateinit var menuThreeFragment: MenuThreeFragment
     private lateinit var menuFourFragment: MenuFourFragment
+    private lateinit var searchFragment: SearchFragment
+    private lateinit var searchView: ImageView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         homeMenuFilter = view.findViewById(R.id.home_menu_filter)
+        searchView = view.findViewById(R.id.searchView)
         menuOneFragment = MenuOneFragment()
         menuTwoFragment = MenuTwoFragment()
         menuThreeFragment = MenuThreeFragment()
         menuFourFragment = MenuFourFragment()
+        searchFragment = SearchFragment()
 
         setFragment(menuOneFragment)
+
+        searchView.setOnClickListener{
+            setFragment(searchFragment)
+        }
 
         homeMenuFilter.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
 
