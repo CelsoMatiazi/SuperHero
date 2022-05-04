@@ -3,12 +3,15 @@ package com.matiaziCelso.superhero.ui.home
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.widget.SearchView
+import android.widget.Toast
 import com.google.android.material.tabs.TabLayout
 import com.matiaziCelso.superhero.R
 import com.matiaziCelso.superhero.ui.home.menu_filter.MenuFourFragment
 import com.matiaziCelso.superhero.ui.home.menu_filter.MenuOneFragment
 import com.matiaziCelso.superhero.ui.home.menu_filter.MenuThreeFragment
 import com.matiaziCelso.superhero.ui.home.menu_filter.MenuTwoFragment
+import com.matiaziCelso.superhero.ui.home.search.SearchFragment
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
@@ -17,7 +20,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private lateinit var menuTwoFragment: MenuTwoFragment
     private lateinit var menuThreeFragment: MenuThreeFragment
     private lateinit var menuFourFragment: MenuFourFragment
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

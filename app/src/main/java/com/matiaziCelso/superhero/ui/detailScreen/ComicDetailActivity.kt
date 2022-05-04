@@ -1,6 +1,7 @@
 package com.matiaziCelso.superhero.ui.detailScreen
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -9,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -31,6 +33,7 @@ class ComicDetailActivity : AppCompatActivity() {
     private lateinit var addCartBtn : TextView
     private lateinit var addCartDoneBtn : FrameLayout
     private lateinit var comicFavIcon : ImageView
+    private lateinit var comicShareIcon : ImageView
     private lateinit var recyclerCharacters: RecyclerView
     private lateinit var loadingState : View
     private lateinit var homeState : View
@@ -67,6 +70,7 @@ class ComicDetailActivity : AppCompatActivity() {
         addCartBtn = findViewById(R.id.comic_add_btn)
         addCartDoneBtn = findViewById(R.id.comic_add_done)
         comicFavIcon = findViewById(R.id.comic_fav_icon)
+        comicShareIcon = findViewById(R.id.comic_share_icon)
 
         //endregion
 
@@ -88,6 +92,23 @@ class ComicDetailActivity : AppCompatActivity() {
            setFavIcon(comicItem)
         }
 
+        comicShareIcon.setOnClickListener {
+//            val sendIntent: Intent = Intent().apply {
+//                action = Intent.ACTION_SEND
+//                putExtra(Intent.EXTRA_TEXT,"Deu certo!!")
+//                type = "text/plain"
+//            }
+//            val shareIntent = Intent.createChooser(sendIntent,null)
+//            startActivity(shareIntent)
+
+            val sendIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_STREAM,Uri.parse(comicItem.image))
+                type = "image/*"
+            }
+            startActivity(Intent.createChooser(sendIntent,"Ei! Você já leu ${comicItem.title}?"))
+        }
+
         //Glide.with(banner.context).load(comicItem?.image).into(banner)
         Glide.with(cover.context).load(comicItem.image).into(cover)
         title.text = comicItem.title
@@ -96,14 +117,6 @@ class ComicDetailActivity : AppCompatActivity() {
 
         val recycler = findViewById<RecyclerView>(R.id.comic_mais_recycler)
         recycler.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-
-//        recycler.adapter = HomeAdapter(comicItem.more){
-//            sendComicToDetail(it)
-//        }
-//
-//        if(comicItem.more.isEmpty()){
-//            tagMais.text = ""
-//        }
 
 
         viewModel.loadComicCharacters(comicItem.id)

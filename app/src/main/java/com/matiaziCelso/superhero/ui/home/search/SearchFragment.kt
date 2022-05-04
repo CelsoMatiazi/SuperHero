@@ -158,5 +158,16 @@ class MenuTwoFragment : Fragment(R.layout.fragment_home_menu_two) {
 }
 /*
 if(totalItemCount>0 && lastItem &&loader.isvisible.not()) -> Colocar no observer o loading
+search.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                TODO("Not yet implemented")
+            }
+
+            override fun onQueryTextChange(query: String?): Boolean {
+                TODO("Not yet implemented")
+            }
+
+        })
  */
  */

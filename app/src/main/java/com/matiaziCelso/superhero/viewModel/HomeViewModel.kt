@@ -151,7 +151,7 @@ class HomeViewModel(
     //region Carregar os dois personagens de destaque:
     fun loadComicCharacters(){
         viewModelScope.launch(Dispatchers.IO) {
-            marvelRepository.fetchCharacters((0 until 200).random())
+            marvelRepository.fetchCharacters((0 until 1000).random())
                 .onStart { _loading.postValue(true) }
                 .catch { _error.postValue(true) }
                 .onCompletion { _loading.postValue(false) }
