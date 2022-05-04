@@ -36,6 +36,7 @@ class MenuFourFragment : Fragment(R.layout.fragment_home_menu_four){
         loadingState = view.findViewById(R.id.home_menu_four_loading)
         homeState = view.findViewById(R.id.home_menu_four_body)
         bannerState = view.findViewById(R.id.home_menu_four_banner)
+        bannerState.isVisible = comicList.isEmpty().not()
         refreshButton = view.findViewById(R.id.error_button)
 
         //region Atribuições Recycler
@@ -79,7 +80,7 @@ class MenuFourFragment : Fragment(R.layout.fragment_home_menu_four){
             adapter.updateList(listOfComics)
         }
         viewModel.loading.observe(viewLifecycleOwner){
-            loadingState.isVisible = it && comicList.isEmpty().not()
+            loadingState.isVisible = it
 //            homeState.isVisible = !it
         }
         viewModel.error.observe(viewLifecycleOwner){

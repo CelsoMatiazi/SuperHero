@@ -35,6 +35,7 @@ class MenuThreeFragment : Fragment(R.layout.fragment_home_menu_three){
         loadingState = view.findViewById(R.id.home_menu_three_loading)
         homeState = view.findViewById(R.id.home_menu_three_body)
         bannerState = view.findViewById(R.id.home_menu_three_banner)
+        bannerState.isVisible = characterList.isEmpty().not()
         refreshButton = view.findViewById(R.id.error_button)
 
         //region Atribuições Recycler

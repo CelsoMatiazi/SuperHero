@@ -31,6 +31,7 @@ class MenuTwoFragment : Fragment(R.layout.fragment_home_menu_two){
         loadingState = view.findViewById(R.id.home_menu_two_loading)
         homeState = view.findViewById(R.id.home_menu_two_body)
         bannerState = view.findViewById(R.id.home_menu_two_banner)
+        bannerState.isVisible = comicList.isEmpty().not()
         refreshButton = view.findViewById(R.id.error_button)
 
         //region Atribuições Recycler
