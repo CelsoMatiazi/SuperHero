@@ -15,7 +15,6 @@ data class MarvelComic(
     @SerializedName("thumbnail")
     val images: ComicImage,
     val characters: CharacterList
-    //val images: List<ComicImage>
 )
 
 data class ComicPrice(val price: Double)

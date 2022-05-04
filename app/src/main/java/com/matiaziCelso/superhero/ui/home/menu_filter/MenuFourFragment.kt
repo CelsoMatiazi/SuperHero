@@ -13,13 +13,14 @@ import com.matiaziCelso.superhero.R
 import com.matiaziCelso.superhero.data.models.ComicItem
 import com.matiaziCelso.superhero.ui.adapter.HomeMenuAdapter
 import com.matiaziCelso.superhero.ui.detailScreen.ComicDetailActivity
+import com.matiaziCelso.superhero.viewModel.HomeMenuFourViewModel
 import com.matiaziCelso.superhero.viewModel.HomeMenuTwoViewModel
 
 class MenuFourFragment : Fragment(R.layout.fragment_home_menu_four){
     private lateinit var recycler: RecyclerView
     private lateinit var adapter: HomeMenuAdapter
     private var comicList = mutableListOf<ComicItem>()
-    private val viewModel: HomeMenuTwoViewModel by viewModels()
+    private val viewModel: HomeMenuFourViewModel by viewModels()
     private lateinit var homeState: View
     private lateinit var loadingState: View
     private lateinit var bannerState: View
@@ -28,13 +29,13 @@ class MenuFourFragment : Fragment(R.layout.fragment_home_menu_four){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        loadingState = view.findViewById(R.id.home_menu_two_loading)
-        homeState = view.findViewById(R.id.home_menu_two_body)
-        bannerState = view.findViewById(R.id.home_menu_two_banner)
+        loadingState = view.findViewById(R.id.home_menu_four_loading)
+        homeState = view.findViewById(R.id.home_menu_four_body)
+        bannerState = view.findViewById(R.id.home_menu_four_banner)
         refreshButton = view.findViewById(R.id.error_button)
 
         //region Atribuições Recycler
-        recycler = view.findViewById(R.id.home_menu_two_recycler_1)
+        recycler = view.findViewById(R.id.home_menu_four_recycler_1)
         adapter = HomeMenuAdapter(){
             sendToDetail(it)
         }
@@ -92,7 +93,8 @@ class MenuFourFragment : Fragment(R.layout.fragment_home_menu_four){
                     val lastVisible = target.findLastVisibleItemPosition()
                     val lastItem = lastVisible + 5 >=totalItemCount
                     if(totalItemCount>0 && lastItem && loadingState.isVisible.not()){
-                        viewModel.loadMarvelComics(null,(0 until 1000).random())
+//                        viewModel.loadMarvelComics(null,(0 until 1000).random(),"thisMonth")
+                        viewModel.loadMarvelComics(null,0,"thisMonth")
                     }
                 }
             })

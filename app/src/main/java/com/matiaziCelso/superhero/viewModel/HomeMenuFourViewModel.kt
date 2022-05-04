@@ -43,9 +43,9 @@ class HomeMenuFourViewModel(
     //endregion
 
     //region Carregar os comics:
-    fun loadMarvelComics(comic: String? = null, offset: Int){
+    fun loadMarvelComics(comic: String? = null, offset: Int, dateDescriptor: String? = null){
         viewModelScope.launch(Dispatchers.IO) {
-            marvelRepository.fetchComics(comic, offset)
+            marvelRepository.fetchComics(comic, offset,dateDescriptor)
                 .onStart { _loading.postValue(true) }
                 .catch { _error.postValue(true) }
                 .onCompletion { _loading.postValue(false) }

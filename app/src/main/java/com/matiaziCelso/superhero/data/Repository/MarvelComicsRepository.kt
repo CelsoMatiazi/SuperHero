@@ -11,8 +11,8 @@ import kotlinx.coroutines.flow.flowOn
 
 class MarvelComicsRepository(private val api: MarvelApi = MarvelApi.instance) {
 
-    fun fetchComics(comic: String?, offset: Int) : Flow<ComicsResponse> = flow {
-        emit(api.getMarvelComics(comic,offset))
+    fun fetchComics(comic: String?, offset: Int?, dateDescriptor:String? = null) : Flow<ComicsResponse> = flow {
+        emit(api.getMarvelComics(comic,offset,null, dateDescriptor))
     }.flowOn(Dispatchers.IO)
 
     fun fetchCharacters(offset: Int? = null) : Flow<CharacterResponse> = flow {
