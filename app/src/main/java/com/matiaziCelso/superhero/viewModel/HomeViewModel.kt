@@ -151,13 +151,16 @@ class HomeViewModel(
     //region Carregar os dois personagens de destaque:
     fun loadComicCharacters(){
         viewModelScope.launch(Dispatchers.IO) {
-            marvelRepository.fetchCharacters()
+            marvelRepository.fetchCharacters((0 until 200).random())
                 .onStart { _loading.postValue(true) }
                 .catch { _error.postValue(true) }
                 .onCompletion { _loading.postValue(false) }
                 .collect {
-                    val firstCharacter = convertCharacterItem(it.data.results[Random.nextInt(0,19)])
-                    val secondCharacter = convertCharacterItem(it.data.results[Random.nextInt(0,19)])
+                    val returnedList = it.data.results.map{
+                        convertCharacterItem(it)
+                    }.shuffled()
+                    val firstCharacter = returnedList[0]
+                    val secondCharacter = returnedList[1]
                     _returnedFirstCharacter.postValue(firstCharacter)
                     _returnedSecondCharacter.postValue(secondCharacter)
                     _error.postValue(false)
