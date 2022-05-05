@@ -1,9 +1,12 @@
 package com.matiaziCelso.superhero.ui.detailScreen
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
@@ -94,21 +97,22 @@ class ComicDetailActivity : AppCompatActivity() {
         }
 
         comicShareIcon.setOnClickListener {
-//            val sendIntent: Intent = Intent().apply {
-//                action = Intent.ACTION_SEND
-//                putExtra(Intent.EXTRA_TEXT,"Deu certo!!")
-//                type = "text/plain"
-//            }
-//            val shareIntent = Intent.createChooser(sendIntent,null)
-//            startActivity(shareIntent)
-
             val sendIntent: Intent = Intent().apply {
                 action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_STREAM,Uri.parse(comicItem.image))
-                type = "image/*"
+                putExtra(Intent.EXTRA_TEXT,"Ei! Você já leu ${comicItem.title}?")
+                type = "text/plain"
             }
-            startActivity(Intent.createChooser(sendIntent,"Ei! Você já leu ${comicItem.title}?"))
+            val shareIntent = Intent.createChooser(sendIntent,null)
+            startActivity(shareIntent)
+//            val screen = printScreen(cover)
+//            val sendIntent: Intent = Intent().apply {
+//                action = Intent.ACTION_SEND
+//                putExtra(Intent.EXTRA_STREAM,screen)
+//                type = "image/jpeg"
+//            }
+//            startActivity(Intent.createChooser(sendIntent,""))
         }
+
 
         //Glide.with(banner.context).load(comicItem?.image).into(banner)
         Glide.with(cover.context).load(comicItem.image).into(cover)
@@ -190,5 +194,17 @@ class ComicDetailActivity : AppCompatActivity() {
 
         }
 
+    }
+    private fun printScreen(view: View): Bitmap? {
+        var screen: Bitmap? = null
+        try{
+            screen = Bitmap.createBitmap(view.measuredWidth, view.measuredHeight, Bitmap.Config.ARGB_8888)
+            val canvas = Canvas(screen)
+            view.draw(canvas)
+        } catch (e: Exception){
+            Log.e("IMAGE_ERROR", e.message.toString())
+        }
+
+        return screen
     }
 }
