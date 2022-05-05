@@ -58,11 +58,11 @@ class ComicDetailViewModel(private val marvelRepository: MarvelComicsRepository 
                     _returnedCharacters.postValue(characterConvert)
                     if (characterConvert.isEmpty()) {
                         loadAleatoryCharacters()
-                        loadMoreComics(suggestionId)
+                    //Se o comic não tem personagens, chamo essa função que já retorna os personagens e os comics relacionados a estes.
                     }
                     else{
-                        val shuffledCharacterConvert = characterConvert.shuffled()
-                        loadMoreComics(shuffledCharacterConvert[0].id)
+                        loadMoreComics(characterConvert.shuffled()[0].id)
+                        //Se o comic tem os personagens, basta fazer a requisição dos comics relacionados.
                     }
                 }
         }
@@ -80,6 +80,8 @@ class ComicDetailViewModel(private val marvelRepository: MarvelComicsRepository 
                     }
                     _returnedCharacters.postValue(aleatoryCharacterConvert.shuffled())
                     _wasEmpty.postValue("Conheça também!")
+                    suggestionId = aleatoryCharacterConvert.shuffled()[0].id
+                    loadMoreComics(suggestionId)
                 }
         }
     }
@@ -111,7 +113,6 @@ class ComicDetailViewModel(private val marvelRepository: MarvelComicsRepository 
                     }
                     _returnedComics.postValue(comicConvert)
                     _error.postValue(false)
-                    suggestionId = comicConvert.shuffled()[0].id
                 }
         }
     }
