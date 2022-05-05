@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import com.matiaziCelso.superhero.R
 
 class PaymentActivity : AppCompatActivity() {
@@ -17,6 +18,7 @@ class PaymentActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_payment)
         this.supportActionBar?.hide()
+        window.statusBarColor = ContextCompat.getColor(this, R.color.lightGreen)
 
         card = findViewById(R.id.payment_card_1)
         pix = findViewById(R.id.payment_card_2)

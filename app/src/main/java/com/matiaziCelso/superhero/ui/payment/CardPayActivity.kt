@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.textfield.TextInputEditText
@@ -42,6 +43,7 @@ class CardPayActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_card_pay)
         supportActionBar?.hide()
+        window.statusBarColor = ContextCompat.getColor(this, R.color.lightGreen)
 
         backBtn = findViewById(R.id.card_pay_back_btn)
         cardName = findViewById(R.id.card_pay_name_txt)

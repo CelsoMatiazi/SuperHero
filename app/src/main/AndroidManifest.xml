@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SuperHero">
         <activity
+            android:name=".ui.home.user_settings.SecretActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.payment.CardPayActivity"
             android:exported="false" />
         <activity

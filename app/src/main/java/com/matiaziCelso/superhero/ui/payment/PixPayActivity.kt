@@ -13,6 +13,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.airbnb.lottie.LottieAnimationView
 import com.google.android.material.textfield.TextInputEditText
@@ -45,6 +46,7 @@ class PixPayActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pix_pay)
         supportActionBar?.hide()
+        window.statusBarColor = ContextCompat.getColor(this, R.color.lightGreen)
 
         pixCode = findViewById(R.id.pix_pay_txt)
         inputText = findViewById(R.id.pix_pay_input)
