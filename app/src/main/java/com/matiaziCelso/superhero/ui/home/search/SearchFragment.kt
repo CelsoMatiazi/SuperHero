@@ -37,15 +37,15 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        loadingState = view.findViewById(R.id.home_menu_four_loading)
-        homeState = view.findViewById(R.id.home_menu_four_body)
-        bannerState = view.findViewById(R.id.home_menu_four_banner)
+        loadingState = view.findViewById(R.id.home_menu_search_loading)
+        homeState = view.findViewById(R.id.home_menu_search_body)
+        bannerState = view.findViewById(R.id.home_menu_search_banner)
         bannerState.isVisible = comicList.isEmpty().not()
         refreshButton = view.findViewById(R.id.error_button)
         searchView = view.findViewById(R.id.searchView_search)
 
         //region Atribuições Recycler
-        recycler = view.findViewById(R.id.home_menu_four_recycler_1)
+        recycler = view.findViewById(R.id.home_menu_search_recycler_1)
         adapter = HomeMenuAdapter(){
             sendToDetail(it)
         }
@@ -64,21 +64,21 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             observer()
         }
 
-//        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
-//
-//            override fun onQueryTextSubmit(query: String?): Boolean {
-//                viewModel.loadMarvelComics(query,0)
-//                observer()
-//                return false
-//            }
-//
-//            override fun onQueryTextChange(query: String?): Boolean {
-//                viewModel.loadMarvelComics(query,0)
-//                observer()
-//                return false
-//            }
-//
-//        })
+        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                viewModel.loadMarvelComics(query,0)
+                observer()
+                return false
+            }
+
+            override fun onQueryTextChange(query: String?): Boolean {
+                viewModel.loadMarvelComics(query,0)
+                observer()
+                return false
+            }
+
+        })
 //        setScrollView()
         observer()
 
