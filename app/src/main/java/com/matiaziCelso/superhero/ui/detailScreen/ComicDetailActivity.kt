@@ -35,6 +35,7 @@ class ComicDetailActivity : AppCompatActivity() {
     private lateinit var comicFavIcon : ImageView
     private lateinit var comicShareIcon : ImageView
     private lateinit var recyclerCharacters: RecyclerView
+    private lateinit var recyclerComics: RecyclerView
     private lateinit var loadingState : View
     private lateinit var homeState : View
     private lateinit var tagMais: TextView
@@ -64,6 +65,8 @@ class ComicDetailActivity : AppCompatActivity() {
 
         recyclerCharacters = findViewById<RecyclerView>(R.id.comic_personagens_recycler)
         recyclerCharacters.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        recyclerComics = findViewById<RecyclerView>(R.id.comic_mais_recycler)
+        recyclerComics.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
         addCartBtn = findViewById(R.id.comic_add_btn)
         addCartDoneBtn = findViewById(R.id.comic_add_done)
@@ -112,10 +115,6 @@ class ComicDetailActivity : AppCompatActivity() {
         title.text = comicItem.title
         price.text = "R$ ${String.format("%.2f", comicItem.value)}"
         description.text = comicItem.description
-
-        val recycler = findViewById<RecyclerView>(R.id.comic_mais_recycler)
-        recycler.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-
 
         viewModel.loadComicCharacters(comicItem.id)
         observer()
@@ -183,6 +182,12 @@ class ComicDetailActivity : AppCompatActivity() {
 
         viewModel.wasEmpty.observe(this){
             tagPersonagens.text = it
+        }
+        viewModel.returnedComics.observe(this){listOfComics ->
+            recyclerComics.adapter = HomeAdapter(listOfComics) {character ->
+                sendComicToDetail(character)
+            }
+
         }
 
     }

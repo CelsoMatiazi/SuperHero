@@ -21,6 +21,7 @@ class ComicDetailViewModel(private val marvelRepository: MarvelComicsRepository 
 
     private val noDescription =
         "TOP SECRET\nA descrição desse heroi é confidencial e seu conteudo é conhecido apenas pelo Pentágono e pela SHIELD."
+    private var suggestion: Int = 0
 
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean>
@@ -33,10 +34,6 @@ class ComicDetailViewModel(private val marvelRepository: MarvelComicsRepository 
     private val _wasEmpty = MutableLiveData<String>()
     val wasEmpty: LiveData<String>
         get() = _wasEmpty
-
-    private val _suggestion = MutableLiveData<String>()
-    val suggestion: LiveData<String>
-        get() = _suggestion
 
     private val _returnedCharacters = MutableLiveData<List<CharacterItem>>()
     val returnedCharacters: MutableLiveData<List<CharacterItem>>
@@ -61,8 +58,8 @@ class ComicDetailViewModel(private val marvelRepository: MarvelComicsRepository 
                     _returnedCharacters.postValue(characterConvert)
                     if (characterConvert.isEmpty()) {
                         loadAleatoryCharacters()
-//                        loadMoreComics()
                     }
+                    loadMoreComics(1011334)
                 }
         }
     }
@@ -77,10 +74,8 @@ class ComicDetailViewModel(private val marvelRepository: MarvelComicsRepository 
                     val characterConvert: List<CharacterItem> = it.data.results.map { character ->
                         convertCharacterItem(character)
                     }
-                    val number = (characterConvert.indices).random()
                     _returnedCharacters.postValue(characterConvert.shuffled())
                     _wasEmpty.postValue("Conheça também!")
-                    _suggestion.postValue(characterConvert[number].name)
                 }
         }
     }
@@ -100,9 +95,9 @@ class ComicDetailViewModel(private val marvelRepository: MarvelComicsRepository 
     //endregion
 
     //region Carregar os comics:
-    private fun loadMoreComics(comic: String){
+    private fun loadMoreComics(characterId: Int){
         viewModelScope.launch(Dispatchers.IO) {
-            marvelRepository.fetchComics(comic,null)
+            marvelRepository.fetchCharacterComics(1011334)
                 .onStart { _loading.postValue(true) }
                 .catch { _error.postValue(true) }
                 .onCompletion { _loading.postValue(false) }
