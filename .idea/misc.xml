@@ -4,6 +4,15 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.11197916666666667" />
+        <entry key="..\:/SuperHero/app/src/main/res/drawable/backround_footer_card.xml" value="0.14" />
+        <entry key="..\:/SuperHero/app/src/main/res/drawable/ic_cart.xml" value="0.14" />
+        <entry key="..\:/SuperHero/app/src/main/res/drawable/ic_heart_border.xml" value="0.14" />
+        <entry key="..\:/SuperHero/app/src/main/res/drawable/ic_home.xml" value="0.14" />
+        <entry key="..\:/SuperHero/app/src/main/res/drawable/ic_like.xml" value="0.14" />
+        <entry key="..\:/SuperHero/app/src/main/res/drawable/rounded_outline.xml" value="0.14" />
+        <entry key="..\:/SuperHero/app/src/main/res/drawable/search_bar_border.xml" value="0.14" />
+        <entry key="..\:/SuperHero/app/src/main/res/drawable/search_icon.xml" value="0.14" />
+        <entry key="..\:/SuperHero/app/src/main/res/drawable/tabs_selector.xml" value="0.14" />
         <entry key="..\:/SuperHero/app/src/main/res/layout/activity_character_detail.xml" value="0.20516304347826086" />
         <entry key="..\:/SuperHero/app/src/main/res/layout/activity_comic_detail.xml" value="0.25" />
         <entry key="..\:/SuperHero/app/src/main/res/layout/activity_home.xml" value="0.15081521739130435" />

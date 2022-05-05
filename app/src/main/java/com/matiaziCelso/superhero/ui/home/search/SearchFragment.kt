@@ -1,5 +1,6 @@
 package com.matiaziCelso.superhero.ui.home.search
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -18,9 +19,13 @@ import com.matiaziCelso.superhero.R
 import com.matiaziCelso.superhero.data.models.ComicItem
 import com.matiaziCelso.superhero.ui.adapter.HomeMenuAdapter
 import com.matiaziCelso.superhero.ui.detailScreen.ComicDetailActivity
+import com.matiaziCelso.superhero.ui.home.HomeFragment
+import com.matiaziCelso.superhero.ui.home.menu_filter.MenuOneFragment
 import com.matiaziCelso.superhero.viewModel.SearchViewModel
+import java.lang.RuntimeException
 
 class SearchFragment : Fragment(R.layout.fragment_search) {
+    private var listener: ISearch? = null
     private lateinit var recycler: RecyclerView
     private lateinit var adapter: HomeMenuAdapter
     private var comicList = mutableListOf<ComicItem>()
@@ -35,6 +40,15 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     private var totalOfResults: Int = 0
     private var querySearch: String? = null
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is ISearch) {
+            listener = context
+        } else {
+            throw RuntimeException(context.toString() + "ISearch não implementado")
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -44,6 +58,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         bannerState.isVisible = comicList.isEmpty().not()
         refreshButton = view.findViewById(R.id.error_button)
         searchView = view.findViewById(R.id.searchView_search)
+        val backBtn = view.findViewById<ImageView>(R.id.search_back_btn)
 
         //region Atribuições Recycler
         recycler = view.findViewById(R.id.home_menu_search_recycler_1)
@@ -54,12 +69,17 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         recycler.layoutManager = GridLayoutManager(view.context,3)
         //endregion
 
+        //region Botões
         refreshButton.setOnClickListener {
             offset+=19
             viewModel.loadMarvelComics(querySearch,offset)
             bannerState.isVisible = loadingState.isVisible.not()
             observer()
         }
+        backBtn.setOnClickListener {
+            listener?.navigateTo(HomeFragment())
+        }
+        //endregion
 
         //region Search
         searchView.isIconified = false
@@ -74,7 +94,9 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
             override fun onQueryTextChange(query: String?): Boolean {
                 resetAttributions(query)
-                viewModel.loadMarvelComics(query,0)
+                if(query != ""){
+                    viewModel.loadMarvelComics(query,0)
+                }
                 observer()
                 return false
             }
@@ -98,7 +120,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             adapter.updateList(listOfComics)
         }
         viewModel.loading.observe(viewLifecycleOwner){
-            loadingState.isVisible = it
+            loadingState.isVisible = false
         }
         viewModel.error.observe(viewLifecycleOwner){
             bannerState.isVisible = it

@@ -46,10 +46,6 @@ class HomeMenuAdapter(private val action: (comicItem : ComicItem) -> Unit): Recy
         return diffUtil.currentList
     }
 
-    fun resetList(newList: List<ComicItem>){
-        diffUtil.submitList(newList)
-    }
-
     companion object{
         val DIFF_UTIL = object: DiffUtil.ItemCallback<ComicItem>(){
             override fun areItemsTheSame(oldItem: ComicItem, newItem: ComicItem): Boolean {

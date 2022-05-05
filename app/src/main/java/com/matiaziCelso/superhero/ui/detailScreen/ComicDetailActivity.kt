@@ -37,7 +37,6 @@ class ComicDetailActivity : AppCompatActivity() {
     private lateinit var recyclerCharacters: RecyclerView
     private lateinit var loadingState : View
     private lateinit var homeState : View
-
     private var database: AppDatabase
 
     init{
