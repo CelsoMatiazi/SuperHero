@@ -43,7 +43,27 @@ class CharacterDetailViewModel(private val marvelRepository: MarvelComicsReposit
                     val comicConvert: List<ComicItem> = it.data.results.map { comic ->
                         convertComicItem(comic)
                     }
+                    if(comicConvert.isEmpty()){
+                        loadAleatoryComics()
+                    }
+                    else{
+                        _returnedComics.postValue(comicConvert)
+                    }
+                }
+        }
+    }
+    private fun loadAleatoryComics(){
+        viewModelScope.launch(Dispatchers.IO) {
+            marvelRepository.fetchComics()
+                .onStart { _loading.postValue(true) }
+                .catch { _error.postValue(true) }
+                .onCompletion { _loading.postValue(false) }
+                .collect {
+                    val comicConvert: List<ComicItem> = it.data.results.map { comic ->
+                        convertComicItem(comic)
+                    }
                     _returnedComics.postValue(comicConvert)
+                    _error.postValue(false)
                 }
         }
     }

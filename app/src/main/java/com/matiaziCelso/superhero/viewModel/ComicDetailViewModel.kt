@@ -55,12 +55,12 @@ class ComicDetailViewModel(private val marvelRepository: MarvelComicsRepository 
                     val characterConvert: List<CharacterItem> = it.data.results.map { character ->
                         convertCharacterItem(character)
                     }
-                    _returnedCharacters.postValue(characterConvert)
                     if (characterConvert.isEmpty()) {
                         loadAleatoryCharacters()
                     //Se o comic não tem personagens, chamo essa função que já retorna os personagens e os comics relacionados a estes.
                     }
                     else{
+                        _returnedCharacters.postValue(characterConvert)
                         loadMoreComics(characterConvert.shuffled()[0].id)
                         //Se o comic tem os personagens, basta fazer a requisição dos comics relacionados.
                     }
@@ -104,6 +104,27 @@ class ComicDetailViewModel(private val marvelRepository: MarvelComicsRepository 
     private fun loadMoreComics(characterId: Int){
         viewModelScope.launch(Dispatchers.IO) {
             marvelRepository.fetchCharacterComics(characterId)
+                .onStart { _loading.postValue(true) }
+                .catch { _error.postValue(true) }
+                .onCompletion { _loading.postValue(false) }
+                .collect {
+                    val comicConvert: List<ComicItem> = it.data.results.map { comic ->
+                        convertComicItem(comic)
+                    }
+
+                    if(comicConvert.isEmpty()){
+                        loadAleatoryComics()
+                    }
+                    else{
+                        _returnedComics.postValue(comicConvert)
+                        _error.postValue(false)
+                    }
+                }
+        }
+    }
+    private fun loadAleatoryComics(){
+        viewModelScope.launch(Dispatchers.IO) {
+            marvelRepository.fetchComics()
                 .onStart { _loading.postValue(true) }
                 .catch { _error.postValue(true) }
                 .onCompletion { _loading.postValue(false) }
