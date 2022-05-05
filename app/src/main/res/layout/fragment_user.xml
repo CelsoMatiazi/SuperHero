@@ -1,171 +1,197 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="250dp"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/user_border"
-    android:layout_gravity="end"
-    android:layout_marginTop="10dp"
-    android:layout_marginBottom="10dp">
+    android:orientation="vertical"
+    android:background="@color/black">
 
 
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/img_user"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/items_anim"
+        android:layout_width="470dp"
+        android:layout_height="match_parent"
+        app:lottie_rawRes="@raw/face_scaner_anim"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        android:elevation="0dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="50dp"
-        android:elevation="3dp"
-        app:cardCornerRadius="90dp">
+    />
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/user_loader_anim"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:lottie_rawRes="@raw/load_user"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            android:elevation="5dp"
-        />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="250dp"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:background="@drawable/user_border"
+        android:layout_gravity="end"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
 
-        <ImageView
-            android:id="@+id/user_img"
-            android:elevation="0dp"
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/img_user"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            tools:src="@drawable/img_user"
-            android:scaleType="centerCrop"
-            android:contentDescription="@string/foto_do_usuario"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="50dp"
+            android:elevation="3dp"
+            app:cardCornerRadius="90dp">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/user_loader_anim"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:lottie_rawRes="@raw/load_user"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                android:elevation="5dp"
+                />
+
+            <ImageView
+                android:id="@+id/user_img"
+                android:elevation="0dp"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                tools:src="@drawable/img_user"
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/foto_do_usuario"
+                />
+        </androidx.cardview.widget.CardView>
+
+
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/img_user"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="Jose da Silva"
+            android:textColor="@color/gray"
+            android:layout_marginTop="15dp"
+            />
+
+
+        <View
+            android:id="@+id/divider_1"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/user_name"
+            android:layout_marginTop="30dp"
+            />
+
+        <TextView
+            android:id="@+id/menu_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/divider_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="15dp"
+            android:text="Dados Pessoais"
+            android:textColor="@color/gray"/>
+
+        <View
+            android:id="@+id/divider_2"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/menu_1"
+            android:layout_marginTop="20dp"
+            />
+
+        <TextView
+            android:id="@+id/menu_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/divider_2"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="15dp"
+            android:text="Pagamentos"
+            android:textColor="@color/gray"/>
+
+
+        <View
+            android:id="@+id/divider_3"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/menu_2"
+            android:layout_marginTop="20dp"
+            />
+
+        <TextView
+            android:id="@+id/menu_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/divider_3"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="15dp"
+            android:text="Ajuda"
+            android:textColor="@color/gray"/>
+
+        <View
+            android:id="@+id/divider_4"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/menu_3"
+            android:layout_marginTop="20dp"
+            />
+
+        <TextView
+            android:id="@+id/menu_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/divider_4"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="15dp"
+            android:text="Politica de privacidade"
+            android:textColor="@color/gray"/>
+
+        <View
+            android:id="@+id/divider_5"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/menu_4"
+            android:layout_marginTop="20dp"
+            />
+
+        <TextView
+            android:id="@+id/menu_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/divider_5"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="15dp"
+            android:text="Sair"
+            android:textColor="@color/gray"/>
+
+        <View
+            android:id="@+id/divider_6"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/menu_5"
+            android:layout_marginTop="20dp"
         />
-    </androidx.cardview.widget.CardView>
 
-
-    <TextView
-        android:id="@+id/user_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/img_user"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:text="Jose da Silva"
-        android:textColor="@color/gray"
-        android:layout_marginTop="15dp"
-    />
-
-
-    <View
-        android:id="@+id/divider_1"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/user_name"
-        android:layout_marginTop="30dp"
-    />
-
-    <TextView
-        android:id="@+id/menu_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/divider_1"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="15dp"
-        android:text="Dados Pessoais"
-        android:textColor="@color/gray"/>
-
-    <View
-        android:id="@+id/divider_2"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/menu_1"
-        android:layout_marginTop="20dp"
-        />
-
-    <TextView
-        android:id="@+id/menu_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/divider_2"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="15dp"
-        android:text="Pagamento"
-        android:textColor="@color/gray"/>
-
-
-    <View
-        android:id="@+id/divider_3"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/menu_2"
-        android:layout_marginTop="20dp"
-        />
-
-    <TextView
-        android:id="@+id/menu_3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/divider_3"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="15dp"
-        android:text="Ajuda"
-        android:textColor="@color/gray"/>
-
-    <View
-        android:id="@+id/divider_4"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/menu_3"
-        android:layout_marginTop="20dp"
-        />
-
-    <TextView
-        android:id="@+id/menu_4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/divider_4"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="15dp"
-        android:text="Politica de privacidade"
-        android:textColor="@color/gray"/>
-
-    <View
-        android:id="@+id/divider_5"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/menu_4"
-        android:layout_marginTop="20dp"
-        />
-
-    <TextView
-        android:id="@+id/menu_5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/divider_5"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="15dp"
-        android:text="Sair"
-        android:textColor="@color/gray"/>
-
-    <View
-        android:id="@+id/divider_6"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/menu_5"
-        android:layout_marginTop="20dp"
-        />
-
-
-
-
-
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
