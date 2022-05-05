@@ -58,8 +58,12 @@ class ComicDetailViewModel(private val marvelRepository: MarvelComicsRepository 
                     _returnedCharacters.postValue(characterConvert)
                     if (characterConvert.isEmpty()) {
                         loadAleatoryCharacters()
+                        loadMoreComics(1009368)
                     }
-                    loadMoreComics(1011334)
+                    else{
+                        val shuffledCharacterConvert = characterConvert.shuffled()
+                        loadMoreComics(shuffledCharacterConvert[0].id)
+                    }
                 }
         }
     }
@@ -71,10 +75,10 @@ class ComicDetailViewModel(private val marvelRepository: MarvelComicsRepository 
                 .catch { _error.postValue(true) }
                 .onCompletion { _loading.postValue(false) }
                 .collect {
-                    val characterConvert: List<CharacterItem> = it.data.results.map { character ->
+                    val aleatoryCharacterConvert: List<CharacterItem> = it.data.results.map { character ->
                         convertCharacterItem(character)
                     }
-                    _returnedCharacters.postValue(characterConvert.shuffled())
+                    _returnedCharacters.postValue(aleatoryCharacterConvert.shuffled())
                     _wasEmpty.postValue("Conheça também!")
                 }
         }
@@ -97,7 +101,7 @@ class ComicDetailViewModel(private val marvelRepository: MarvelComicsRepository 
     //region Carregar os comics:
     private fun loadMoreComics(characterId: Int){
         viewModelScope.launch(Dispatchers.IO) {
-            marvelRepository.fetchCharacterComics(1011334)
+            marvelRepository.fetchCharacterComics(characterId)
                 .onStart { _loading.postValue(true) }
                 .catch { _error.postValue(true) }
                 .onCompletion { _loading.postValue(false) }
