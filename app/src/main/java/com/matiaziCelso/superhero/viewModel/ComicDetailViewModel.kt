@@ -21,7 +21,7 @@ class ComicDetailViewModel(private val marvelRepository: MarvelComicsRepository 
 
     private val noDescription =
         "TOP SECRET\nA descrição desse heroi é confidencial e seu conteudo é conhecido apenas pelo Pentágono e pela SHIELD."
-    private var suggestion: Int = 0
+    private var suggestionId: Int = 1009368
 
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean>
@@ -58,7 +58,7 @@ class ComicDetailViewModel(private val marvelRepository: MarvelComicsRepository 
                     _returnedCharacters.postValue(characterConvert)
                     if (characterConvert.isEmpty()) {
                         loadAleatoryCharacters()
-                        loadMoreComics(1009368)
+                        loadMoreComics(suggestionId)
                     }
                     else{
                         val shuffledCharacterConvert = characterConvert.shuffled()
@@ -111,6 +111,7 @@ class ComicDetailViewModel(private val marvelRepository: MarvelComicsRepository 
                     }
                     _returnedComics.postValue(comicConvert)
                     _error.postValue(false)
+                    suggestionId = comicConvert.shuffled()[0].id
                 }
         }
     }
