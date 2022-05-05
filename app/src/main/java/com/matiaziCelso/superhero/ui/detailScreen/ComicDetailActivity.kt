@@ -37,11 +37,9 @@ class ComicDetailActivity : AppCompatActivity() {
     private lateinit var recyclerCharacters: RecyclerView
     private lateinit var loadingState : View
     private lateinit var homeState : View
-    private var database: AppDatabase
-
-    init{
-        database = DataBaseFactory.getAppDataBase()
-    }
+    private lateinit var tagMais: TextView
+    private lateinit var tagPersonagens: TextView
+    private var database: AppDatabase = DataBaseFactory.getAppDataBase()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,7 +57,8 @@ class ComicDetailActivity : AppCompatActivity() {
         val title = findViewById<TextView>(R.id.comic_detail_title)
         val price = findViewById<TextView>(R.id.comic_detail_price)
         val description = findViewById<TextView>(R.id.comic_description)
-        val tagMais = findViewById<TextView>(R.id.comic_mais)
+        tagMais = findViewById<TextView>(R.id.comic_mais)
+        tagPersonagens = findViewById<TextView>(R.id.comic_personagens)
         loadingState = findViewById<View>(R.id.comicDetail_loading)
         homeState = findViewById<View>(R.id.comicDetail_screen)
 
@@ -175,10 +174,15 @@ class ComicDetailActivity : AppCompatActivity() {
             recyclerCharacters.adapter = CharactersAdapter(listOfCharacter) {character ->
                 sendCharacterToDetail(character)
             }
+
         }
         viewModel.loading.observe(this){
             loadingState.isVisible = it
             homeState.isVisible = !it
+        }
+
+        viewModel.wasEmpty.observe(this){
+            tagPersonagens.text = it
         }
 
     }
