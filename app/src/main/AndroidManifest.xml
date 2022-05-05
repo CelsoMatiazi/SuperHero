@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SuperHero">
         <activity
+            android:name=".ui.detailScreen.WhatsApp"
+            android:exported="false" />
+        <activity
             android:name=".ui.TesteDB"
             android:exported="false" />
         <activity
