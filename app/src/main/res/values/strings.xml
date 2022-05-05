@@ -14,7 +14,7 @@
     <string name="home">Home</string>
     <string name="populares">Populares</string>
     <string name="lan_amentos">Lançamentos</string>
-    <string name="especiais">Especiais</string>
+    <string name="especiais">Este mês!</string>
     <string name="capitao_america">Capitão America</string>
     <string name="user">user</string>
     <string name="avengers">Avengers</string>
@@ -32,6 +32,9 @@
     <string name="escolha_a_forma_de_pagamento">Escolha a forma de pagamento.</string>
     <string name="pix">Código Pix</string>
     <string name="dados_pessoais">Dados Pessoais</string>
+    <string name="mensagem_erro">Desculpe, ocorreu um erro.</string>
+    <string name="recarregar">Recarregar</string>
+    <string name="queryHint_pesquisa">Pesquise por gibi, personagem...</string>
 
 
 </resources>

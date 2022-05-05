@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 //region ComicsResponse
 data class ComicsResponse(val data: Results)
 
-data class Results(val results: List<MarvelComic>)
+data class Results(val offset: Int, val total: Int, val results: List<MarvelComic>)
 
 data class MarvelComic(
     val id: Int,
@@ -15,7 +15,6 @@ data class MarvelComic(
     @SerializedName("thumbnail")
     val images: ComicImage,
     val characters: CharacterList
-    //val images: List<ComicImage>
 )
 
 data class ComicPrice(val price: Double)
@@ -26,9 +25,13 @@ data class CharacterSummary(val resourceURI: String, val name: String)
 
 //region CharactersResponse
 data class CharacterResponse(val data: CharacterResults)
-data class CharacterResults(val results: List<MarvelCharacter>)
+data class CharacterResults(val offset: Int, val results: List<MarvelCharacter>)
 data class MarvelCharacter(val id: Int, val name: String, val description: String? = null, val thumbnail: CharacterImage, val comics: CharacterComics)
 data class CharacterImage(val path: String, val extension: String)
 data class CharacterComics(val items: List<CharacterComicsItems>)
 data class CharacterComicsItems(val resourceURI: String, val name: String)
 //endregion
+
+/*
+http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available
+ */

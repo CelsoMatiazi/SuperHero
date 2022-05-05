@@ -19,6 +19,7 @@ import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.ktx.Firebase
 import com.matiaziCelso.superhero.R
 import com.matiaziCelso.superhero.ui.TesteDB
+import com.matiaziCelso.superhero.ui.home.HomeActivity
 import com.matiaziCelso.superhero.ui.login.LoginActivity
 import com.matiaziCelso.superhero.viewModel.HomeViewModel
 import java.security.MessageDigest
@@ -35,7 +36,6 @@ class splashScreen : AppCompatActivity() {
 
         this.supportActionBar?.hide()
         window.statusBarColor = ContextCompat.getColor(this, R.color.black)
-
 
         val imagem = findViewById<ImageView>(R.id.splash_bg_animation)
 

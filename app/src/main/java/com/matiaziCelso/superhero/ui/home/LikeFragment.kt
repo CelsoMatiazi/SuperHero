@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -60,7 +61,7 @@ class LikeFragment : Fragment(R.layout.fragment_like) {
         items = iniciarFavoritos()
     }
 
-    //@SuppressLint("NotifyDataSetChanged")
+
     private fun showDialog(id: Int){
         val alertDialog = AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle)
         alertDialog
@@ -69,7 +70,6 @@ class LikeFragment : Fragment(R.layout.fragment_like) {
             .setCancelable(false)
             .setPositiveButton("Sim") { _, _ ->
                 removeItem(id)
-//                recycler.adapter?.notifyDataSetChanged()
                 recycler.adapter = FavoriteAdapter(items,{ showDialog(it) },{ sendToDetail(it) })
                 whenItemsIsEmpty()
             }
@@ -93,8 +93,6 @@ class LikeFragment : Fragment(R.layout.fragment_like) {
                 description = it.description,
                 image = it.image,
                 isFavorite = false,
-                more = mutableListOf(),
-                characters = mutableListOf(),
                 id = it.id
             )
         }

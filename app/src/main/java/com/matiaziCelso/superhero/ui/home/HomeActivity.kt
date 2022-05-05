@@ -6,15 +6,18 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.matiaziCelso.superhero.R
 import androidx.core.content.ContextCompat
+import com.matiaziCelso.superhero.ui.home.search.ISearch
+import com.matiaziCelso.superhero.ui.home.search.SearchFragment
 
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity(), ISearch{
 
     private lateinit var homeFragment: HomeFragment
     private lateinit var itemFragment: ItemsFragment
     private lateinit var likeFragment: LikeFragment
     private lateinit var cartFragment: CartFragment
     private lateinit var userFragment: UserFragment
+    private lateinit var searchFragment: SearchFragment
 
     private lateinit var bottomNavigationHome: BottomNavigationView
 
@@ -32,6 +35,7 @@ class HomeActivity : AppCompatActivity() {
         likeFragment = LikeFragment()
         cartFragment = CartFragment()
         userFragment = UserFragment()
+        searchFragment = SearchFragment()
 
         setFragment(homeFragment)
 
@@ -47,7 +51,6 @@ class HomeActivity : AppCompatActivity() {
             }
             true
         }
-
     }
 
     private fun setFragment(fragment: Fragment){
@@ -72,6 +75,10 @@ class HomeActivity : AppCompatActivity() {
                 replace(R.id.fragment_container, fragment)
             fragmentTransaction.commit()
         }
+    }
+
+    override fun navigateTo(fragment: Fragment) {
+        setFragment(fragment)
     }
 
 }

@@ -18,13 +18,13 @@ class HomeViewModel(
     private val marvelRepository: MarvelComicsRepository = MarvelComicsRepository.instance,
 ): ViewModel() {
 
-    private var loading5 = true
     private var loading1 = true
     private var loading2 = true
     private var loading3 = true
     private var loading4 = true
+    private var loading5 = true
     private var loading6 = true
-    private val noDescription = "TOP SECRET\nA descrição desse comic é confidencial e seu conteudo é conhecido apenas pelo Pentágono e pela SHILD."
+    private val noDescription = "TOP SECRET\nA descrição desse comic é confidencial e seu conteudo é conhecido apenas pelo Pentágono e pela SHIELD."
     private var itemsSearch = listOf<String>()
 
     private val comicsSearchList = listOf(
@@ -89,27 +89,27 @@ class HomeViewModel(
 
     //region getComics
     fun getComics1(){
-        loadMarvelComics(itemsSearch[0], _recycler1, 1)
+        loadMarvelComics(itemsSearch[0], _recycler1, 1,1)
     }
 
     fun getComics2(){
-        loadMarvelComics(itemsSearch[1], _recycler2, 2)
+        loadMarvelComics(itemsSearch[1], _recycler2, 2,1)
     }
 
     fun getComics3(){
-        loadMarvelComics(itemsSearch[2], _recycler3, 3)
+        loadMarvelComics(itemsSearch[2], _recycler3, 3,1)
     }
 
     fun getComics4(){
-        loadMarvelComics(itemsSearch[3], _recycler4, 4)
+        loadMarvelComics(itemsSearch[3], _recycler4, 4,1)
     }
 
     fun getComics5(){
-        loadMarvelComics(itemsSearch[4], _recycler5, 5)
+        loadMarvelComics(itemsSearch[4], _recycler5, 5,1)
     }
 
     fun getComics6(){
-        loadMarvelComics(itemsSearch[5], _recycler6, 6)
+        loadMarvelComics(itemsSearch[5], _recycler6, 6,1)
     }
     //endregion
 
@@ -117,10 +117,11 @@ class HomeViewModel(
     private fun loadMarvelComics(
         comic: String,
         recycler: MutableLiveData<List<ComicItem>>,
-        position: Int
+        position: Int,
+        offset: Int
     ){
         viewModelScope.launch(Dispatchers.IO) {
-            marvelRepository.fetchComics(comic)
+            marvelRepository.fetchComics(comic,offset)
                 .onStart { _loading.postValue(true) }
                 .catch { _error.postValue(true) }
                 .onCompletion { loadingStatus(position) }
@@ -142,8 +143,6 @@ class HomeViewModel(
             description = comic.description ?: noDescription,
             value = comic.prices[0].price,
             isFavorite = false,
-            characters = listOf(),
-            more = listOf(),
             id = comic.id
         )
     }
@@ -152,15 +151,19 @@ class HomeViewModel(
     //region Carregar os dois personagens de destaque:
     fun loadComicCharacters(){
         viewModelScope.launch(Dispatchers.IO) {
-            marvelRepository.fetchCharacters()
+            marvelRepository.fetchCharacters((0 until 1000).random())
                 .onStart { _loading.postValue(true) }
                 .catch { _error.postValue(true) }
                 .onCompletion { _loading.postValue(false) }
                 .collect {
-                    val firstCharacter = convertCharacterItem(it.data.results[Random.nextInt(0,19)])
-                    val secondCharacter = convertCharacterItem(it.data.results[Random.nextInt(0,19)])
+                    val returnedList = it.data.results.map{
+                        convertCharacterItem(it)
+                    }.shuffled()
+                    val firstCharacter = returnedList[0]
+                    val secondCharacter = returnedList[1]
                     _returnedFirstCharacter.postValue(firstCharacter)
                     _returnedSecondCharacter.postValue(secondCharacter)
+                    _error.postValue(false)
                     }
                 }
         }
@@ -175,7 +178,6 @@ class HomeViewModel(
             name = character.name,
             image = tempImg.replace("http://", "https://"),
             description =  emptyString(character.description)
-//            comics = character.comics.items
         )
     }
     //endregion
@@ -191,12 +193,12 @@ class HomeViewModel(
             6 -> loading6 = false
         }
 
-        _loading.postValue(( loading1 &&
-                             loading2 &&
-                             loading3 &&
-                             loading4 &&
-                             loading5 &&
-                             loading6 && !loading1)
+        _loading.postValue(( loading1 ||
+                             loading2 ||
+                             loading3 ||
+                             loading4 ||
+                             loading5 ||
+                             loading6)
         )
 
     }

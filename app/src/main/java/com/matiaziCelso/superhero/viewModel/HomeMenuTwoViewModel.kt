@@ -5,9 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.matiaziCelso.superhero.data.Repository.MarvelComicsRepository
-import com.matiaziCelso.superhero.data.models.CharacterItem
-import com.matiaziCelso.superhero.data.models.ComicItem
-import com.matiaziCelso.superhero.data.models.MarvelComic
+import com.matiaziCelso.superhero.data.mock.listasPadrao
+import com.matiaziCelso.superhero.data.models.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
@@ -15,11 +14,15 @@ import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
-class CharacterDetailViewModel(private val marvelRepository: MarvelComicsRepository = MarvelComicsRepository.instance): ViewModel() {
+class HomeMenuTwoViewModel(
+    private val marvelRepository: MarvelComicsRepository = MarvelComicsRepository.instance,
+): ViewModel() {
 
     private val noDescription = "TOP SECRET\nA descrição desse comic é confidencial e seu conteudo é conhecido apenas pelo Pentágono e pela SHIELD."
+    private var itemsSearch = listOf<String>()
 
 
+    //region viewModel
     private val _loading = MutableLiveData(false)
     val loading: LiveData<Boolean>
         get() = _loading
@@ -33,28 +36,16 @@ class CharacterDetailViewModel(private val marvelRepository: MarvelComicsReposit
         get() = _returnedComics
 
 
-    fun loadCharacterComics(characterId: Int){
-        viewModelScope.launch(Dispatchers.IO) {
-            marvelRepository.fetchCharacterComics(characterId)
-                .onStart { _loading.postValue(true) }
-                .catch { _error.postValue(true) }
-                .onCompletion { _loading.postValue(false)}
-                .collect {
-                    val comicConvert: List<ComicItem> = it.data.results.map { comic ->
-                        convertComicItem(comic)
-                    }
-                    if(comicConvert.isEmpty()){
-                        loadAleatoryComics()
-                    }
-                    else{
-                        _returnedComics.postValue(comicConvert)
-                    }
-                }
-        }
+    init {
+        itemsSearch = listasPadrao.comics.asSequence().shuffled().take(1).toList()
     }
-    private fun loadAleatoryComics(){
+
+    //endregion
+
+    //region Carregar os comics:
+    fun loadMarvelComics(comic: String? = null, offset: Int){
         viewModelScope.launch(Dispatchers.IO) {
-            marvelRepository.fetchComics()
+            marvelRepository.fetchComics(comic, offset)
                 .onStart { _loading.postValue(true) }
                 .catch { _error.postValue(true) }
                 .onCompletion { _loading.postValue(false) }
@@ -67,7 +58,7 @@ class CharacterDetailViewModel(private val marvelRepository: MarvelComicsReposit
                 }
         }
     }
-    private fun convertComicItem(comic: MarvelComic): ComicItem {
+    private fun convertComicItem(comic: MarvelComic): ComicItem{
         val tempImg = "${comic.images.path}.${comic.images.extension}"
 
         return ComicItem(
@@ -79,4 +70,13 @@ class CharacterDetailViewModel(private val marvelRepository: MarvelComicsReposit
             id = comic.id
         )
     }
+//endregion
+
+    private fun emptyString(txt: String?): String{
+        return txt?.ifEmpty {
+            noDescription
+        } ?: noDescription
+        return noDescription
+    }
+
 }

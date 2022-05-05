@@ -1,6 +1,9 @@
 package com.matiaziCelso.superhero.ui.detailScreen
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +12,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -33,10 +37,13 @@ class ComicDetailActivity : AppCompatActivity() {
     private lateinit var addCartBtn : TextView
     private lateinit var addCartDoneBtn : FrameLayout
     private lateinit var comicFavIcon : ImageView
+    private lateinit var comicShareIcon : ImageView
     private lateinit var recyclerCharacters: RecyclerView
+    private lateinit var recyclerComics: RecyclerView
     private lateinit var loadingState : View
     private lateinit var homeState : View
-
+    private lateinit var tagMais: TextView
+    private lateinit var tagPersonagens: TextView
     private var database: AppDatabase = DataBaseFactory.getAppDataBase()
 
     private var firebaseDB = FirebaseDatabase.getInstance()
@@ -56,16 +63,20 @@ class ComicDetailActivity : AppCompatActivity() {
         val title = findViewById<TextView>(R.id.comic_detail_title)
         val price = findViewById<TextView>(R.id.comic_detail_price)
         val description = findViewById<TextView>(R.id.comic_description)
-        val tagMais = findViewById<TextView>(R.id.comic_mais)
-        loadingState = findViewById(R.id.comicDetail_loading)
-        homeState = findViewById(R.id.comicDetail_screen)
+        tagMais = findViewById<TextView>(R.id.comic_mais)
+        tagPersonagens = findViewById<TextView>(R.id.comic_personagens)
+        loadingState = findViewById<View>(R.id.comicDetail_loading)
+        homeState = findViewById<View>(R.id.comicDetail_screen)
 
         recyclerCharacters = findViewById(R.id.comic_personagens_recycler)
         recyclerCharacters.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        recyclerComics = findViewById<RecyclerView>(R.id.comic_mais_recycler)
+        recyclerComics.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
         addCartBtn = findViewById(R.id.comic_add_btn)
         addCartDoneBtn = findViewById(R.id.comic_add_done)
         comicFavIcon = findViewById(R.id.comic_fav_icon)
+        comicShareIcon = findViewById(R.id.comic_share_icon)
 
         //endregion
 
@@ -88,22 +99,27 @@ class ComicDetailActivity : AppCompatActivity() {
            setFavIcon(comicItem)
         }
 
+        comicShareIcon.setOnClickListener {
+            val sendIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT,"Ei! Você já leu ${comicItem.title}?")
+                type = "text/plain"
+            }
+            val shareIntent = Intent.createChooser(sendIntent,null)
+            startActivity(shareIntent)
+//            val screen = printScreen(cover)
+//            val sendIntent: Intent = Intent().apply {
+//                action = Intent.ACTION_SEND
+//                putExtra(Intent.EXTRA_STREAM,screen)
+//                type = "image/jpeg"
+//            }
+//            startActivity(Intent.createChooser(sendIntent,""))
+        }
+
         Glide.with(cover.context).load(comicItem.image).into(cover)
         title.text = comicItem.title
         price.text = "R$ ${String.format("%.2f", comicItem.value)}"
         description.text = comicItem.description
-
-        val recycler = findViewById<RecyclerView>(R.id.comic_mais_recycler)
-        recycler.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-
-        recycler.adapter = HomeAdapter(comicItem.more){
-            sendComicToDetail(it)
-        }
-
-        if(comicItem.more.isEmpty()){
-            tagMais.text = ""
-        }
-
 
         viewModel.loadComicCharacters(comicItem.id)
         observer()
@@ -134,7 +150,7 @@ class ComicDetailActivity : AppCompatActivity() {
     private fun setFavIcon(comic: ComicItem){
         val lista = database.favoritos().comicIsInDatabase(comic.id) //Por ora este é o "filtro" que consegui implementar.
 
-        if(lista.isNotEmpty()){
+        if(lista>0){
             comicFavIcon.setImageResource(R.drawable.ic_full_heart)
         }else{
             comicFavIcon.setImageResource(R.drawable.ic_heart_border)
@@ -144,7 +160,7 @@ class ComicDetailActivity : AppCompatActivity() {
     private fun addFavItem(comic: ComicItem){
         val lista = database.favoritos().comicIsInDatabase(comic.id) //Por ora este é o "filtro" que consegui implementar.
 
-        if(lista.isNotEmpty()){
+        if(lista>0){
             database.favoritos().delete(comic.id)
         }else{
             val converter = ListaFavoritosEntity(
@@ -176,11 +192,34 @@ class ComicDetailActivity : AppCompatActivity() {
             recyclerCharacters.adapter = CharactersAdapter(listOfCharacter) {character ->
                 sendCharacterToDetail(character)
             }
+
         }
         viewModel.loading.observe(this){
             loadingState.isVisible = it
             homeState.isVisible = !it
         }
 
+        viewModel.wasEmpty.observe(this){
+            tagPersonagens.text = it
+        }
+        viewModel.returnedComics.observe(this){listOfComics ->
+            recyclerComics.adapter = HomeAdapter(listOfComics) {character ->
+                sendComicToDetail(character)
+            }
+
+        }
+
+    }
+    private fun printScreen(view: View): Bitmap? {
+        var screen: Bitmap? = null
+        try{
+            screen = Bitmap.createBitmap(view.measuredWidth, view.measuredHeight, Bitmap.Config.ARGB_8888)
+            val canvas = Canvas(screen)
+            view.draw(canvas)
+        } catch (e: Exception){
+            Log.e("IMAGE_ERROR", e.message.toString())
+        }
+
+        return screen
     }
 }

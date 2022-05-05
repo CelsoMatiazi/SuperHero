@@ -119,7 +119,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/comic_fav_icon"
                 android:src="@drawable/ic_icon_share"
-
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="15dp"
                 />

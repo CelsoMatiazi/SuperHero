@@ -6,10 +6,6 @@ import android.widget.Button
 import com.matiaziCelso.superhero.R
 import com.matiaziCelso.superhero.data.db.AppDatabase
 import com.matiaziCelso.superhero.data.db.DataBaseFactory
-import com.matiaziCelso.superhero.data.db.entities.CarrinhoEntity
-import com.matiaziCelso.superhero.data.db.entities.FavoritoEntity
-import com.matiaziCelso.superhero.data.db.entities.ListaFavoritosEntity
-import com.matiaziCelso.superhero.data.db.entities.QuadrinhoEntity
 import com.matiaziCelso.superhero.data.models.ComicItem
 
 class TesteDB : AppCompatActivity(R.layout.activity_teste_db) {
@@ -39,8 +35,6 @@ class TesteDB : AppCompatActivity(R.layout.activity_teste_db) {
             value = 19.99,
             image = "https://m.media-amazon.com/images/I/61KFLylOgPL.jpg",
             isFavorite = false,
-            more = mutableListOf(),
-            characters = mutableListOf(),
             id=1
         )
 

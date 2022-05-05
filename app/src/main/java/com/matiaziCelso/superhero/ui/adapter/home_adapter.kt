@@ -9,7 +9,10 @@ import com.bumptech.glide.Glide
 import com.matiaziCelso.superhero.R
 import com.matiaziCelso.superhero.data.models.ComicItem
 
-
+/*
+Este adapter é o utilizado na aba principal da Home, recebendo comics e exibindo. Ele recebe uma lista
+e uma ação, enviando o usuário para uma das duas telas de Detail.
+ */
 
 class HomeAdapter(
     private val items: List<ComicItem>,
