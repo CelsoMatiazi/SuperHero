@@ -119,7 +119,9 @@ class UserFragment : Fragment(R.layout.fragment_user) {
 
     private fun getUserImage(img: String){
         if(img == ""){
-            setImage(auth.currentUser!!.photoUrl!!)
+            if(auth.currentUser?.photoUrl != null){
+                setImage(auth.currentUser!!.photoUrl!!)
+            }
         }else{
             setImage(img)
         }
