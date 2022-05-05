@@ -78,8 +78,8 @@ class HomeActivity : AppCompatActivity(), ISearch{
         }
     }
 
-    override fun navigateTo() {
-        setFragment(searchFragment)
+    override fun navigateTo(fragment: Fragment) {
+        setFragment(fragment)
     }
 
 }

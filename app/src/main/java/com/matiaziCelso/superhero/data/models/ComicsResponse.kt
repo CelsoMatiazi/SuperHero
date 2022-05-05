@@ -31,3 +31,7 @@ data class CharacterImage(val path: String, val extension: String)
 data class CharacterComics(val items: List<CharacterComicsItems>)
 data class CharacterComicsItems(val resourceURI: String, val name: String)
 //endregion
+
+/*
+http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available
+ */

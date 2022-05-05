@@ -13,6 +13,7 @@ import com.matiaziCelso.superhero.ui.home.menu_filter.MenuOneFragment
 import com.matiaziCelso.superhero.ui.home.menu_filter.MenuThreeFragment
 import com.matiaziCelso.superhero.ui.home.menu_filter.MenuTwoFragment
 import com.matiaziCelso.superhero.ui.home.search.ISearch
+import com.matiaziCelso.superhero.ui.home.search.SearchFragment
 import java.lang.RuntimeException
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
@@ -22,6 +23,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private lateinit var menuTwoFragment: MenuTwoFragment
     private lateinit var menuThreeFragment: MenuThreeFragment
     private lateinit var menuFourFragment: MenuFourFragment
+    private lateinit var searchFragment: SearchFragment
     private lateinit var searchView: ImageView
     private var listener: ISearch? = null
 
@@ -42,11 +44,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         menuTwoFragment = MenuTwoFragment()
         menuThreeFragment = MenuThreeFragment()
         menuFourFragment = MenuFourFragment()
+        searchFragment = SearchFragment()
 
         setFragment(menuOneFragment)
 
         searchView.setOnClickListener{
-            listener?.navigateTo()
+            listener?.navigateTo(searchFragment)
         }
 
         homeMenuFilter.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {

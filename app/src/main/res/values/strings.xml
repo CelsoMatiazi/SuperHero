@@ -31,6 +31,7 @@
     <string name="web_token_id">401208676758-2ib0ejkbn0onu9gdqfdvr1qogovf1627.apps.googleusercontent.com</string>
     <string name="mensagem_erro">Desculpe, ocorreu um erro.</string>
     <string name="recarregar">Recarregar</string>
+    <string name="queryHint_pesquisa">Pesquise por gibi, personagem...</string>
 
 
 </resources>

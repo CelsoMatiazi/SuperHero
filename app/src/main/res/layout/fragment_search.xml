@@ -16,6 +16,8 @@
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="5dp"
         android:layout_marginTop="20dp"
+        android:iconifiedByDefault="false"
+        app:queryHint="@string/queryHint_pesquisa"
         />
 
     <ScrollView

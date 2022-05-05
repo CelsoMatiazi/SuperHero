@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
@@ -32,7 +33,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     private var offset: Int = 0
     private var newRequest: Boolean = true
     private var totalOfResults: Int = 0
-
+    private var querySearch: String? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -50,36 +51,38 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             sendToDetail(it)
         }
         recycler.adapter = adapter
-
-        if(comicList.isEmpty().not()){
-            adapter.updateList(comicList)
-        }
         recycler.layoutManager = GridLayoutManager(view.context,3)
         //endregion
 
         refreshButton.setOnClickListener {
             offset+=19
-            viewModel.loadMarvelComics(null,offset)
+            viewModel.loadMarvelComics(querySearch,offset)
             bannerState.isVisible = loadingState.isVisible.not()
             observer()
         }
 
+        //region Search
+        searchView.isIconified = false
         searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
 
             override fun onQueryTextSubmit(query: String?): Boolean {
+                resetAttributions(query)
                 viewModel.loadMarvelComics(query,0)
                 observer()
                 return false
             }
 
             override fun onQueryTextChange(query: String?): Boolean {
+                resetAttributions(query)
                 viewModel.loadMarvelComics(query,0)
                 observer()
                 return false
             }
 
         })
-//        setScrollView()
+        //endregion
+
+        setScrollView()
         observer()
 
     }
@@ -109,7 +112,6 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     }
 
     private fun setScrollView(){
-        viewModel.loadMarvelComics(null,offset)
         recycler.run{
             addOnScrollListener(object: RecyclerView.OnScrollListener(){
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -121,10 +123,19 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                     if(totalItemCount>0 && lastItem && newRequest && offset< totalOfResults){
                         offset+=19
                         newRequest = newRequest.not()
-                        viewModel.loadMarvelComics(null,offset)
+                        viewModel.loadMarvelComics(querySearch,offset)
                     }
                 }
             })
         }
+    }
+
+    private fun resetAttributions(query: String?){
+        querySearch = query
+        offset = 0
+        adapter = HomeMenuAdapter(){
+            sendToDetail(it)
+        }
+        recycler.adapter = adapter
     }
 }
