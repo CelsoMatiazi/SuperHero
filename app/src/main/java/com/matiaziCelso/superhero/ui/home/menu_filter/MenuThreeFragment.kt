@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.lottie.LottieAnimationView
 import com.matiaziCelso.superhero.R
 import com.matiaziCelso.superhero.data.models.CharacterItem
 import com.matiaziCelso.superhero.data.models.ComicItem
@@ -25,7 +26,7 @@ class MenuThreeFragment : Fragment(R.layout.fragment_home_menu_three){
     private var characterList = mutableListOf<CharacterItem>()
     private val viewModel: HomeMenuThreeViewModel by viewModels()
     private lateinit var homeState: View
-    private lateinit var loadingState: View
+    private lateinit var loadingState: LottieAnimationView
     private lateinit var bannerState: View
     private lateinit var refreshButton: Button
 

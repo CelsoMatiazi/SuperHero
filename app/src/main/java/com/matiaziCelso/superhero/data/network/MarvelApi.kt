@@ -15,7 +15,7 @@ interface MarvelApi {
     @GET("comics")
     suspend fun  getMarvelComics(@Query("title") comic :String? = null,
                                  @Query("offset") offset :Int? = null,
-                                 @Query("limit") limit :Int? = 18,
+                                 @Query("limit") limit :Int? = 39,
                                  @Query("dateDescriptor") dateDescriptor :String? = null) : ComicsResponse
 
     @GET("characters")

@@ -26,6 +26,17 @@ class LikeFragment : Fragment(R.layout.fragment_like) {
     private var items : List<ComicItem>
     private var database : AppDatabase
 
+
+    override fun onResume() {
+        super.onResume()
+        items = iniciarFavoritos()
+        recycler.adapter = FavoriteAdapter(items,{
+            showDialog(it)
+        },{
+            sendToDetail(it)
+        })
+    }
+
     init {
         items = listOf()
         database = DataBaseFactory.getAppDataBase()

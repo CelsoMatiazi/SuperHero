@@ -13,7 +13,7 @@ class QueryInterceptor() : Interceptor {
             .addQueryParameter("ts","1630864899194")
             .addQueryParameter("apikey", "ec5a2ce55642448dc7efe46d0dcde46b")
             .addQueryParameter("hash", "df70db149a157c283d014c6ffa1c40c0")
-            .addQueryParameter("limit", "20")
+            .addQueryParameter("limit", "40")
             .build()
 
 
