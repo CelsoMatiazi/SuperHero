@@ -48,6 +48,7 @@ class CharacterDetailViewModel(private val marvelRepository: MarvelComicsReposit
                     }
                     else{
                         _returnedComics.postValue(comicConvert)
+                        _error.postValue(false)
                     }
                 }
         }

@@ -80,6 +80,7 @@ class ComicDetailViewModel(private val marvelRepository: MarvelComicsRepository 
                     }
                     _returnedCharacters.postValue(aleatoryCharacterConvert.shuffled())
                     _wasEmpty.postValue("Conheça também!")
+                    _error.postValue(false)
                     suggestionId = aleatoryCharacterConvert.shuffled()[0].id
                     loadMoreComics(suggestionId)
                 }

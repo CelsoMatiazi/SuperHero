@@ -130,6 +130,7 @@ class HomeViewModel(
                         convertComicItem(comic)
                     }
                       _titles.postValue(itemsSearch)
+                    _error.postValue(false)
                       recycler.postValue(comicConvert.shuffled())
                 }
         }
