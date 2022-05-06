@@ -68,11 +68,15 @@ class MenuItemViewHolderForCharacters(view: View): RecyclerView.ViewHolder(view)
 
     fun bind(item: CharacterItem, action: (CharacterItem) -> Unit){
 
-        val urlImage = item.image.replace("http://", "https://")
+        if((item.image.contains("i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg") ||
+            item.image.contains("i.annihil.us/u/prod/marvel/i/mg/f/60/4c002e0305708.gif")).not()
+        ){
+            val urlImage = item.image.replace("http://", "https://")
 
-        Glide.with(image.context).load(urlImage).into(image)
-        image.setOnClickListener { action.invoke(item) }
-        text.text = item.name
+            Glide.with(image.context).load(urlImage).into(image)
+            image.setOnClickListener { action.invoke(item) }
+            text.text = item.name.take(15)
+        }
 
     }
 }

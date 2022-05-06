@@ -53,7 +53,7 @@ class SecretActivity : AppCompatActivity() {
             .into(img3)
 
         Glide.with(this)
-            .load("")
+            .load(R.drawable.andre)
             .circleCrop()
             .into(img4)
 

@@ -23,7 +23,7 @@
                 android:layout_height="100dp"
                 android:layout_margin="10dp"
                 android:layout_gravity="center"
-                android:src="@color/red" />
+                android:src="@color/darkGrey" />
 
             <TextView
                 android:id="@+id/menu_rounded_character_front_text"

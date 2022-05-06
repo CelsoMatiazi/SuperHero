@@ -35,6 +35,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     private lateinit var bannerState: View
     private lateinit var refreshButton: Button
     private lateinit var searchView: SearchView
+    private lateinit var emptyIcon: ImageView
     private var offset: Int = 0
     private var newRequest: Boolean = true
     private var totalOfResults: Int = 0
@@ -58,6 +59,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         bannerState.isVisible = comicList.isEmpty().not()
         refreshButton = view.findViewById(R.id.error_button)
         searchView = view.findViewById(R.id.searchView_search)
+        emptyIcon = view.findViewById(R.id.search_empty)
         val backBtn = view.findViewById<ImageView>(R.id.search_back_btn)
 
         //region Atribuições Recycler
@@ -118,6 +120,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     private fun observer(){
         viewModel.returnedComics.observe(viewLifecycleOwner){listOfComics ->
             adapter.updateList(listOfComics)
+            emptyIcon.isVisible = listOfComics.isEmpty()
         }
         viewModel.loading.observe(viewLifecycleOwner){
             loadingState.isVisible = false

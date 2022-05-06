@@ -196,15 +196,28 @@ class MenuOneFragment : Fragment(R.layout.fragment_home_menu) {
         viewModel.returnedFirstCharacter.observe(viewLifecycleOwner) {
             characterOneReceiver = it
             characterOneTextReceiver.text = it.name
-            val urlimge = it.image.replace("http://", "https://")
-            Glide.with(this).load(urlimge).into(characterOneImageReceiver)
+            var urlImage = ""
+            urlImage = if((it.image.contains("i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg"))
+            ){
+                "https://kkavishala.s3.ap-south-1.amazonaws.com/post_pics/%40vikas-kumar/None/sg_17-01-2021_01-35-45-AM.jpg"
+            }else{
+                it.image.replace("http://", "https://")
+            }
+
+            Glide.with(this).load(urlImage).into(characterOneImageReceiver)
         }
 
         viewModel.returnedSecondCharacter.observe(viewLifecycleOwner) {
             characterTwoReceiver = it
             characterTwoTextReceiver.text = it.name
-            val urlimge = it.image.replace("http://", "https://")
-            Glide.with(this).load(urlimge).into(characterTwoImageReceiver)
+            var urlImage = ""
+            urlImage = if((it.image.contains("i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg"))
+            ){
+                "https://kkavishala.s3.ap-south-1.amazonaws.com/post_pics/%40vikas-kumar/None/sg_17-01-2021_01-35-45-AM.jpg"
+            }else{
+                it.image.replace("http://", "https://")
+            }
+            Glide.with(this).load(urlImage).into(characterTwoImageReceiver)
         }
     }
 

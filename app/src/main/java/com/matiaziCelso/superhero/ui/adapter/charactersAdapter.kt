@@ -44,7 +44,7 @@ class CharacterViewHolder(view: View): RecyclerView.ViewHolder(view){
     private val img: ShapeableImageView = view.findViewById(R.id.character_img)
 
     fun bind(item: CharacterItem, action: (CharacterItem) -> Unit){
-        name.text = item.name
+        name.text = item.name.take(20)
         Glide.with(img.context).load(item.image).into(img)
         img.setOnClickListener { action.invoke(item) }
     }
