@@ -37,6 +37,8 @@ class splashScreen : AppCompatActivity() {
         this.supportActionBar?.hide()
         window.statusBarColor = ContextCompat.getColor(this, R.color.black)
 
+        startActivity(Intent(this,HomeActivity::class.java))
+
         val imagem = findViewById<ImageView>(R.id.splash_bg_animation)
 
         imagem.setBackgroundResource(R.drawable.bg_animation_list)

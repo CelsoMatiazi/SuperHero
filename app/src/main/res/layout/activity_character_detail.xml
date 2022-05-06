@@ -118,4 +118,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         />
+    <include
+        android:id="@+id/character_detail_error_banner"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        layout="@layout/banner_error"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
     </androidx.constraintlayout.widget.ConstraintLayout>

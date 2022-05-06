@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
@@ -23,6 +24,8 @@ class CharacterDetailActivity : AppCompatActivity() {
     private lateinit var recycler: RecyclerView
     private lateinit var loadingState : View
     private lateinit var homeState : View
+    private lateinit var bannerState: View
+    private lateinit var refreshButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +40,9 @@ class CharacterDetailActivity : AppCompatActivity() {
         val backBtn = findViewById<ImageView>(R.id.character_detail_back_btn)
         val name = findViewById<TextView>(R.id.character_detail_title)
         val description = findViewById<TextView>(R.id.character_description)
+        bannerState = findViewById(R.id.character_detail_error_banner)
+        bannerState.isVisible = false
+        refreshButton = findViewById(R.id.error_button)
 
         //Exibir o loading durante a requisição da API:
         loadingState = findViewById(R.id.characterDetail_loading)
@@ -45,6 +51,11 @@ class CharacterDetailActivity : AppCompatActivity() {
 
         backBtn.setOnClickListener {
             onBackPressed()
+        }
+        refreshButton.setOnClickListener {
+            characterItem?.id?.let { viewModel.loadCharacterComics(it) }
+            bannerState.isVisible = loadingState.isVisible.not()
+            observer()
         }
 
         //Atribuição do personagem na tela:
@@ -77,6 +88,9 @@ class CharacterDetailActivity : AppCompatActivity() {
         viewModel.loading.observe(this){
             loadingState.isVisible = it
             homeState.isVisible = !it
+        }
+        viewModel.error.observe(this){
+            bannerState.isVisible = it
         }
     }
 }

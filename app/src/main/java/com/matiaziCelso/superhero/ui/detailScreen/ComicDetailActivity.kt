@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
@@ -42,6 +43,8 @@ class ComicDetailActivity : AppCompatActivity() {
     private lateinit var recyclerComics: RecyclerView
     private lateinit var loadingState : View
     private lateinit var homeState : View
+    private lateinit var bannerState: View
+    private lateinit var refreshButton: Button
     private lateinit var tagMais: TextView
     private lateinit var tagPersonagens: TextView
     private var database: AppDatabase = DataBaseFactory.getAppDataBase()
@@ -67,6 +70,9 @@ class ComicDetailActivity : AppCompatActivity() {
         tagPersonagens = findViewById<TextView>(R.id.comic_personagens)
         loadingState = findViewById<View>(R.id.comicDetail_loading)
         homeState = findViewById<View>(R.id.comicDetail_screen)
+        bannerState = findViewById(R.id.comic_detail_error_banner)
+        bannerState.isVisible = false
+        refreshButton = findViewById(R.id.error_button)
 
         recyclerCharacters = findViewById(R.id.comic_personagens_recycler)
         recyclerCharacters.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
@@ -88,6 +94,12 @@ class ComicDetailActivity : AppCompatActivity() {
             onBackPressed()
         }
 
+        refreshButton.setOnClickListener {
+            viewModel.loadComicCharacters(comicItem.id)
+            bannerState.isVisible = loadingState.isVisible.not()
+            observer()
+        }
+
         addCartBtn.setOnClickListener {
 //            CartItems.items.add(comicItem)
 //            switchAddToCart(comicItem)
@@ -102,18 +114,11 @@ class ComicDetailActivity : AppCompatActivity() {
         comicShareIcon.setOnClickListener {
             val sendIntent: Intent = Intent().apply {
                 action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_TEXT,"Ei! Você já leu ${comicItem.title}?")
+                putExtra(Intent.EXTRA_TEXT,"Ei! Você já leu ${comicItem.title}?\n${comicItem.description}")
                 type = "text/plain"
             }
             val shareIntent = Intent.createChooser(sendIntent,null)
             startActivity(shareIntent)
-//            val screen = printScreen(cover)
-//            val sendIntent: Intent = Intent().apply {
-//                action = Intent.ACTION_SEND
-//                putExtra(Intent.EXTRA_STREAM,screen)
-//                type = "image/jpeg"
-//            }
-//            startActivity(Intent.createChooser(sendIntent,""))
         }
 
         Glide.with(cover.context).load(comicItem.image).into(cover)
@@ -207,6 +212,9 @@ class ComicDetailActivity : AppCompatActivity() {
                 sendComicToDetail(character)
             }
 
+        }
+        viewModel.error.observe(this){
+            bannerState.isVisible = it
         }
 
     }
