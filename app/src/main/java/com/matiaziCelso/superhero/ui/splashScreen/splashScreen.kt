@@ -34,6 +34,8 @@ class splashScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
 
+//        startActivity(Intent(this, HomeActivity::class.java))
+
         this.supportActionBar?.hide()
         window.statusBarColor = ContextCompat.getColor(this, R.color.black)
 

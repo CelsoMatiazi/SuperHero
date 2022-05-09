@@ -1,6 +1,8 @@
 package com.matiaziCelso.superhero.ui.detailScreen
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.net.Uri
@@ -8,11 +10,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,14 +36,14 @@ import com.matiaziCelso.superhero.viewModel.ComicDetailViewModel
 class ComicDetailActivity : AppCompatActivity() {
 
     private val viewModel: ComicDetailViewModel by viewModels()
-    private lateinit var addCartBtn : TextView
-    private lateinit var addCartDoneBtn : FrameLayout
-    private lateinit var comicFavIcon : ImageView
-    private lateinit var comicShareIcon : ImageView
+    private lateinit var addCartBtn: TextView
+    private lateinit var addCartDoneBtn: FrameLayout
+    private lateinit var comicFavIcon: ImageView
+    private lateinit var comicShareIcon: ImageView
     private lateinit var recyclerCharacters: RecyclerView
     private lateinit var recyclerComics: RecyclerView
-    private lateinit var loadingState : View
-    private lateinit var homeState : View
+    private lateinit var loadingState: View
+    private lateinit var homeState: View
     private lateinit var bannerState: View
     private lateinit var refreshButton: Button
     private lateinit var tagMais: TextView
@@ -52,13 +53,14 @@ class ComicDetailActivity : AppCompatActivity() {
     private var firebaseDB = FirebaseDatabase.getInstance()
     private val auth = FirebaseAuth.getInstance()
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_comic_detail)
         supportActionBar?.hide()
 
         //region Inicialização de variáveis
-        val extras : Bundle? = intent.extras
+        val extras: Bundle? = intent.extras
         val comicItem: ComicItem? = extras?.getParcelable("comicItem")
 
         val backBtn = findViewById<ImageView>(R.id.comic_detail_back_btn)
@@ -75,14 +77,25 @@ class ComicDetailActivity : AppCompatActivity() {
         refreshButton = findViewById(R.id.error_button)
 
         recyclerCharacters = findViewById(R.id.comic_personagens_recycler)
-        recyclerCharacters.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        recyclerCharacters.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         recyclerComics = findViewById<RecyclerView>(R.id.comic_mais_recycler)
-        recyclerComics.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        recyclerComics.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
         addCartBtn = findViewById(R.id.comic_add_btn)
         addCartDoneBtn = findViewById(R.id.comic_add_done)
         comicFavIcon = findViewById(R.id.comic_fav_icon)
         comicShareIcon = findViewById(R.id.comic_share_icon)
+
+        val permissionResultCallback =
+            registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+                if (it) {
+                    Toast.makeText(this, "Permission ok", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show()
+                }
+            }
 
         //endregion
 
@@ -101,24 +114,19 @@ class ComicDetailActivity : AppCompatActivity() {
         }
 
         addCartBtn.setOnClickListener {
-//            CartItems.items.add(comicItem)
-//            switchAddToCart(comicItem)
             saveItemOnFirebase(comicItem)
         }
 
         comicFavIcon.setOnClickListener {
-           addFavItem(comicItem)
-           setFavIcon(comicItem)
+            addFavItem(comicItem)
+            setFavIcon(comicItem)
         }
 
         comicShareIcon.setOnClickListener {
-            val sendIntent: Intent = Intent().apply {
-                action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_TEXT,"Ei! Você já leu ${comicItem.title}?\n${comicItem.description}")
-                type = "text/plain"
+
+            printScreen(cover)?.let { image ->
+                SaveFile(this, image).saveAndShare()
             }
-            val shareIntent = Intent.createChooser(sendIntent,null)
-            startActivity(shareIntent)
         }
 
         Glide.with(cover.context).load(comicItem.image).into(cover)
@@ -131,7 +139,7 @@ class ComicDetailActivity : AppCompatActivity() {
     }
 
 
-    private fun saveItemOnFirebase(item: ComicItem){
+    private fun saveItemOnFirebase(item: ComicItem) {
         val ref = firebaseDB.getReference(auth.currentUser!!.uid)
         val key = "cart"
         val id = item.id.toString()
@@ -139,35 +147,37 @@ class ComicDetailActivity : AppCompatActivity() {
             CartItems.items.add(item)
             switchAddToCart(item)
         }
-        .addOnFailureListener{
-            Log.d("CART", "ERRO")
-        }
+            .addOnFailureListener {
+                Log.d("CART", "ERRO")
+            }
     }
 
 
-    private fun switchAddToCart(comic: ComicItem){
-        if(CartItems.items.filter { it.image == comic.image}.getOrNull(0) != null){
+    private fun switchAddToCart(comic: ComicItem) {
+        if (CartItems.items.filter { it.image == comic.image }.getOrNull(0) != null) {
             addCartBtn.isVisible = false
             addCartDoneBtn.isVisible = true
         }
     }
 
-    private fun setFavIcon(comic: ComicItem){
-        val lista = database.favoritos().comicIsInDatabase(comic.id) //Por ora este é o "filtro" que consegui implementar.
+    private fun setFavIcon(comic: ComicItem) {
+        val lista = database.favoritos()
+            .comicIsInDatabase(comic.id) //Por ora este é o "filtro" que consegui implementar.
 
-        if(lista>0){
+        if (lista > 0) {
             comicFavIcon.setImageResource(R.drawable.ic_full_heart)
-        }else{
+        } else {
             comicFavIcon.setImageResource(R.drawable.ic_heart_border)
         }
     }
 
-    private fun addFavItem(comic: ComicItem){
-        val lista = database.favoritos().comicIsInDatabase(comic.id) //Por ora este é o "filtro" que consegui implementar.
+    private fun addFavItem(comic: ComicItem) {
+        val lista = database.favoritos()
+            .comicIsInDatabase(comic.id) //Por ora este é o "filtro" que consegui implementar.
 
-        if(lista>0){
+        if (lista > 0) {
             database.favoritos().delete(comic.id)
-        }else{
+        } else {
             val converter = ListaFavoritosEntity(
                 title = comic.title,
                 image = comic.image,
@@ -179,55 +189,62 @@ class ComicDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun sendComicToDetail(item: ComicItem){
+    private fun sendComicToDetail(item: ComicItem) {
         val intent = Intent(this, ComicDetailActivity::class.java)
         intent.putExtra("comicItem", item)
         startActivity(intent)
     }
 
 
-    private fun sendCharacterToDetail(item: CharacterItem){
+    private fun sendCharacterToDetail(item: CharacterItem) {
         val intent = Intent(this, CharacterDetailActivity::class.java)
         intent.putExtra("characterItem", item)
         startActivity(intent)
     }
 
-    private fun observer(){
-        viewModel.returnedCharacters.observe(this){listOfCharacter ->
-            recyclerCharacters.adapter = CharactersAdapter(listOfCharacter) {character ->
+    private fun observer() {
+        viewModel.returnedCharacters.observe(this) { listOfCharacter ->
+            recyclerCharacters.adapter = CharactersAdapter(listOfCharacter) { character ->
                 sendCharacterToDetail(character)
             }
 
         }
-        viewModel.loading.observe(this){
+        viewModel.loading.observe(this) {
             loadingState.isVisible = it
             homeState.isVisible = !it
         }
 
-        viewModel.wasEmpty.observe(this){
+        viewModel.wasEmpty.observe(this) {
             tagPersonagens.text = it
         }
-        viewModel.returnedComics.observe(this){listOfComics ->
-            recyclerComics.adapter = HomeAdapter(listOfComics) {character ->
+        viewModel.returnedComics.observe(this) { listOfComics ->
+            recyclerComics.adapter = HomeAdapter(listOfComics) { character ->
                 sendComicToDetail(character)
             }
 
         }
-        viewModel.error.observe(this){
+        viewModel.error.observe(this) {
             bannerState.isVisible = it
         }
 
     }
+
     private fun printScreen(view: View): Bitmap? {
         var screen: Bitmap? = null
-        try{
-            screen = Bitmap.createBitmap(view.measuredWidth, view.measuredHeight, Bitmap.Config.ARGB_8888)
+        try {
+            screen = Bitmap.createBitmap(
+                view.measuredWidth,
+                view.measuredHeight,
+                Bitmap.Config.ARGB_8888
+            )
             val canvas = Canvas(screen)
             view.draw(canvas)
-        } catch (e: Exception){
+        } catch (e: Exception) {
             Log.e("IMAGE_ERROR", e.message.toString())
         }
 
         return screen
     }
 }
+
+//TODO("1:02:52")
