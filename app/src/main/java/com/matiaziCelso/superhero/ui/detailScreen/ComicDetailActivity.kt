@@ -8,6 +8,7 @@ import android.graphics.Canvas
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.View
 import android.widget.*
@@ -123,10 +124,16 @@ class ComicDetailActivity : AppCompatActivity() {
         }
 
         comicShareIcon.setOnClickListener {
-
-            printScreen(cover)?.let { image ->
-                SaveFile(this, image).saveAndShare()
+//            printScreen(cover)?.let { image ->
+//                SaveFile(this, image).saveAndShare()
+//            }
+            val sendIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT,"Ei! Você já leu ${comicItem.title}?\n${comicItem.description}")
+                type = "text/plain"
             }
+            val shareIntent = Intent.createChooser(sendIntent,null)
+            startActivity(shareIntent)
         }
 
         Glide.with(cover.context).load(comicItem.image).into(cover)
@@ -245,6 +252,7 @@ class ComicDetailActivity : AppCompatActivity() {
 
         return screen
     }
+
 }
 
 //TODO("1:02:52")
